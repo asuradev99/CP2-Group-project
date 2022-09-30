@@ -1,6 +1,8 @@
 
 
 # CP2-Group-project
+![Logo](res/logo.png "Logo")
+
 The Group project for our Computer Programming 2 class.
 
 ## Project Ideas
