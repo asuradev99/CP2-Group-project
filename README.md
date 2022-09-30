@@ -1,7 +1,7 @@
 
 
 # CP2-Group-project
-
+![Logo](funny.jpeg "Logo")
 
 The Group project for our Computer Programming 2 class.
 
