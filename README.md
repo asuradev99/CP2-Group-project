@@ -16,3 +16,7 @@ A simple RPG type game with vim style controls, new abilities you get are vim co
 ### Simple Cellular Automata
 17
 A cellular autoamta is a 2-dimension grid of cells whose state evolves over time according to their neighbors. With cellular automata, you can create a complex and diverse array of different behavior. The Game of Life is a popular and simple example of a cellular automata. In the Game of Life, you can create strange and beautiful patterns like flying gliders, blinking oscillators, and even Conway's Game Of Life
+
+### Cellular Automata RPG
+
+nethack except everything is cellular automata
