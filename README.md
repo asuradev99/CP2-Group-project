@@ -20,3 +20,4 @@ amog us except if you type faster than the impostor you kill him
 have to do 15 second typing test to do emergency meeting
 
 all  tasks are typing games
+amog use is stupid
