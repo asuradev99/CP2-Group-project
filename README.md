@@ -7,6 +7,13 @@
 
 The Group project for our Computer Programming 2 class.
 
+# Project
+
+We are doing turn based rogue like video game.
+you can beat room to go to next room of random enemies
+every action happens turn basedly
+
+
 ## Project Ideas
 
 ### Esolang (maybe)
