@@ -36,3 +36,10 @@ A cellular autoamta is a 2-dimension grid of cells whose state evolves over time
 
 https://www.youtube.com/watch?v=C2vgICfQawE
 
+### Data structures annd reasorces
+No dialoge 
+no story
+We have gathering coins and a marketplace
+Sprites: main chracter, with 2 skins, 3 people who are bad, 5 diffirent weapons, background tiles (9x9)
+videos: door open, break down door, die, take the L 
+sound: background music, and shooting
