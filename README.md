@@ -36,10 +36,16 @@ A cellular autoamta is a 2-dimension grid of cells whose state evolves over time
 
 https://www.youtube.com/watch?v=C2vgICfQawE
 
-### Data structures annd reasorces
+### Data structures annd resources
+
 No dialoge 
+
 no story
-We have gathering coins and a marketplace
-Sprites: main chracter, with 2 skins, 3 people who are bad, 5 diffirent weapons, background tiles (9x9)
-videos: door open, break down door, die, take the L 
+
+We have gathering coins (int currency) and a marketplace (class)
+
+Sprites: main character (pimage), with 2 skins (rick from rick and morty and the banana guy from fortnite), at least 3 types of enemy (classes), 5 different weapons (class), background tiles (pimage, class) (9x9)
+
+videos (these will be placeholders): door open, break down door, die, take the L
+
 sound: background music, and shooting
