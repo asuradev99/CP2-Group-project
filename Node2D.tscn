@@ -1,0 +1,21 @@
+[gd_scene format=2]
+
+[node name="StartMenu" type="Node2D"]
+
+[node name="Button" type="Button" parent="."]
+margin_left = 400.0
+margin_top = 250.0
+margin_right = 441.0
+margin_bottom = 291.0
+rect_scale = Vector2( 2, 2 )
+text = "Start"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_left = 50.0
+margin_top = 434.0
+margin_right = 350.0
+margin_bottom = 534.0
+rect_min_size = Vector2( 300, 0 )
+rect_scale = Vector2( 3, 3 )
+text = "By: Ayush Rajan, Steven Mai, Ethan Suresh, 
+Alon Galili"
