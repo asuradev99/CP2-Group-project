@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://images/title screen placeholder-1.png.png" type="Texture" id=1]
 
 [node name="StartMenu" type="Node2D"]
 
@@ -19,3 +21,8 @@ rect_min_size = Vector2( 300, 0 )
 rect_scale = Vector2( 3, 3 )
 text = "By: Ayush Rajan, Steven Mai, Ethan Suresh, 
 Alon Galili"
+
+[node name="TitleScreenPlaceholder-1png" type="Sprite" parent="."]
+position = Vector2( 768.75, 162 )
+scale = Vector2( 46.6406, 11.9375 )
+texture = ExtResource( 1 )
