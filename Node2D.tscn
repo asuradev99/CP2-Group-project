@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://images/title screen placeholder-1.png.png" type="Texture" id=1]
 [ext_resource path="res://images/theTest.webp" type="Texture" id=2]
+[ext_resource path="res://GridEntity2D.gd" type="Script" id=3]
 
 [node name="StartMenu" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="Button" type="Button" parent="."]
 margin_left = 400.0
