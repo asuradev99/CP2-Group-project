@@ -2,7 +2,7 @@
 
 # CP2-Group-project
 ![Logo](images/Roguelike.drawio.png "Logo")
-![Logo](images/Class_Diagram.png "Logo")
+![Logo](images/class in diagram.png "Logo")
 
 
 The Group project for our Computer Programming 2 class.
