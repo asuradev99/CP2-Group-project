@@ -48,4 +48,4 @@ Sprites: main character (pimage), with 2 skins (rick from rick and morty and the
 
 videos (these will be placeholders): door open, break down door, die, take the L
 
-sound: background music, and shooting
+sound: background music, bonzi buddy tts, and shooting
