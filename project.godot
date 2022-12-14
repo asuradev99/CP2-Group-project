@@ -9,13 +9,43 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "HBoxContainer",
+"class": "ContributorClass",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/ContributorClass.gd"
+}, {
+"base": "PanelContainer",
+"class": "GistItem",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/GistItem.gd"
+}, {
 "base": "Node2D",
 "class": "GridEntity2D",
 "language": "GDScript",
 "path": "res://GridEntity2D.gd"
+}, {
+"base": "HBoxContainer",
+"class": "InvitationItem",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/InvitationItem.gd"
+}, {
+"base": "GridEntity2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
+}, {
+"base": "PanelContainer",
+"class": "RepositoryItem",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/RepositoryItem.gd"
 } ]
 _global_script_class_icons={
-"GridEntity2D": ""
+"ContributorClass": "",
+"GistItem": "",
+"GridEntity2D": "",
+"InvitationItem": "",
+"Player": "",
+"RepositoryItem": ""
 }
 
 [application]
@@ -23,6 +53,15 @@ _global_script_class_icons={
 config/name="RPGGame"
 run/main_scene="res://Node2D.tscn"
 config/icon="res://icon.png"
+
+[editor]
+
+version_control_autoload_on_startup=true
+version_control_plugin_name="GitAPI"
+
+[gdnative]
+
+singletons=[  ]
 
 [gui]
 
