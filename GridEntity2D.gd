@@ -10,7 +10,8 @@ export(int) var y = 0
 func _ready():
 	pass # Replace with function body.
 
+#renders the object at a specific location on the grid
+func render():
+	pass
+	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
