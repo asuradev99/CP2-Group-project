@@ -44,7 +44,7 @@ no story
 
 We have gathering coins (int currency) and a marketplace (class)
 
-Sprites: main character (pimage), with 2 skins (rick from rick and morty and the banana guy from fortnite), at least 3 types of enemy (classes), 5 different weapons (class), background tiles (pimage, class) (9x9)
+Sprites: main character (pimage), at least 3 types of enemy (classes), 5 different weapons (class), background tiles (pimage, class) (9x9)
 
 videos (these will be placeholders): door open, break down door, die, take the L
 
