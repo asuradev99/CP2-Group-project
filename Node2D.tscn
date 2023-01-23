@@ -27,12 +27,6 @@ margin_bottom = 481.0
 rect_min_size = Vector2( 300, 0 )
 rect_scale = Vector2( 3, 3 )
 text = "By: Ayush Rajan, Steven Mai, Ethan Suresh, 
-<<<<<<< HEAD
-Alon Galili"
-readonly = true
-=======
-Alon Galili, Ayush is Haram"
->>>>>>> afe7037c3f609220c68c1394b3b56444bf4e9a85
 
 [node name="TitleScreenPlaceholder-1png" type="Sprite" parent="."]
 position = Vector2( 768.75, 162 )
