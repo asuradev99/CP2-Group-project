@@ -28,6 +28,7 @@ rect_min_size = Vector2( 300, 0 )
 rect_scale = Vector2( 3, 3 )
 text = "By: Ayush Rajan, Steven Mai, Ethan Suresh, 
 Alon Galili"
+readonly = true
 
 [node name="TitleScreenPlaceholder-1png" type="Sprite" parent="."]
 position = Vector2( 768.75, 162 )
