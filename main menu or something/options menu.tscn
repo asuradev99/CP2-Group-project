@@ -75,4 +75,14 @@ margin_bottom = 339.0
 rect_pivot_offset = Vector2( -338, -19 )
 text = "dfasdf"
 
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer"]
+margin_top = 343.0
+margin_right = 944.0
+margin_bottom = 520.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "TODO:
+- ACTUALLY MAKE THE CHECKBOXES DO STUFF
+- ADD ACTUAL OPTIONS"
+
 [connection signal="pressed" from="VBoxContainer/HSplitContainer/Button" to="VBoxContainer/HSplitContainer/Button" method="_on_Button_pressed"]
