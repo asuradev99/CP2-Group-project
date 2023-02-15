@@ -2,6 +2,8 @@ const inc = 10;
 let x, y;
 function setup() {
     createCanvas(window.innerWidth,window.innerHeight);
+    x = width/2;
+    y = height/2;
 }
 function KeyboardControl(){
     if (key == 'w') {
