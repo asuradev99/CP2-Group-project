@@ -5,6 +5,6 @@ function setup() {
 
 function draw() {
     background(200);
-    ellipse(50,50,80,80);
+    ellipse(window.innerWidth/2,window.innerHeight/2,200,200);
 }
 console.log("Hello World");
