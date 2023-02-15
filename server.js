@@ -6,11 +6,11 @@ const hostname = '127.0.0.1';
 const port = 3000;
 
 
-app.use(express.static(__dirname + "/public"));
-
-app.get("/", (req, res) => {
-  res.render("index.html");
-});
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World\n');
+  });
 
 server.listen(port, hostname, function() {
   console.log('Server running at http://'+ hostname + ':' + port + '/');
