@@ -18,7 +18,7 @@ function KeyboardControl(){
 }
 function draw() {
     background(200);
-    ellipse(window.innerWidth/2,window.innerHeight/2,x,y);
+    ellipse(window.innerWidth/2,window.innerHeight/2,200,200);
    // rect(40, 120, 120, 40);
 }
 console.log("Hello World");
