@@ -4,7 +4,7 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   transports: ["websocket"] //set to use websocket only
 }); //this loads socket.io and connects it to the server.
-
+console.log("bruh")
 const port = process.env.PORT || 8080;
 
 //this next line makes sure we can put all our html/css/javascript in the public directory
