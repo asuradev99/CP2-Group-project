@@ -12,20 +12,20 @@ var y3 = 75;
 function draw() {
   background(220);
   if(keyIsPressed) {
-    if(keyCode==LEFT_ARROW) {
+    if(keyCode==LEFT_ARROW||key=='a') {
       x1--;
       x2--;
       x3--;
-    } else if(keyCode==RIGHT_ARROW) {
+    } else if(keyCode==RIGHT_ARROW||key=='d') {
       x1++;
       x2++;
       x3++;
     }
-    if(keyCode==UP_ARROW) {
+    if(keyCode==UP_ARROW||key=='w') {
       y1--;
       y2--;
       y3--;
-    } else if(keyCode==DOWN_ARROW) {
+    } else if(keyCode==DOWN_ARROW||key=='s') {
       y1++;
       y2++;
       y3++;
