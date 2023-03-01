@@ -1,3 +1,6 @@
 class player{
-    constructor(playername)
+    constructor(playername) {
+        
+    }
+    
 }
