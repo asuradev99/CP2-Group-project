@@ -4,11 +4,11 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   transports: ["websocket"] //set to use websocket only
 }); //this loads socket.io and connects it to the server.
-console.log("bruh")
+
 const port = process.env.PORT || 8080;
 
 //this next line makes sure we can put all our html/css/javascript in the public directory
-app.use(express.static(__dirname + "/"));
+app.use(express.static(__dirname + "/public"));
 //we just have 1 route to the home page rendering an index html
 app.get("/", (req, res) => {
   res.render("index.html");
@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
 
   //lets add a starting position when the client connects
-  positions[socket.id] = { x: 0.5, y: 0.5 };
+  positions[socket.id] = { x: 100, y: 100 };
 
   socket.on("disconnect", () => {
     //when this client disconnects, lets delete its position from the object.
