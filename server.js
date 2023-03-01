@@ -39,6 +39,10 @@ io.on("connection", (socket) => {
     console.log(`${socket.id} disconnected`);
   });
 
+  io.sockets.on('connect', function(socket) {
+    const sessionID = socket.id;
+  });
+
   //client can send a message 'updatePosition' each time the clients position changes
   socket.on("updatePosition", (data) => {
     positions[socket.id].x = data.x;
@@ -47,7 +51,7 @@ io.on("connection", (socket) => {
 });
 
 //send positions every framerate to each client
-const frameRate = 30;
+const frameRate = 60;
 setInterval(() => {
   io.emit("positions", positions);
 }, 1000 / frameRate);
