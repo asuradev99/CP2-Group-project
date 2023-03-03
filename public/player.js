@@ -1,6 +1,6 @@
 class player{
-let x;
-let y;
+    let x;
+    let y;
 let speed;
 let smoothSpeed = 1;
 let scl = 25.0;
