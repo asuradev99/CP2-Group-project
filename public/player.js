@@ -3,7 +3,7 @@ class player{
     let y;  
     let speed;
     let smoothSpeed = 1;
-    let scl = 25.0;
+    let scl;
     const count = 3;
     let iToTheta;
     
