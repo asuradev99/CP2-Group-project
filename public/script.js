@@ -2,12 +2,17 @@
 const sketchContainer = document.getElementById("sketch-container");
 
 //get socket which only uses websockets as a means of communication
+
 const socket = io({
   transports: ["websocket"]
 });
+
+//const socket = io('http://game.0000727.xyz:8080')
 var clientid
+
 socket.on("connect", () => {
-  clientid = socket.id 
+  clientid = socket.id
+  console.log('connected')
 });
 
 
