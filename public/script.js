@@ -44,14 +44,16 @@ const sketch = (p) => {
   //(30-60 times / sec)
   p.draw = () => {
     if(p.keyIsPressed) {
-      if(p.keyCode==p.LEFT_ARROW||p.key=='a') {
+      if(p.keyIsDown(p.LEFT_ARROW)||p.keyIsDown(65)) {
         xx-=5;
-      } else if(p.keyCode==p.RIGHT_ARROW||p.key=='d') {
+      } 
+      if(p.keyIsDown(p.RIGHT_ARROW)||p.keyIsDown(68)) {
        xx+=5;
       }
-      if(p.keyCode==p.UP_ARROW||p.key=='w') {
+      if(p.keyIsDown(p.UP_ARROW)||p.keyIsDown(87)) {
         yy-=5;
-      } else if(p.keyCode==p.DOWN_ARROW||p.key=='s') {
+      } 
+      if(p.keyIsDown(p.DOWN_ARROW)||p.keyIsDown(83)) {
         yy+=5;
       }
     }
