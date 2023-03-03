@@ -14,17 +14,20 @@ socket.on("connect", () => {
 //the p5js sketch
 const sketch = (p) => {
   let positions = {};
-  let xx,yy
+  let xx,yy, aa
   xx = 100
   yy = 100
+  aa = 0
   let targetAngle = 0.0;
   let currentAngle = 0.0;
   let x;
   let y;
+  let a;
   let smoothSpeed = 1;
   let scl = 25.0;
   const count = 3;
   let iToTheta;
+
   //the p5js setup function
   p.setup = () => {
     //to fill up the full container, get the width an height
@@ -43,16 +46,18 @@ const sketch = (p) => {
   //the p5js draw function, runs every frame rate
   //(30-60 times / sec)
   p.draw = () => {
-    keyboardControl()
+    keyboardControl();
     sendPacket();
+    aa = p.atan2(p.mouseY - yy, p.mouseX - xx)
     
     p.background(51); //reset background to black
     //draw a circle for every position
-    render(xx, yy);
+    render(xx, yy, aa);
     for (const id in positions) {
       if (id != clientid){
       const position = positions[id];
-      p.circle(position.x, position.y, 50);
+      //p.circle(position.x, position.y, 50);
+      render(position.x, position.y, position.a)
       }
     }
   };
@@ -60,12 +65,13 @@ const sketch = (p) => {
   async function sendPacket() {
     socket.emit("updatePosition", {
       x: xx,
-      y: yy
+      y: yy,
+      a: p.atan2(p.mouseY - y, p.mouseX - x)
     });
   }
 
-  function render(x, y){
-    targetAngle = p.atan2(p.mouseY - y, p.mouseX - x);
+  function render(x, y, targetAngle){
+    //targetAngle = p.atan2(p.mouseY - y, p.mouseX - x);
 	  currentAngle = lerpAngle(currentAngle, targetAngle, smoothSpeed);
     p.beginShape();
 	    for (let i = 0; i < count; ++i) {
@@ -73,8 +79,9 @@ const sketch = (p) => {
 		    p.vertex(x + p.cos(theta) * scl, y + p.sin(theta) * scl);
 	    }
       p.fill(51);
-      p.stroke('red');
+      p.stroke('white');
 	  p.endShape(p.CLOSE);
+    //console.log(targetAngle)
   }
 
   function keyboardControl(){

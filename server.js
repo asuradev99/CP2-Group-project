@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
 
   //lets add a starting position when the client connects
-  positions[socket.id] = { x: 100, y: 100 };
+  positions[socket.id] = { x: 100, y: 100 , a: 0};
 
   socket.on("disconnect", () => {
     //when this client disconnects, lets delete its position from the object.
