@@ -15,8 +15,6 @@ socket.on("connect", () => {
   console.log('connected')
 });
 
-var name = window.prompt("what is ur name","deez nuts");
-
 //the p5js sketch
 const sketch = (p) => {
   let positions = {};
@@ -33,6 +31,7 @@ const sketch = (p) => {
   let scl = 25.0;
   const count = 3;
   let iToTheta;
+  let clientname = window.prompt("what is ur name","deez nuts");
 
   //the p5js setup function
   p.setup = () => {
@@ -72,7 +71,8 @@ const sketch = (p) => {
     socket.emit("updatePosition", {
       x: xx,
       y: yy,
-      a: aa
+      a: aa,
+      name: clientname
     });
   }
 
@@ -86,8 +86,8 @@ const sketch = (p) => {
 	    }
       p.fill('white');
       p.stroke('red');
-      text(name, x, y)
 	  p.endShape(p.CLOSE);
+    p.text(clientname, x, y)
     //console.log(targetAngle)
   }
 
