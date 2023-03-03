@@ -7,8 +7,8 @@ class player{
     const count = 3;
     let iToTheta;
     
-    constructor(playername, x, y) {
-        
+    constructor(playername, x, y, speed, smoothSpeed, scl, count, iToTheta) {
+        let x = width
     }
     
 }

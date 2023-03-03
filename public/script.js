@@ -57,12 +57,12 @@ const sketch = (p) => {
     
     p.background(51); //reset background to black
     //draw a circle for every position
-    render(xx, yy, aa);
+    render(xx, yy, aa, clientname);
     for (const id in positions) {
       if (id != clientid){
       const position = positions[id];
       //p.circle(position.x, position.y, 50);
-      render(position.x, position.y, position.a)
+      render(position.x, position.y, position.a, position.name)
       }
     }
   };
@@ -76,7 +76,7 @@ const sketch = (p) => {
     });
   }
 
-  function render(x, y, targetAngle){
+  function render(x, y, targetAngle, name){
     //targetAngle = p.atan2(p.mouseY - y, p.mouseX - x);
 	  currentAngle = lerpAngle(currentAngle, targetAngle, smoothSpeed);
     p.beginShape();
@@ -87,7 +87,7 @@ const sketch = (p) => {
       p.fill('white');
       p.stroke('red');
 	  p.endShape(p.CLOSE);
-    p.text(clientname, x, y)
+    p.text(name, x, y)
     //console.log(targetAngle)
   }
 
