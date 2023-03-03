@@ -78,8 +78,8 @@ const sketch = (p) => {
 		    const theta = currentAngle + i * iToTheta;
 		    p.vertex(x + p.cos(theta) * scl, y + p.sin(theta) * scl);
 	    }
-      p.fill(51);
-      p.stroke('white');
+      p.fill('white');
+      p.stroke('red');
 	  p.endShape(p.CLOSE);
     //console.log(targetAngle)
   }
