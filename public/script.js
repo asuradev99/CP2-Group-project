@@ -15,6 +15,7 @@ socket.on("connect", () => {
   console.log('connected')
 });
 
+var name = window.prompt("what is ur name","deez nuts");
 
 //the p5js sketch
 const sketch = (p) => {
@@ -85,6 +86,7 @@ const sketch = (p) => {
 	    }
       p.fill('white');
       p.stroke('red');
+      text(name, x, y)
 	  p.endShape(p.CLOSE);
     //console.log(targetAngle)
   }
