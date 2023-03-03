@@ -1,14 +1,72 @@
-class player{
-    let x;
-    let y;  
-    let speed;
-    let smoothSpeed = 1;
-    let scl;
-    const count = 3;
-    let iToTheta;
+class Player{
+    // let targetAngle;
+    // let currentAngle;
+    // let x;
+    // let y;  
+    // let speed;
+    // let smoothSpeed = 1;
+    // let scl;
+    // const count = 3;
+    // let iToTheta;
     
-    constructor(playername, x, y, speed, smoothSpeed, scl, count, iToTheta) {
-        let x = width
+    constructor(playername) {
+        //fix width and height
+         //var x = width/2;
+         //var y = height/2;
+         this.x = 100;
+         this.y = 100;
+         this.playername = playername;
+         this.smoothSpeed = 1;
+         this.targetAngle = 0;
+         this.currentAngle = 0;
+         this.scl = 25;
+         this.movementSpeed = 5;
     }
     
+    move(){
+        if(keyIsPressed) {
+          if(keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
+            x-=this.movementSpeed;
+          } 
+          if(keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
+           x+=this.movementSpeed;
+          }
+          if(keyIsDown(UP_ARROW)||keyIsDown(87)) {
+            y-=this.movementSpeed;
+          } 
+          if(keyIsDown(DOWN_ARROW)||keyIsDown(83)) {
+            y+=this.movementSpeed;
+          }
+        }
+      }
+      
+    rotate(targetAngle){
+        this.currentAngle = lerpAngle(this.currentAngle, targetAngle, this.smoothSpeed);
+    }
+
+    render(){
+          beginShape();
+            for (let i = 0; i < count; ++i) {
+                const theta = this.currentAngle + i * TWO_PI / count;
+                vertex(this.x + cos(theta) * this.scl, this.y + sin(theta) * scl);
+            }
+          fill('white');
+          stroke('red');
+          endShape(CLOSE);
+          text(this.playername, this.x, this.y);
+        //console.log(targetAngle)
+    }
+
+    lerpAngle(a, b, step) {
+        // Prefer shortest distance,
+        const delta = b - a;
+        if (delta == 0.0) {
+            return a;
+        } else if (delta < -PI) {
+            b += TWO_PI;
+        } else if (delta > PI) {
+            a += TWO_PI;
+        }
+        return (1.0 - step) * a + step * b;
+    }
 }

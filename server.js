@@ -7,6 +7,7 @@ const io = require("socket.io")(http, {
 
 const port = process.env.PORT || 8080;
 
+
 //this next line makes sure we can put all our html/css/javascript in the public directory
 app.use(express.static(__dirname + "/public"));
 //we just have 1 route to the home page rendering an index html
@@ -22,6 +23,7 @@ http.listen(port, () => {
 //store the positions of each client in this object.
 //It would be safer to connect it to a database as well so the data doesn't get destroyed when the server restarts
 //but we'll just use an object for simplicity.
+//const positions = {};
 const positions = {};
 
 //Socket configuration
@@ -32,7 +34,7 @@ io.on("connection", (socket) => {
 
   //lets add a starting position when the client connects
   positions[socket.id] = { x: 100, y: 100 , a: 0, name: ''};
-
+  //players[socket.id] = {player: new Player(''), a: 0}
   socket.on("disconnect", () => {
     //when this client disconnects, lets delete its position from the object.
     delete positions[socket.id];
@@ -44,7 +46,7 @@ io.on("connection", (socket) => {
   });
 
   //client can send a message 'updatePosition' each time the clients position changes
-  socket.on("updatePosition", (data) => {
+  socket.on("updateServer", (data) => {
     positions[socket.id].x = data.x;
     positions[socket.id].y = data.y;
     positions[socket.id].a = data.a;
@@ -57,3 +59,5 @@ const frameRate = 60;
 setInterval(() => {
   io.emit("positions", positions);
 }, 1000 / frameRate);
+
+

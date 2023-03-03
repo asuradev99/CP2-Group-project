@@ -18,28 +18,30 @@ socket.on("connect", () => {
 //the p5js sketch
 const sketch = (p) => {
   let positions = {};
-  let xx,yy, aa
-  xx = 100
-  yy = 100
-  aa = 0
-  let targetAngle = 0.0;
-  let currentAngle = 0.0;
-  let x;
-  let y;
-  let a;
-  let smoothSpeed = 1;
-  let scl = 25.0;
-  const count = 3;
-  let iToTheta;
+  let xx,yy, mouseAngle;
+  // xx = 100
+  // yy = 100
+  mouseAngle = 0
+  // let targetAngle = 0.0;
+  // let currentAngle = 0.0;
+  // let x;
+  // let y;
+  // let a;
+  // let smoothSpeed = 1;
+  // let scl = 25.0;
+  // const count = 3;
+  // let iToTheta;
   let clientname = window.prompt("what is ur name","deez nuts");
+  var clientPlayer = new Player(clientname);
 
+  
+  
   //the p5js setup function
   p.setup = () => {
     //to fill up the full container, get the width an height
     const containerPos = sketchContainer.getBoundingClientRect();
     const cnv = p.createCanvas(containerPos.width, containerPos.height); //the canvas!
-    iToTheta = p.TWO_PI / count;
-
+    //laser = new Laser(width/2, height/2, mouseX, mouseY, 5);
     p.fill(255); //sets the fill color of the circle to white
     p.frameRate(60); //set framerate to 30, same as server
     socket.on("positions", (data) => {
@@ -51,29 +53,33 @@ const sketch = (p) => {
   //the p5js draw function, runs every frame rate
   //(30-60 times / sec)
   p.draw = () => {
-    keyboardControl();
+    clientPlayer.move();
     sendPacket();
-    aa = p.atan2(p.mouseY - yy, p.mouseX - xx)
-    
+    mouseAngle = p.atan2(p.mouseY - yy, p.mouseX - xx)
+    // laser.move();
+    // laser.draw();
     p.background(51); //reset background to black
     //draw a circle for every position
-    render(xx, yy, aa, clientname);
-    for (const id in positions) {
+    clientPlayer.rotate(mouseAngle);
+    clientPlayer.render();
+    for (const id in players) {
       if (id != clientid){
-      const position = positions[id];
-      //p.circle(position.x, position.y, 50);
-      render(position.x, position.y, position.a, position.name)
+        const player = players[id];
+        player.render();
       }
     }
   };
 
   async function sendPacket() {
-    socket.emit("updatePosition", {
-      x: xx,
-      y: yy,
-      a: aa,
-      name: clientname
-    });
+    // socket.emit("updatePosition", {
+    //   x: clientPlayer.x,
+    //   y: clientPlayer.y,
+    //   a: mouseAngle,
+    //   name: clientname
+    // });
+    socket.emit("updateServer", {
+      player: clientPlayer
+    })
   }
 
   function render(x, y, targetAngle, name){
@@ -91,35 +97,35 @@ const sketch = (p) => {
     //console.log(targetAngle)
   }
 
-  function keyboardControl(){
-    if(p.keyIsPressed) {
-      if(p.keyIsDown(p.LEFT_ARROW)||p.keyIsDown(65)) {
-        xx-=5;
-      } 
-      if(p.keyIsDown(p.RIGHT_ARROW)||p.keyIsDown(68)) {
-       xx+=5;
-      }
-      if(p.keyIsDown(p.UP_ARROW)||p.keyIsDown(87)) {
-        yy-=5;
-      } 
-      if(p.keyIsDown(p.DOWN_ARROW)||p.keyIsDown(83)) {
-        yy+=5;
-      }
-    }
-  }
+  // function keyboardControl(){
+  //   if(p.keyIsPressed) {
+  //     if(p.keyIsDown(p.LEFT_ARROW)||p.keyIsDown(65)) {
+  //       xx-=5;
+  //     } 
+  //     if(p.keyIsDown(p.RIGHT_ARROW)||p.keyIsDown(68)) {
+  //      xx+=5;
+  //     }
+  //     if(p.keyIsDown(p.UP_ARROW)||p.keyIsDown(87)) {
+  //       yy-=5;
+  //     } 
+  //     if(p.keyIsDown(p.DOWN_ARROW)||p.keyIsDown(83)) {
+  //       yy+=5;
+  //     }
+  //   }
+  // }
 
-  function lerpAngle(a, b, step) {
-  // Prefer shortest distance,
-    const delta = b - a;
-    if (delta == 0.0) {
-      return a;
-    } else if (delta < -p.PI) {
-      b += p.TWO_PI;
-    } else if (delta > p.PI) {
-      a += p.TWO_PI;
-    }
-    return (1.0 - step) * a + step * b;
-  }
+  // function lerpAngle(a, b, step) {
+  // // Prefer shortest distance,
+  //   const delta = b - a;
+  //   if (delta == 0.0) {
+  //     return a;
+  //   } else if (delta < -p.PI) {
+  //     b += p.TWO_PI;
+  //   } else if (delta > p.PI) {
+  //     a += p.TWO_PI;
+  //   }
+  //   return (1.0 - step) * a + step * b;
+  // }
 };
 
 
