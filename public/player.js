@@ -7,7 +7,7 @@ class player{
     const count = 3;
     let iToTheta;
     
-    constructor(playername) {
+    constructor(playername, x, y) {
         
     }
     
