@@ -47,6 +47,7 @@ io.on("connection", (socket) => {
   socket.on("updatePosition", (data) => {
     positions[socket.id].x = data.x;
     positions[socket.id].y = data.y;
+    positions[socket.id].a = data.a;
   });
 });
 
