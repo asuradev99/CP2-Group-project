@@ -66,7 +66,7 @@ const sketch = (p) => {
     socket.emit("updatePosition", {
       x: xx,
       y: yy,
-      a: p.atan2(p.mouseY - y, p.mouseX - x)
+      a: aa
     });
   }
 
