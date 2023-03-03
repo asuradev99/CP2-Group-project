@@ -43,26 +43,7 @@ const sketch = (p) => {
   //the p5js draw function, runs every frame rate
   //(30-60 times / sec)
   p.draw = () => {
-    if(p.keyIsPressed) {
-      if(p.keyIsDown(p.LEFT_ARROW)||p.keyIsDown(65)) {
-        xx-=5;
-      } 
-      if(p.keyIsDown(p.RIGHT_ARROW)||p.keyIsDown(68)) {
-       xx+=5;
-      }
-      if(p.keyIsDown(p.UP_ARROW)||p.keyIsDown(87)) {
-        yy-=5;
-      } 
-      if(p.keyIsDown(p.DOWN_ARROW)||p.keyIsDown(83)) {
-        yy+=5;
-      }
-    }
-    /*
-      socket.emit("updatePosition", {
-        x: xx,
-        y: yy
-      });
-      console.log("bruh")*/
+    keyboardControl()
     sendPacket();
     
     p.background(51); //reset background to black
@@ -82,24 +63,53 @@ const sketch = (p) => {
       y: yy
     });
   }
+
   function render(x, y){
-    p.circle(x, y, 100)
+    targetAngle = p.atan2(p.mouseY - y, p.mouseX - x);
+	  currentAngle = lerpAngle(currentAngle, targetAngle, smoothSpeed);
+    p.beginShape();
+	    for (let i = 0; i < count; ++i) {
+		    const theta = currentAngle + i * iToTheta;
+		    p.vertex(x + p.cos(theta) * scl, y + p.sin(theta) * scl);
+	    }
+      p.fill(51);
+      p.stroke('red');
+	  p.endShape(p.CLOSE);
   }
-};
 
+  function keyboardControl(){
+    if(p.keyIsPressed) {
+      if(p.keyIsDown(p.LEFT_ARROW)||p.keyIsDown(65)) {
+        xx-=5;
+      } 
+      if(p.keyIsDown(p.RIGHT_ARROW)||p.keyIsDown(68)) {
+       xx+=5;
+      }
+      if(p.keyIsDown(p.UP_ARROW)||p.keyIsDown(87)) {
+        yy-=5;
+      } 
+      if(p.keyIsDown(p.DOWN_ARROW)||p.keyIsDown(83)) {
+        yy+=5;
+      }
+    }
+  }
 
-function lerpAngle(a, b, step) {
+  function lerpAngle(a, b, step) {
   // Prefer shortest distance,
     const delta = b - a;
     if (delta == 0.0) {
       return a;
-    } else if (delta < -PI) {
+    } else if (delta < -p.PI) {
       b += p.TWO_PI;
-    } else if (delta > PI) {
+    } else if (delta > p.PI) {
       a += p.TWO_PI;
     }
     return (1.0 - step) * a + step * b;
   }
+};
+
+
+
 
 //initialize the sketch!
 new p5(sketch, sketchContainer);
