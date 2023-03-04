@@ -63,6 +63,9 @@ const sketch = (p) => {
     // laser.move();
     // laser.draw();
     p.background(51); //reset background to black
+
+    grid(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY)
+
     //draw a circle for every position
     clientPlayer.rotate(mouseAngle);
     clientPlayer.render(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY);
@@ -100,6 +103,22 @@ const sketch = (p) => {
 	  p.endShape(p.CLOSE);
     p.text(name, x, y)
     //console.log(targetAngle)
+  }
+
+  function grid(offsetX, offsetY){
+    /*tempoffx = String(offsetX)
+    tempoffy = String(offsetY)
+    offsetX = parseInt(tempoffx.substring(1), 10)
+    offsetY = parseInt(tempoffy.substring(1), 10)*/
+    //console.log(tempoffx, tempoffy)
+    for (let i = -100; i < window.innerWidth; i+=100){
+      for (let j = -100; j < window.innerHeight; j+=100){
+        x=window.innerWidth-i+(offsetX%100)-50
+        y=window.innerHeight-j+(offsetY%100)-50
+        p.line(x, y, x, y-window.innerHeight)
+        p.line(x, y, x-window.innerWidth, y)
+      }
+    }
   }
 
   // function keyboardControl(){
