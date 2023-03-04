@@ -71,15 +71,15 @@ const sketch = (p) => {
   };
 
   async function sendPacket() {
-    // socket.emit("updatePosition", {
-    //   x: clientPlayer.x,
-    //   y: clientPlayer.y,
-    //   a: mouseAngle,
-    //   name: clientname
-    // });
-    socket.emit("updateServer", {
-      player: clientPlayer
-    })
+    socket.emit("updatePosition", {
+      x: clientPlayer.x,
+      y: clientPlayer.y,
+      a: mouseAngle,
+      name: clientname
+    });
+    // socket.emit("updateServer", {
+    //   player: clientPlayer
+    // })
   }
 
   function render(x, y, targetAngle, name){

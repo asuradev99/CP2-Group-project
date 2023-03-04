@@ -1,4 +1,6 @@
-class Player{
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.min.js"></script>
+
+class Player {
     // let targetAngle;
     // let currentAngle;
     // let x;
@@ -24,28 +26,41 @@ class Player{
     }
     
     move(){
-        if(keyIsPressed) {
-          if(keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
-            x-=this.movementSpeed;
-          } 
-          if(keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
-           x+=this.movementSpeed;
-          }
-          if(keyIsDown(UP_ARROW)||keyIsDown(87)) {
-            y-=this.movementSpeed;
-          } 
-          if(keyIsDown(DOWN_ARROW)||keyIsDown(83)) {
-            y+=this.movementSpeed;
-          }
+      if(sketch.keyIsPressed) {
+        if(keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
+          x-=this.movementSpeed;
+        } 
+        if(keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
+          x+=this.movementSpeed;
+        }
+        if(keyIsDown(UP_ARROW)||keyIsDown(87)) {
+          y-=this.movementSpeed;
+        } 
+        if(keyIsDown(DOWN_ARROW)||keyIsDown(83)) {
+          y+=this.movementSpeed;
         }
       }
+    }
+      
+    lerpAngle(a, b, step) {
+      // Prefer shortest distance,
+      const delta = b - a;
+      if (delta == 0.0) {
+          return a;
+      } else if (delta < -sketch.PI) {
+          b += TWO_PI;
+      } else if (delta > sketch.PI) {
+          a += TWO_PI;
+      }
+      return (1.0 - step) * a + step * b;
+    }
       
     rotate(targetAngle){
-        this.currentAngle = lerpAngle(this.currentAngle, targetAngle, this.smoothSpeed);
+        this.currentAngle = this.lerpAngle(this.currentAngle, targetAngle, this.smoothSpeed);
     }
 
     render(){
-          beginShape();
+          sketch.beginShape();
             for (let i = 0; i < count; ++i) {
                 const theta = this.currentAngle + i * TWO_PI / count;
                 vertex(this.x + cos(theta) * this.scl, this.y + sin(theta) * scl);
@@ -57,16 +72,6 @@ class Player{
         //console.log(targetAngle)
     }
 
-    lerpAngle(a, b, step) {
-        // Prefer shortest distance,
-        const delta = b - a;
-        if (delta == 0.0) {
-            return a;
-        } else if (delta < -PI) {
-            b += TWO_PI;
-        } else if (delta > PI) {
-            a += TWO_PI;
-        }
-        return (1.0 - step) * a + step * b;
-    }
+
 }
+

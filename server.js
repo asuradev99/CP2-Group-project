@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
   });
 
   //client can send a message 'updatePosition' each time the clients position changes
-  socket.on("updateServer", (data) => {
+  socket.on("updatePosition", (data) => {
     positions[socket.id].x = data.x;
     positions[socket.id].y = data.y;
     positions[socket.id].a = data.a;
