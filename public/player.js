@@ -19,6 +19,8 @@ class Player {
       this.p = p
       this.x = x;
       this.y = y;
+      this.cameraOffsetX = 0;
+      this.cameraOffsetY = 0;
       this.playername = playername;
       this.smoothSpeed = 1;
       this.targetAngle = 0;
@@ -32,15 +34,19 @@ class Player {
       if(this.p.keyIsPressed) {
         if(this.p.keyIsDown(this.p.LEFT_ARROW)||this.p.keyIsDown(65)) {
           this.x-=this.movementSpeed;
+          this.cameraOffsetX+=this.movementSpeed
         } 
         if(this.p.keyIsDown(this.p.RIGHT_ARROW)||this.p.keyIsDown(68)) {
           this.x+=this.movementSpeed;
+          this.cameraOffsetX-=this.movementSpeed
         }
         if(this.p.keyIsDown(this.p.UP_ARROW)||this.p.keyIsDown(87)) {
           this.y-=this.movementSpeed;
+          this.cameraOffsetY+=this.movementSpeed
         } 
         if(this.p.keyIsDown(this.p.DOWN_ARROW)||this.p.keyIsDown(83)) {
           this.y+=this.movementSpeed;
+          this.cameraOffsetY-=this.movementSpeed
         }
       }
     }
@@ -62,16 +68,16 @@ class Player {
         this.currentAngle = this.lerpAngle(this.currentAngle, targetAngle, this.smoothSpeed);
     }
 
-    render(){
+    render(cameraOffsetX, cameraOffsetY){
       this.p.beginShape();
         for (let i = 0; i < this.count; ++i) {
             const theta = this.currentAngle + i * this.p.TWO_PI / this.count;
-            this.p.vertex(this.x + this.p.cos(theta) * this.scl, this.y + this.p.sin(theta) * this.scl);
+            this.p.vertex( (this.x + cameraOffsetX) + this.p.cos(theta) * this.scl, (this.y + cameraOffsetY) + this.p.sin(theta) * this.scl);
         }
         this.p.fill('white');
         this.p.stroke('red');
       this.p.endShape(this.p.CLOSE);
-      this.p.text(this.playername, this.x, this.y);
+      this.p.text(this.playername, this.x + cameraOffsetX, this.y + cameraOffsetY);
         //console.log(targetAngle)
     }
 

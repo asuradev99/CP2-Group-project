@@ -32,7 +32,7 @@ const sketch = (p) => {
   // const count = 3;
   // let iToTheta;
   let clientname = window.prompt("what is ur name","deez nuts");
-  var clientPlayer = new Player(clientname, p, 100, 100);
+  var clientPlayer = new Player(clientname, p, window.innerWidth/2, window.innerHeight/2);
 
   
   
@@ -56,18 +56,21 @@ const sketch = (p) => {
   p.draw = () => {
     clientPlayer.move();
     sendPacket();
-    mouseAngle = p.atan2(p.mouseY - clientPlayer.y, p.mouseX - clientPlayer.x)
+
+    mouseAngle = p.atan2(p.mouseY - clientPlayer.y - clientPlayer.cameraOffsetY, p.mouseX - clientPlayer.x - clientPlayer.cameraOffsetX)
+
+    //mouseAngle = p.atan2(p.mouseY - window.innerWidth/2, p.mouseX - window.innerHeight/2)
     // laser.move();
     // laser.draw();
     p.background(51); //reset background to black
     //draw a circle for every position
     clientPlayer.rotate(mouseAngle);
-    clientPlayer.render();
+    clientPlayer.render(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY);
     for (const id in positions) {
       if (id != clientid){
         const player = new Player(positions[id].name, p, positions[id].x, positions[id].y);
         player.rotate(positions[id].a)
-        player.render();
+        player.render(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY);
       }
     }
   };
