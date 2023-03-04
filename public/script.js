@@ -113,10 +113,10 @@ const sketch = (p) => {
     //console.log(tempoffx, tempoffy)
     for (let i = -100; i < window.innerWidth; i+=100){
       for (let j = -100; j < window.innerHeight; j+=100){
-        x=window.innerWidth-i+(offsetX%100)-50
+        x=window.innerWidth-i+(offsetX%100)-200
         y=window.innerHeight-j+(offsetY%100)-50
-        p.line(x, y, x, y-window.innerHeight)
-        p.line(x, y, x-window.innerWidth, y)
+        p.line(x, y+200, x, y-window.innerHeight-200)
+        p.line(x+200, y, x-window.innerWidth-200, y)
       }
     }
   }
