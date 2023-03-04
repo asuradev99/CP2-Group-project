@@ -74,8 +74,9 @@ class Player {
             const theta = this.currentAngle + i * this.p.TWO_PI / this.count;
             this.p.vertex( (this.x + cameraOffsetX) + this.p.cos(theta) * this.scl, (this.y + cameraOffsetY) + this.p.sin(theta) * this.scl);
         }
-        this.p.fill('white');
-        this.p.stroke('red');
+        this.p.fill(51,153,255)
+        this.p.stroke(0,77,153)
+        this.p.strokeWeight(3)
       this.p.endShape(this.p.CLOSE);
       this.p.text(this.playername, this.x + cameraOffsetX, this.y + cameraOffsetY);
         //console.log(targetAngle)

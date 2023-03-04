@@ -70,7 +70,7 @@ const sketch = (p) => {
 
     // laser.move();
     // laser.draw();
-    p.background(51); //reset background to black
+    p.background(232); //reset background to black
 
     // create a grid behind the player
     grid(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY)
@@ -121,6 +121,7 @@ const sketch = (p) => {
   }
   */
   function grid(offsetX, offsetY){
+    p.stroke(201)
     for (let i = -100; i < window.innerWidth; i+=100){
       for (let j = -100; j < window.innerHeight; j+=100){
         x=window.innerWidth-i+(offsetX%100)-200
