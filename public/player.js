@@ -9,33 +9,38 @@ class Player {
     // const count = 3;
     // let iToTheta;
     
-    constructor(playername) {
-        //fix width and height
-         //var x = width/2;
-         //var y = height/2;
-         this.x = 100;
-         this.y = 100;
-         this.playername = playername;
-         this.smoothSpeed = 1;
-         this.targetAngle = 0;
-         this.currentAngle = 0;
-         this.scl = 25;
-         this.movementSpeed = 5;
+    constructor(playername, p, x, y) {
+    //fix width and height
+      //var x = width/2;
+      //var y = height/2;
+
+      //for all things where a p5js function is called, use p
+      // we have to pass in p in the constructor  for some reason
+      this.p = p
+      this.x = x;
+      this.y = y;
+      this.playername = playername;
+      this.smoothSpeed = 1;
+      this.targetAngle = 0;
+      this.currentAngle = 0;
+      this.count = 3;
+      this.scl = 25;
+      this.movementSpeed = 5;
     }
     
     move(){
-      if(sketch.keyIsPressed) {
-        if(keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
-          x-=this.movementSpeed;
+      if(this.p.keyIsPressed) {
+        if(this.p.keyIsDown(this.p.LEFT_ARROW)||this.p.keyIsDown(65)) {
+          this.x-=this.movementSpeed;
         } 
-        if(keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
-          x+=this.movementSpeed;
+        if(this.p.keyIsDown(this.p.RIGHT_ARROW)||this.p.keyIsDown(68)) {
+          this.x+=this.movementSpeed;
         }
-        if(keyIsDown(UP_ARROW)||keyIsDown(87)) {
-          y-=this.movementSpeed;
+        if(this.p.keyIsDown(this.p.UP_ARROW)||this.p.keyIsDown(87)) {
+          this.y-=this.movementSpeed;
         } 
-        if(keyIsDown(DOWN_ARROW)||keyIsDown(83)) {
-          y+=this.movementSpeed;
+        if(this.p.keyIsDown(this.p.DOWN_ARROW)||this.p.keyIsDown(83)) {
+          this.y+=this.movementSpeed;
         }
       }
     }
@@ -45,10 +50,10 @@ class Player {
       const delta = b - a;
       if (delta == 0.0) {
           return a;
-      } else if (delta < -sketch.PI) {
-          b += TWO_PI;
-      } else if (delta > sketch.PI) {
-          a += TWO_PI;
+      } else if (delta < -this.p.PI) {
+          b += this.p.TWO_PI;
+      } else if (delta > this.p.PI) {
+          a += this.p.TWO_PI;
       }
       return (1.0 - step) * a + step * b;
     }
@@ -58,15 +63,15 @@ class Player {
     }
 
     render(){
-          sketch.beginShape();
-            for (let i = 0; i < count; ++i) {
-                const theta = this.currentAngle + i * TWO_PI / count;
-                vertex(this.x + cos(theta) * this.scl, this.y + sin(theta) * scl);
-            }
-          fill('white');
-          stroke('red');
-          endShape(CLOSE);
-          text(this.playername, this.x, this.y);
+      this.p.beginShape();
+        for (let i = 0; i < this.count; ++i) {
+            const theta = this.currentAngle + i * this.p.TWO_PI / this.count;
+            this.p.vertex(this.x + this.p.cos(theta) * this.scl, this.y + this.p.sin(theta) * this.scl);
+        }
+        this.p.fill('white');
+        this.p.stroke('red');
+      this.p.endShape(this.p.CLOSE);
+      this.p.text(this.playername, this.x, this.y);
         //console.log(targetAngle)
     }
 

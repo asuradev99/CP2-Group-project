@@ -1,5 +1,3 @@
-
-
 //get container for our canvas
 const sketchContainer = document.getElementById("sketch-container");
 
@@ -34,7 +32,7 @@ const sketch = (p) => {
   // const count = 3;
   // let iToTheta;
   let clientname = window.prompt("what is ur name","deez nuts");
-  var clientPlayer = new Player(clientname);
+  var clientPlayer = new Player(clientname, p, 100, 100);
 
   
   
@@ -57,16 +55,17 @@ const sketch = (p) => {
   p.draw = () => {
     clientPlayer.move();
     sendPacket();
-    mouseAngle = p.atan2(p.mouseY - yy, p.mouseX - xx)
+    mouseAngle = p.atan2(p.mouseY - clientPlayer.y, p.mouseX - clientPlayer.x)
     // laser.move();
     // laser.draw();
     p.background(51); //reset background to black
     //draw a circle for every position
     clientPlayer.rotate(mouseAngle);
     clientPlayer.render();
-    for (const id in players) {
+    for (const id in positions) {
       if (id != clientid){
-        const player = players[id];
+        const player = new Player(positions[id].name, p, positions[id].x, positions[id].y);
+        player.rotate(positions[id].a)
         player.render();
       }
     }
@@ -134,4 +133,5 @@ const sketch = (p) => {
 
 
 //initialize the sketch!
-new p5(sketch, sketchContainer);
+//new p5(sketch, sketchContainer);
+new p5(sketch, sketchContainer)
