@@ -40,7 +40,8 @@ const sketch = (p) => {
   p.setup = () => {
     //to fill up the full container, get the width an height
     const containerPos = sketchContainer.getBoundingClientRect();
-    const cnv = p.createCanvas(containerPos.width, containerPos.height); //the canvas!
+    //const cnv = p.createCanvas(containerPos.width, containerPos.height); //the canvas!
+    const cnv = p.createCanvas(window.innerWidth, window.innerHeight);
     //laser = new Laser(width/2, height/2, mouseX, mouseY, 5);
     p.fill(255); //sets the fill color of the circle to white
     p.frameRate(60); //set framerate to 30, same as server
