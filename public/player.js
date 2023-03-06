@@ -28,6 +28,7 @@ class Player {
       this.count = 3;
       this.scl = 25;
       this.movementSpeed = 5;
+      
     }
     
     move(){
@@ -82,6 +83,7 @@ class Player {
         //console.log(targetAngle)
     }
 
+    
 
 }
 

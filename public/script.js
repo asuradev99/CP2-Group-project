@@ -22,6 +22,9 @@ const sketch = (p) => {
   // ----------------- create variables
   let positions = {};
   let xx,yy, mouseAngle;
+  let laser;
+  let lasers = [];
+  let lastShotTime = -Infinity;
   // xx = 100
   // yy = 100
   mouseAngle = 0
@@ -34,6 +37,7 @@ const sketch = (p) => {
   // let scl = 25.0;
   // const count = 3;
   // let iToTheta;
+  
   let clientname = window.prompt("what is ur name","deez nuts");
   var clientPlayer = new Player(clientname, p, window.innerWidth/2, window.innerHeight/2);
 
@@ -47,7 +51,7 @@ const sketch = (p) => {
 
     // ---------------------- create the canvas as large as the screen width and height
     const cnv = p.createCanvas(window.innerWidth, window.innerHeight);
-    //laser = new Laser(width/2, height/2, mouseX, mouseY, 5);
+    laser = new Laser(100, 100, p.mouseX, p.mouseY, clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY, 5, 500, p, clientPlayer.currentAngle);
     p.frameRate(60); //set framerate to 30, same as server
     socket.on("positions", (data) => {
       //get the data from the server to continually update the positions
@@ -58,27 +62,20 @@ const sketch = (p) => {
   //the p5js draw function, runs every frame rate
   //(30-60 times / sec)
   p.draw = () => {
-
-    // check for wasd / arrow keys to move player
+    //move laser
+    laser.move();
+    //draw laser
+    laser.draw();
+  
     clientPlayer.move();
-
-    // send new player position to server
     sendPacket();
 
-    // get the target angle that the player has to face
     mouseAngle = p.atan2(p.mouseY - clientPlayer.y - clientPlayer.cameraOffsetY, p.mouseX - clientPlayer.x - clientPlayer.cameraOffsetX)
-
-    // laser.move();
-    // laser.draw();
     p.background(232); //reset background to black
 
     // create a grid behind the player
     grid(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY)
-
-    // get the angle that the player has to rotate to
     clientPlayer.rotate(mouseAngle);
-
-    // render the player in the middle of the screen
     clientPlayer.render(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY);
 
     // for each client id got from the server except your client, render them
@@ -91,6 +88,31 @@ const sketch = (p) => {
         player.render(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY);
       }
     }
+    //laser stuff
+    for (var j = lasers.length - 1; j >= 0; j--) {
+      lasers[j].draw();
+      lasers[j].move();
+
+      if(lasers[j].isOffscreen(p.windowWidth,p.windowHeight)){
+        lasers.splice(j,1);
+        break;
+      }
+    }
+    if (p.mouseIsPressed && p.millis() - lastShotTime >= 150) {
+      const laser = new Laser(clientPlayer.x-1, clientPlayer.y, p.mouseX, p.mouseY, clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY, 5, 500, p, clientPlayer.currentAngle); 
+      lasers.push(laser);
+      lastShotTime = p.millis();
+    }
+    for (var j = lasers.length - 1; j >= 0; j--) {
+      lasers[j].draw();
+      lasers[j].move();
+
+      if(lasers[j].isOffscreen(p.windowWidth,p.windowHeight)){
+        lasers.splice(j,1);
+        break;
+      }
+    }
+
   };
 
   async function sendPacket() {
@@ -100,26 +122,9 @@ const sketch = (p) => {
       a: mouseAngle,
       name: clientname
     });
-    // socket.emit("updateServer", {
-    //   player: clientPlayer
-    // })
+
   }
-/*
-  function render(x, y, targetAngle, name){
-    //targetAngle = p.atan2(p.mouseY - y, p.mouseX - x);
-	  currentAngle = lerpAngle(currentAngle, targetAngle, smoothSpeed);
-    p.beginShape();
-	    for (let i = 0; i < count; ++i) {
-		    const theta = currentAngle + i * iToTheta;
-		    p.vertex(x + p.cos(theta) * scl, y + p.sin(theta) * scl);
-	    }
-      p.fill('white');
-      p.stroke('red');
-	  p.endShape(p.CLOSE);
-    p.text(name, x, y)
-    //console.log(targetAngle)
-  }
-  */
+
   function grid(offsetX, offsetY){
     p.stroke(201)
     for (let i = -100; i < window.innerWidth; i+=100){
@@ -131,38 +136,7 @@ const sketch = (p) => {
       }
     }
   }
-
-  // function keyboardControl(){
-  //   if(p.keyIsPressed) {
-  //     if(p.keyIsDown(p.LEFT_ARROW)||p.keyIsDown(65)) {
-  //       xx-=5;
-  //     } 
-  //     if(p.keyIsDown(p.RIGHT_ARROW)||p.keyIsDown(68)) {
-  //      xx+=5;
-  //     }
-  //     if(p.keyIsDown(p.UP_ARROW)||p.keyIsDown(87)) {
-  //       yy-=5;
-  //     } 
-  //     if(p.keyIsDown(p.DOWN_ARROW)||p.keyIsDown(83)) {
-  //       yy+=5;
-  //     }
-  //   }
-  // }
-
-  // function lerpAngle(a, b, step) {
-  // // Prefer shortest distance,
-  //   const delta = b - a;
-  //   if (delta == 0.0) {
-  //     return a;
-  //   } else if (delta < -p.PI) {
-  //     b += p.TWO_PI;
-  //   } else if (delta > p.PI) {
-  //     a += p.TWO_PI;
-  //   }
-  //   return (1.0 - step) * a + step * b;
-  // }
 };
-
 
 
 
