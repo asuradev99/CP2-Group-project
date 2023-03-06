@@ -43,7 +43,7 @@ class Laser {
 
   draw() {
     this.p.push();
-    this.p.translate(this.x + this.cameraOffsetX, this.y + this.cameraOffsetY);
+    this.p.translate(this.x , this.y);
     this.p.rotate(this.angle);
     this.p.rect(-this.width/2, -this.height/2, this.width, this.height);
     this.p.pop();
