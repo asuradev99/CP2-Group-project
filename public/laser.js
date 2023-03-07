@@ -36,16 +36,24 @@ class Laser {
   draw() {
     //undo camera translations to center bullet
      translate(this.clientPlayer.x , this.clientPlayer.y);
-     translate(-width / 2, -height / 2);
-     translate(this.x, this.y);
+    // translate(-width / 2, -height / 2);
+    // translate(this.x, this.y);
 
     //rotate and render bullet
+
+    const dx = this.x - this.clientPlayer.x;
+    const dy = this.y - this.clientPlayer.y;
+     translate(dx, dy)
      rotate(this.angle);
+
      rect(-this.width/2, -this.height/2, this.width, this.height);
      
      //undo translation operations
-     translate(-this.x, -this.y);
-     translate(width / 2, height / 2);
+     rotate(-this.angle);
+
+     translate(-dx, -dy)
+     //translate(-this.x, -this.y);
+     //translate(width / 2, height / 2);
      translate(-clientPlayer.x, -clientPlayer.y);
     }
 

@@ -86,7 +86,7 @@ function draw() {
   }
 
   if (mouseIsPressed && millis() - lastShotTime >= 150) {
-    const laser = new Laser(clientPlayer.x, clientPlayer.y, mouseAngle, 2, 500, clientPlayer); 
+    const laser = new Laser(clientPlayer.x, clientPlayer.y, mouseAngle, 10, 500, clientPlayer); 
     lasers.push(laser);
     lastShotTime = millis();
   }
