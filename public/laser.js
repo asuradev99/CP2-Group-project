@@ -1,40 +1,32 @@
 class Laser {
-  constructor(x, y, mouseX, mouseY, cameraOffsetX, cameraOffsetY, speed = 20, maxRange = 500, p, angle) {
+  constructor(x, y, mouseAngle, speed, maxRange, clientPlayer) {
     this.x = x;
     this.y = y;
-    this.mouseX = mouseX;
-    this.mouseY = mouseY;
     this.speed = speed;
     this.width = 15;
     this.height = 5;
-    this.angle = this.calculateAngle();
+    this.angle = mouseAngle;
     //this.angle = angle
     this.maxRange = maxRange;
     this.lastShotTime = -Infinity;
-    this.p = p;
-    this.cameraOffsetX = cameraOffsetX;
-    this.cameraOffsetY = cameraOffsetY;
+    this.clientPlayer = clientPlayer;
+    // this.cameraOffsetX = cameraOffsetX;
+    // this.cameraOffsetY = cameraOffsetY;
   }
 
-  calculateAngle() {
-   const dx = this.mouseX - window.innerWidth/2;
-   const dy = this.mouseY - window.innerHeight/2;
-   return Math.atan2(dy, dx);
-  }
+  // canShoot() {
+  //   return this.p.millis() - this.lastShotTime >= 1000;
+  // }
 
-  canShoot() {
-    return this.p.millis() - this.lastShotTime >= 1000;
-  }
-
-  shoot() {
-    if (this.canShoot()) {
-      const laser = new Laser(this.x, this.y, this.mouseX, this.mouseY, this.cameraOffsetX, this.cameraOffsetY, this.speed, this.maxRange, this.p, this.angle);
-      laser.lastShotTime = this.p.millis();
-      return laser;
-    } else {
-      return null;
-    }
-  }
+  // shoot() {
+  //   if (this.canShoot()) {
+  //     const laser = new Laser(this.x, this.y, this.mouseX, this.mouseY, this.cameraOffsetX, this.cameraOffsetY, this.speed, this.maxRange, this.p, this.angle);
+  //     laser.lastShotTime = this.p.millis();
+  //     return laser;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   move() {
     this.x += Math.cos(this.angle) * this.speed;
@@ -42,14 +34,19 @@ class Laser {
   }
 
   draw() {
-    this.p.push();
-    this.p.translate(this.x , this.y);
-    this.p.rotate(this.angle);
-    this.p.rect(-this.width/2, -this.height/2, this.width, this.height);
-    this.p.pop();
-  }
+    //undo camera translations to center bullet
+     translate(this.clientPlayer.x , this.clientPlayer.y);
+     translate(-width / 2, -height / 2);
+     translate(this.x, this.y);
 
-  isOffscreen(screenWidth, screenHeight) {
-    return this.x + this.cameraOffsetX < 0 || this.x + this.cameraOffsetX > screenWidth || this.y + this.cameraOffsetY  < 0 || this.y + this.cameraOffsetY > screenHeight;
-  }
+    //rotate and render bullet
+     rotate(this.angle);
+     rect(-this.width/2, -this.height/2, this.width, this.height);
+     
+     //undo translation operations
+     translate(-this.x, -this.y);
+     translate(width / 2, height / 2);
+     translate(-clientPlayer.x, -clientPlayer.y);
+    }
+
 }

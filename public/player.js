@@ -1,22 +1,6 @@
 class Player {
-    // let targetAngle;
-    // let currentAngle;
-    // let x;
-    // let y;  
-    // let speed;
-    // let smoothSpeed = 1;
-    // let scl;
-    // const count = 3;
-    // let iToTheta;
     
-    constructor(playername, p, x, y) {
-    //fix width and height
-      //var x = width/2;
-      //var y = height/2;
-
-      //for all things where a p5js function is called, use p
-      // we have to pass in p in the constructor  for some reason
-      this.p = p
+    constructor(playername, x, y) {
       this.x = x;
       this.y = y;
       this.cameraOffsetX = 0;
@@ -32,22 +16,18 @@ class Player {
     }
     
     move(){
-      if(this.p.keyIsPressed) {
-        if(this.p.keyIsDown(this.p.LEFT_ARROW)||this.p.keyIsDown(65)) {
+      if(keyIsPressed) {
+        if(keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
           this.x-=this.movementSpeed;
-          this.cameraOffsetX+=this.movementSpeed
         } 
-        if(this.p.keyIsDown(this.p.RIGHT_ARROW)||this.p.keyIsDown(68)) {
+        if(keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
           this.x+=this.movementSpeed;
-          this.cameraOffsetX-=this.movementSpeed
         }
-        if(this.p.keyIsDown(this.p.UP_ARROW)||this.p.keyIsDown(87)) {
+        if(keyIsDown(UP_ARROW)||keyIsDown(87)) {
           this.y-=this.movementSpeed;
-          this.cameraOffsetY+=this.movementSpeed
         } 
-        if(this.p.keyIsDown(this.p.DOWN_ARROW)||this.p.keyIsDown(83)) {
+        if(keyIsDown(DOWN_ARROW)||keyIsDown(83)) {
           this.y+=this.movementSpeed;
-          this.cameraOffsetY-=this.movementSpeed
         }
       }
     }
@@ -57,10 +37,10 @@ class Player {
       const delta = b - a;
       if (delta == 0.0) {
           return a;
-      } else if (delta < -this.p.PI) {
-          b += this.p.TWO_PI;
-      } else if (delta > this.p.PI) {
-          a += this.p.TWO_PI;
+      } else if (delta < -PI) {
+          b += TWO_PI;
+      } else if (delta > PI) {
+          a += TWO_PI;
       }
       return (1.0 - step) * a + step * b;
     }
@@ -69,17 +49,17 @@ class Player {
         this.currentAngle = this.lerpAngle(this.currentAngle, targetAngle, this.smoothSpeed);
     }
 
-    render(cameraOffsetX, cameraOffsetY){
-      this.p.beginShape();
+    render(){
+      beginShape();
         for (let i = 0; i < this.count; ++i) {
-            const theta = this.currentAngle + i * this.p.TWO_PI / this.count;
-            this.p.vertex( (this.x + cameraOffsetX) + this.p.cos(theta) * this.scl, (this.y + cameraOffsetY) + this.p.sin(theta) * this.scl);
+            const theta = this.currentAngle + i * TWO_PI / this.count;
+            vertex( (this.x) + cos(theta) * this.scl, (this.y) + sin(theta) * this.scl);
         }
-        this.p.fill(51,153,255)
-        this.p.stroke(0,77,153)
-        this.p.strokeWeight(3)
-      this.p.endShape(this.p.CLOSE);
-      this.p.text(this.playername, this.x + cameraOffsetX, this.y + cameraOffsetY);
+        fill(51,153,255)
+        stroke(0,77,153)
+        strokeWeight(3)
+        endShape(CLOSE);
+        text(this.playername, this.x, this.y);
         //console.log(targetAngle)
     }
 
