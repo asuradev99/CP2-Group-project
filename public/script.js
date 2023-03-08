@@ -45,6 +45,9 @@ function setup() {
     //get the data from the server to continually update the positions
     positions = data;
   });
+  socket.on("time", (data) => {
+    mill = data;
+  });
 
 };
 
@@ -80,7 +83,7 @@ function draw() {
  
       if(positions[id].isShooting){
         text("I am soting", player.x, player.y)
-        player.shoot(lasers, positions[id].millis)
+        player.shoot(lasers, mill)
       }
       
     }
@@ -92,8 +95,6 @@ function draw() {
     lasers[j].draw(clientPlayer.x, clientPlayer.y);
     lasers[j].move();
   }
-
-  mill = millis()
   
   if (mouseIsPressed) {
     clientPlayer.shoot(lasers, mill);
@@ -117,7 +118,7 @@ async function sendPacket() {
     name: clientname,
     isShooting: clientPlayer.isShooting,
     lastShotTime: clientPlayer.lastShotTime,
-    millis: mill+150
+    millis: mill
   });
 
 }

@@ -61,6 +61,7 @@ io.on("connection", (socket) => {
 const frameRate = 60;
 setInterval(() => {
   io.emit("positions", positions);
+  io.emit("time", performance.now());
 }, 1000 / frameRate);
 
 
