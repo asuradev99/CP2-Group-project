@@ -74,6 +74,17 @@ function draw() {
       // rotate that player and render them
       player.rotate(positions[id].a)
       player.render(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY);
+
+      for (var k = lasers.length - 1; j >= 0; j--) {
+        lasers[k].draw(clientPlayer.x, clientPlayer.y);
+        lasers[j].move();
+      }
+    
+      if (positions[id].isShooting && millis() - positions[id].lst >= 150) {
+        const laser = new Laser(player.x, player.y, positions[id].a, 10, 500, clientPlayer); 
+        lasers.push(laser);
+        //positions[id].lst = millis();
+      }
     }
   }
 
@@ -102,7 +113,9 @@ async function sendPacket() {
     x: clientPlayer.x,
     y: clientPlayer.y,
     a: mouseAngle,
-    name: clientname
+    name: clientname,
+    isShooting: mouseIsPressed,
+    lst: lastShotTime
   });
 
 }
