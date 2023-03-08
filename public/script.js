@@ -22,12 +22,14 @@ socket.on("connect", () => {
 // ----------------- create variables
 let positions = {};
 let lasers = [];
-let lastShotTime = -Infinity;
+let lastShotTime = 0;
+let canShoot;
+let mill;
 
 mouseAngle = 0
 
 let clientname = window.prompt("what is ur name","deez nuts");
-var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2);
+var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime);
 
 
 
@@ -51,7 +53,7 @@ function setup() {
 function draw() {
 
   //draw background color and grid
-  background(232); 
+  background(0); 
 
   //apply camera transformation
   translate(width / 2, height / 2);
@@ -70,24 +72,19 @@ function draw() {
   for (const id in positions) {
     if (id != clientid){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y);
+      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime);
       // rotate that player and render them
       player.rotate(positions[id].a)
-      player.render(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY);
+      player.render();
 
-      for (var k = lasers.length - 1; j >= 0; j--) {
-        lasers[k].draw(clientPlayer.x, clientPlayer.y);
-        lasers[j].move();
+ 
+      if(positions[id].isShooting){
+        text("I am soting", player.x, player.y)
+        player.shoot(lasers, positions[id].millis)
       }
-    
-      if (positions[id].isShooting && millis() - positions[id].lst >= 150) {
-        const laser = new Laser(player.x, player.y, positions[id].a, 10, 500, clientPlayer); 
-        lasers.push(laser);
-        //positions[id].lst = millis();
-      }
+      
     }
   }
-
 
 
   //laser stuff
@@ -96,10 +93,14 @@ function draw() {
     lasers[j].move();
   }
 
-  if (mouseIsPressed && millis() - lastShotTime >= 150) {
-    const laser = new Laser(clientPlayer.x, clientPlayer.y, mouseAngle, 10, 500, clientPlayer); 
-    lasers.push(laser);
-    lastShotTime = millis();
+  mill = millis()
+  
+  if (mouseIsPressed) {
+    clientPlayer.shoot(lasers, mill);
+    
+    clientPlayer.isShooting = true;
+  } else {
+    clientPlayer.isShooting = false;
   }
 
   //send updated packet to server
@@ -114,14 +115,15 @@ async function sendPacket() {
     y: clientPlayer.y,
     a: mouseAngle,
     name: clientname,
-    isShooting: mouseIsPressed,
-    lst: lastShotTime
+    isShooting: clientPlayer.isShooting,
+    lastShotTime: clientPlayer.lastShotTime,
+    millis: mill+150
   });
 
 }
 
 function grid(offsetX, offsetY){
-  stroke(201)
+  stroke(51)
   for (let i = -100; i < window.innerWidth; i+=100){
     for (let j = -100; j < window.innerHeight; j+=100){
       x=window.innerWidth-i+(offsetX%100)-200

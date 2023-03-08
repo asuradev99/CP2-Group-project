@@ -6,27 +6,11 @@ class Laser {
     this.width = 15;
     this.height = 5;
     this.angle = mouseAngle;
-    //this.angle = angle
     this.maxRange = maxRange;
     this.lastShotTime = -Infinity;
     this.clientPlayer = clientPlayer;
-    // this.cameraOffsetX = cameraOffsetX;
-    // this.cameraOffsetY = cameraOffsetY;
+
   }
-
-  // canShoot() {
-  //   return this.p.millis() - this.lastShotTime >= 1000;
-  // }
-
-  // shoot() {
-  //   if (this.canShoot()) {
-  //     const laser = new Laser(this.x, this.y, this.mouseX, this.mouseY, this.cameraOffsetX, this.cameraOffsetY, this.speed, this.maxRange, this.p, this.angle);
-  //     laser.lastShotTime = this.p.millis();
-  //     return laser;
-  //   } else {
-  //     return null;
-  //   }
-  // }
 
   move() {
     this.x += Math.cos(this.angle) * this.speed;
@@ -54,7 +38,9 @@ class Laser {
      translate(-dx, -dy)
      //translate(-this.x, -this.y);
      //translate(width / 2, height / 2);
-     translate(-clientPlayer.x, -clientPlayer.y);
+     translate(-this.clientPlayer.x, -this.clientPlayer.y);
     }
 
 }
+
+// STEVEN IS A FURRY DOG

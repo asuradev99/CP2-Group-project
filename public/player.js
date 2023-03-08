@@ -1,10 +1,8 @@
 class Player {
     
-    constructor(playername, x, y) {
+    constructor(playername, x, y, lastShotTime) {
       this.x = x;
       this.y = y;
-      this.cameraOffsetX = 0;
-      this.cameraOffsetY = 0;
       this.playername = playername;
       this.smoothSpeed = 1;
       this.targetAngle = 0;
@@ -12,7 +10,10 @@ class Player {
       this.count = 3;
       this.scl = 25;
       this.movementSpeed = 5;
-      
+      this.lastShotTime = lastShotTime;
+      this.reloadTime = 300;
+      this.isShooting = false;
+      this.millisBuffer = 0;
     }
     
     move(){
@@ -31,7 +32,18 @@ class Player {
         }
       }
     }
-      
+    
+    shoot(lasers, millis) {
+      if (millis - this.lastShotTime >= this.reloadTime) {
+        const laser = new Laser(this.x, this.y, this.currentAngle, 10, 500, this);
+        lasers.push(laser);
+        this.lastShotTime = millis;
+      }
+      text(millis, this.x+100, this.y+100)
+      text(this.lastShotTime, this.x+100, this.y+150)
+
+    }
+
     lerpAngle(a, b, step) {
       // Prefer shortest distance,
       const delta = b - a;
@@ -55,8 +67,8 @@ class Player {
             const theta = this.currentAngle + i * TWO_PI / this.count;
             vertex( (this.x) + cos(theta) * this.scl, (this.y) + sin(theta) * this.scl);
         }
-        fill(51,153,255)
-        stroke(0,77,153)
+        fill(0,0,0)
+        stroke(255,0,0)
         strokeWeight(3)
         endShape(CLOSE);
         text(this.playername, this.x, this.y);

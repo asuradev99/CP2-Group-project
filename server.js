@@ -33,7 +33,7 @@ io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
 
   //lets add a starting position when the client connects
-  positions[socket.id] = { x: 100, y: 100 , a: 0, name: '', isShooting: false, lst: 0};
+  positions[socket.id] = { x: 100, y: 100 , a: 0, name: '', isShooting: false, lastShotTime: 0, millis: 0};
   //players[socket.id] = {player: new Player(''), a: 0}
   socket.on("disconnect", () => {
     //when this client disconnects, lets delete its position from the object.
@@ -52,7 +52,8 @@ io.on("connection", (socket) => {
     positions[socket.id].a = data.a;
     positions[socket.id].name = data.name;
     positions[socket.id].isShooting = data.isShooting;
-    positions[socket.id].lst = data.lst;
+    positions[socket.id].lastShotTime = data.lastShotTime;
+    positions[socket.id].millis = data.millis;
   });
 });
 
