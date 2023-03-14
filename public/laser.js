@@ -30,7 +30,8 @@ class Laser {
      translate(dx, dy)
      rotate(this.angle);
 
-     rect(-this.width/2, -this.height/2, this.width, this.height);
+     //rect(-this.width/2, -this.height/2, this.width, this.height);
+     circle(0, 0, this.width);
      
      //undo translation operations
      rotate(-this.angle);
