@@ -25,6 +25,7 @@ http.listen(port, () => {
 //but we'll just use an object for simplicity.
 //const positions = {};
 const positions = {};
+let bullets = 0;
 
 //Socket configuration
 io.on("connection", (socket) => {
@@ -55,12 +56,21 @@ io.on("connection", (socket) => {
     positions[socket.id].lastShotTime = data.lastShotTime;
     positions[socket.id].millis = data.millis;
   });
+
+  socket.on("bullet", (data) => {
+    // bullets.x = data.x;
+    // bullets.y = data.y;
+    // bullets.a = data.a;
+    bullets  = socket.id;
+    io.emit("recievebullet", bullets);
+  })
 });
 
 //send positions every framerate to each client
 const frameRate = 60;
 setInterval(() => {
   io.emit("positions", positions);
+  
   io.emit("time", performance.now());
 }, 1000 / frameRate);
 

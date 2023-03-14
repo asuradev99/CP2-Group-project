@@ -25,6 +25,7 @@ let lasers = [];
 let lastShotTime = 0;
 let canShoot;
 let mill;
+let newLaser;
 
 mouseAngle = 0
 
@@ -48,6 +49,11 @@ function setup() {
   socket.on("time", (data) => {
     mill = data;
   });
+  socket.on("recievebullet", (data) => {
+    console.log("we bullet")
+    newLaser = data;
+    
+  })
 
 };
 
@@ -80,11 +86,18 @@ function draw() {
       player.rotate(positions[id].a)
       player.render();
 
- 
-      if(positions[id].isShooting){
-        text("I am soting", player.x, player.y)
-        player.shoot(lasers, mill)
+      if(newLaser == id) {
+        console.log("i ahve to shot")
+        laser = new Laser(player.x, player.y, player.currentAngle, 10, 500, player);
+        
+        lasers.push(laser)
       }
+
+ 
+      // if(positions[id].isShooting){
+      //   text("I am soting", player.x, player.y)
+      //   player.shoot(lasers, mill)
+      // }
       
     }
   }
@@ -92,12 +105,20 @@ function draw() {
 
   //laser stuff
   for (var j = lasers.length - 1; j >= 0; j--) {
-    lasers[j].draw(clientPlayer.x, clientPlayer.y);
+    lasers[j].draw();
     lasers[j].move();
   }
+
   
   if (mouseIsPressed) {
-    clientPlayer.shoot(lasers, mill);
+    if(performance.now() - clientPlayer.lastShotTime >= clientPlayer.reloadTime) {
+      sendBullet(lasers)
+      
+    }
+    clientPlayer.shoot(lasers, performance.now());
+
+    
+
     
     clientPlayer.isShooting = true;
   } else {
@@ -107,7 +128,7 @@ function draw() {
   //send updated packet to server
   sendPacket();
 
-
+  newLaser = -1;
 };
 
 async function sendPacket() {
@@ -121,6 +142,15 @@ async function sendPacket() {
     millis: mill
   });
 
+}
+
+async function sendBullet(x, y ,a) {
+  socket.emit("bullet", {
+    x: x,
+    y: y,
+    a: a
+    
+  })
 }
 
 function grid(offsetX, offsetY){

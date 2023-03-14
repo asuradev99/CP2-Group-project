@@ -75,7 +75,9 @@ class Player {
         //console.log(targetAngle)
     }
 
-    
+    collisionCheck(){
+
+    }
 
 }
 

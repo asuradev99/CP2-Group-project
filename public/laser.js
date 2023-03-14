@@ -9,7 +9,6 @@ class Laser {
     this.maxRange = maxRange;
     this.lastShotTime = -Infinity;
     this.clientPlayer = clientPlayer;
-
   }
 
   move() {
