@@ -1,8 +1,7 @@
-class Player {
+class Player extends entity{
     
-    constructor(playername, x, y, lastShotTime) {
-      this.x = x;
-      this.y = y;
+    constructor(playername, x, y, width, lastShotTime) {
+      super(x, y, width);
       this.playername = playername;
       this.smoothSpeed = 1;
       this.targetAngle = 0;

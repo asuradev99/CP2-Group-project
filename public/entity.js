@@ -7,7 +7,7 @@ class entity {
 
     collisionCheck(entity){
 	// find hypotenuse of the line connecting each circle
-	distance = Math.sqrt( Math.abs(Math.pow((this.x - entity.x), 2) + Math.pow((this.y - entity.y), 2)) );
+	let distance = Math.sqrt( Math.abs(Math.pow((this.x - entity.x), 2) + Math.pow((this.y - entity.y), 2)) );
 	if(distance < this.width + entity.width) {
 	    return true
 	} return false
