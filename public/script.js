@@ -30,7 +30,7 @@ let newLaser;
 mouseAngle = 0
 
 let clientname = window.prompt("what is ur name","deez nuts");
-var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, 100, lastShotTime);
+var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime);
 
 
 
@@ -81,7 +81,7 @@ function draw() {
   for (const id in positions) {
     if (id != clientid){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y, 100, positions[id].lastShotTime);
+      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime);
       // rotate that player and render them
       player.rotate(positions[id].a)
       player.render();

@@ -1,6 +1,6 @@
 class Laser extends entity{
   constructor(x, y, mouseAngle, speed, maxRange, clientPlayer) {
-    super(x, y, width);
+    super(x, y);
     this.speed = speed;
     this.width = 15;
     this.height = 5;
@@ -14,7 +14,7 @@ class Laser extends entity{
     this.x += Math.cos(this.angle) * this.speed;
     this.y += Math.sin(this.angle) * this.speed;
     if(this.collisionCheck(player) == true) {
-	console.log("collision inbound")
+	    console.log("collision inbound")
     }
   }
 
