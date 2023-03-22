@@ -1,9 +1,10 @@
 class Player extends entity{
     
-    constructor(playername, x, y, lastShotTime) {
+    constructor(playername, x, y, lastShotTime, hp) {
       super(x, y);
-      this.width = 30
+      this.width = 20
       this.playername = playername;
+      this.hp = hp;
       this.smoothSpeed = 1;
       this.targetAngle = 0;
       this.currentAngle = 0;
@@ -39,8 +40,6 @@ class Player extends entity{
         lasers.push(laser);
         this.lastShotTime = millis;
       }
-      text(millis, this.x+100, this.y+100)
-      text(this.lastShotTime, this.x+100, this.y+150)
 
     }
 
@@ -61,7 +60,7 @@ class Player extends entity{
         this.currentAngle = this.lerpAngle(this.currentAngle, targetAngle, this.smoothSpeed);
     }
 
-    render(){
+    render(laser){
       beginShape();
         for (let i = 0; i < this.count; ++i) {
             const theta = this.currentAngle + i * TWO_PI / this.count;
@@ -72,11 +71,8 @@ class Player extends entity{
         strokeWeight(3)
         endShape(CLOSE);
         text(this.playername, this.x, this.y);
+        text(this.hp, this.x, this.y+20);
         //console.log(targetAngle)
-    }
-
-    collisionCheck(){
-
     }
 
 }

@@ -30,7 +30,7 @@ let newLaser;
 mouseAngle = 0
 
 let clientname = window.prompt("what is ur name","deez nuts");
-var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime);
+var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100);
 
 
 
@@ -81,7 +81,7 @@ function draw() {
   for (const id in positions) {
     if (id != clientid){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime);
+      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp);
       // rotate that player and render them
       player.rotate(positions[id].a)
       player.render();
@@ -106,8 +106,17 @@ function draw() {
   //laser stuff
   for (var j = lasers.length - 1; j >= 0; j--) {
     lasers[j].draw();
-    lasers[j].move(clientPlayer);
+    lasers[j].move();
+    if (lasers[j].collisionCheck(clientPlayer)){
+      clientPlayer.hp=clientPlayer.hp-5;
+      lasers.pop(lasers[j])
+    }
+    // if (lasers[j].speed <= 0){
+    //   lasers.pop(lasers[j])
+    // }
   }
+
+
 
   
   if (mouseIsPressed) {
@@ -129,6 +138,12 @@ function draw() {
   sendPacket();
 
   newLaser = -1;
+
+  if(clientPlayer.hp <= 0){
+    alert("you are dead.");
+    throw new Error(
+      'you are dead');
+  }
 };
 
 async function sendPacket() {
@@ -139,7 +154,8 @@ async function sendPacket() {
     name: clientname,
     isShooting: clientPlayer.isShooting,
     lastShotTime: clientPlayer.lastShotTime,
-    millis: mill
+    millis: mill,
+    hp: clientPlayer.hp
   });
 
 }

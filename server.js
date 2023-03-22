@@ -55,6 +55,7 @@ io.on("connection", (socket) => {
     positions[socket.id].isShooting = data.isShooting;
     positions[socket.id].lastShotTime = data.lastShotTime;
     positions[socket.id].millis = data.millis;
+    positions[socket.id].hp = data.hp
   });
 
   socket.on("bullet", (data) => {

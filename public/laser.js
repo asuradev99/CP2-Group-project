@@ -10,12 +10,9 @@ class Laser extends entity{
     this.clientPlayer = clientPlayer;
   }
 
-  move(player) {
+  move() {
     this.x += Math.cos(this.angle) * this.speed;
     this.y += Math.sin(this.angle) * this.speed;
-    if(this.collisionCheck(player) == true) {
-	    console.log("collision inbound")
-    }
   }
 
   draw() {
@@ -41,8 +38,14 @@ class Laser extends entity{
      //translate(-this.x, -this.y);
      //translate(width / 2, height / 2);
      translate(-this.clientPlayer.x, -this.clientPlayer.y);
+
+     // first move for laser
+     if(this.collisionCheck(this.clientPlayer)){
+        this.x += Math.cos(this.angle) * 35;
+        this.y += Math.sin(this.angle) * 35;
+     }
+
+     this.speed= this.speed - 0.1
     }
 
 }
-
-// STEVEN IS A FURRY DOG
