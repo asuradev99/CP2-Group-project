@@ -36,7 +36,7 @@ class Player extends entity{
     
     shoot(lasers, millis) {
       if (millis - this.lastShotTime >= this.reloadTime) {
-        const laser = new Laser(this.x, this.y, this.currentAngle, 10, 500, this);
+        let laser = new Laser(this.x, this.y, this.currentAngle, 10, 500, this);
         lasers.push(laser);
         this.lastShotTime = millis;
       }

@@ -109,7 +109,7 @@ function draw() {
     lasers[j].move();
     if (lasers[j].collisionCheck(clientPlayer)){
       clientPlayer.hp=clientPlayer.hp-5;
-      lasers.pop(lasers[j])
+      //lasers.pop(lasers[j])
     }
     // if (lasers[j].speed <= 0){
     //   lasers.pop(lasers[j])
