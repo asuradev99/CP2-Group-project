@@ -8,6 +8,7 @@ class Laser extends entity{
     this.maxRange = maxRange;
     this.lastShotTime = -Infinity;
     this.clientPlayer = clientPlayer;
+    this.hit = false;
   }
 
   move() {
@@ -45,7 +46,8 @@ class Laser extends entity{
         this.y += Math.sin(this.angle) * 35;
      }
 
-     this.speed= this.speed - 0.1
+     if(this.speed > 0){this.speed= this.speed - 0.1}
+     else{this.speed=0}
     }
 
 }

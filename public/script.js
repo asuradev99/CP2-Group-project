@@ -79,7 +79,7 @@ function draw() {
 
   // for each client id got from the server except your client, render them
   for (const id in positions) {
-    if (id != clientid){
+    if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
       const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp);
       // rotate that player and render them
@@ -107,13 +107,13 @@ function draw() {
   for (var j = lasers.length - 1; j >= 0; j--) {
     lasers[j].draw();
     lasers[j].move();
-    if (lasers[j].collisionCheck(clientPlayer)){
+    if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
       clientPlayer.hp=clientPlayer.hp-5;
-      //lasers.pop(lasers[j])
+      lasers[j].hit = true;
     }
-    // if (lasers[j].speed <= 0){
-    //   lasers.pop(lasers[j])
-    // }
+    if (lasers[j].speed == 0){
+      lasers.splice(j, 1)
+    }
   }
 
 
@@ -140,9 +140,12 @@ function draw() {
   newLaser = -1;
 
   if(clientPlayer.hp <= 0){
-    alert("you are dead.");
-    throw new Error(
-      'you are dead');
+    para = document.createElement("p");
+    node = document.createTextNode("you are dead, not big surprise");
+    para.appendChild(node);
+    elmnt = document.getElementById("bruh");
+    elmnt.appendChild(para);
+    elmnt = document.getElementById("defaultCanvas0"); elmnt.remove();
   }
 };
 
