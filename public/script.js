@@ -95,8 +95,8 @@ function draw() {
       } else{
         smallerside = window.innerWidth;
       }
-      if(player.distance>smallerside/2){
-        r = ((smallerside/2)-50) / player.distance
+      if(player.findDistance(clientPlayer)>smallerside/2){
+        r = ((smallerside/2)-50) / player.findDistance(clientPlayer)
         circx = r * player.x + (1 - r) * clientPlayer.x;
         circy = r * player.y + (1 - r) * clientPlayer.y;
       }
