@@ -87,10 +87,16 @@ function draw() {
       player.render();
 
       var circx, circy;
+      var smallerside;
       
       player.collisionCheck(clientPlayer);
-      if(player.distance>window.innerWidth/2){
-        r = ((window.innerWidth/2)-50) / player.distance
+      if(window.innerHeight < window.innerWidth){
+        smallerside = window.innerHeight;
+      } else{
+        smallerside = window.innerWidth;
+      }
+      if(player.distance>smallerside/2){
+        r = ((smallerside/2)-50) / player.distance
         circx = r * player.x + (1 - r) * clientPlayer.x;
         circy = r * player.y + (1 - r) * clientPlayer.y;
       }
