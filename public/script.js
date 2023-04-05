@@ -86,6 +86,16 @@ function draw() {
       player.rotate(positions[id].a)
       player.render();
 
+      var circx, circy;
+      
+      player.collisionCheck(clientPlayer);
+      if(player.distance>window.innerWidth/2){
+        r = ((window.innerWidth/2)-50) / player.distance
+        circx = r * player.x + (1 - r) * clientPlayer.x;
+        circy = r * player.y + (1 - r) * clientPlayer.y;
+      }
+      circle(circx, circy, 20)
+
       if(newLaser == id) {
         console.log("i ahve to shot")
         laser = new Laser(player.x, player.y, player.currentAngle, 10, 500, player);
