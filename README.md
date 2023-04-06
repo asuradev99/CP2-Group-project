@@ -6,4 +6,4 @@ Our project is an online 2d shooting game similar to asteroids or diep.io
 - steven: server / client
 - ayush: code the objects
 - alon: code the objects
-- biden: ice cream
+- biden: choclate choclate chip ice cream
