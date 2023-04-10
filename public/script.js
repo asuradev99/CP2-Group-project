@@ -8,12 +8,14 @@ const socket = io({
 });
 
 //const socket = io('http://game.0000727.xyz:8080')
-var clientid
+var clientid;
 
 // ---------------------- create a variable containing the id of the client
 socket.on("connect", () => {
   clientid = socket.id
+  clientPlayer.id = clientid
   console.log('connected')
+  console.log(clientid)
 });
 
 //the p5js sketch
@@ -27,10 +29,12 @@ let canShoot;
 let mill;
 let newLaser;
 
+let laserThatLastHitThePlayer;
+
 mouseAngle = 0
 
 let clientname = window.prompt("what is ur name","deez nuts");
-var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100);
+var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, clientid);
 
 
 
@@ -54,6 +58,11 @@ function setup() {
     newLaser = data;
     
   })
+  socket.on("recievekill", (data) =>{
+    if(clientid == data){
+      clientPlayer.points+=100;
+    }
+  })
 
 };
 
@@ -69,7 +78,7 @@ function draw() {
   translate(-clientPlayer.x, -clientPlayer.y);
 
   //grid
-  grid(clientPlayer.cameraOffsetX, clientPlayer.cameraOffsetY)
+  grid()
 
   //update player position
   clientPlayer.move();
@@ -81,14 +90,14 @@ function draw() {
   for (const id in positions) {
     if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp);
+      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, id);
       // rotate that player and render them
       player.rotate(positions[id].a)
       player.render();
 
       if(newLaser == id) {
         console.log("i ahve to shot")
-        laser = new Laser(player.x, player.y, player.currentAngle, 10, 500, player);
+        laser = new Laser(player.x, player.y, player.currentAngle, 10, 500, player, id);
         
         lasers.push(laser)
       }
@@ -110,6 +119,7 @@ function draw() {
     if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
       clientPlayer.hp=clientPlayer.hp-5;
       lasers[j].hit = true;
+      laserThatLastHitThePlayer = lasers[j].id;
     }
     if (lasers[j].speed == 0){
       lasers.splice(j, 1)
@@ -138,10 +148,13 @@ function draw() {
   sendPacket();
 
   newLaser = -1;
-
+  
+//die
   if(clientPlayer.hp <= 0){
     para = document.createElement("p");
-    node = document.createTextNode("you are dead, not big surprise");
+    text = "you are dead, not big surprise, you were killed by "+positions[laserThatLastHitThePlayer].name;
+    node = document.createTextNode(text);
+    sendKill(laserThatLastHitThePlayer);
     para.appendChild(node);
     elmnt = document.getElementById("bruh");
     elmnt.appendChild(para);
@@ -172,14 +185,21 @@ async function sendBullet(x, y ,a) {
   })
 }
 
-function grid(offsetX, offsetY){
+async function sendKill(id){
+  socket.emit("kill", {
+    id: id
+  })
+}
+
+//grid
+function grid(){
   stroke(51)
-  for (let i = -100; i < window.innerWidth; i+=100){
-    for (let j = -100; j < window.innerHeight; j+=100){
-      x=window.innerWidth-i+(offsetX%100)-200
-      y=window.innerHeight-j+(offsetY%100)-50
-      line(x, y+200, x, y-window.innerHeight-200)
-      line(x+200, y, x-window.innerWidth-200, y)
+  for (let i = 0; i < window.innerWidth; i+=100){
+    for (let j = 0; j < window.innerHeight; j+=100){
+      x=clientPlayer.x - window.innerWidth/2;
+      y=clientPlayer.y - window.innerHeight/2;
+      line(x, y, x, y+window.innerHeight)
+      line(x+window.innerWidth/2, y, x-window.innerWidth/2, y)
     }
   }
 }
