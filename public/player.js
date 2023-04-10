@@ -1,20 +1,25 @@
 class Player extends entity{
     
-    constructor(playername, x, y, lastShotTime, hp) {
+    constructor(playername, x, y, lastShotTime, hp, clientid) {
       super(x, y);
       this.width = 20
       this.playername = playername;
+      // player stats
       this.hp = hp;
+      this.movementSpeed = 5;
+      this.reloadTime = 300;
+      this.points = 0;
+
+      // player variables
       this.smoothSpeed = 1;
       this.targetAngle = 0;
       this.currentAngle = 0;
       this.count = 3;
       this.scl = 25;
-      this.movementSpeed = 5;
       this.lastShotTime = lastShotTime;
-      this.reloadTime = 300;
       this.isShooting = false;
       this.millisBuffer = 0;
+      this.id = clientid;
     }
     
     move(){
@@ -36,7 +41,7 @@ class Player extends entity{
     
     shoot(lasers, millis) {
       if (millis - this.lastShotTime >= this.reloadTime) {
-        let laser = new Laser(this.x, this.y, this.currentAngle, 10, 500, this);
+        let laser = new Laser(this.x, this.y, this.currentAngle, 10, 500, this, this.id);
         lasers.push(laser);
         this.lastShotTime = millis;
       }
@@ -71,9 +76,18 @@ class Player extends entity{
         strokeWeight(3)
         endShape(CLOSE);
         text(this.playername, this.x, this.y);
-        text(this.hp, this.x, this.y+20);
+        //text(this.hp, this.x, this.y+20);
+        //health bar (no worky)
+        stroke(51,0,0);
+        strokeWeight(4);
+        noFill();
+        rect(this.x-this.width*2-10,this.y+30,100,20);
+        noStroke();
+        fill(255,0,0);
+        rect(this.x-this.width*2-10,this.y+30,this.hp,16);
+        //text(this.id, this.x, this.y+40);
         //console.log(targetAngle)
     }
-
+    
 }
 

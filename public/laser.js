@@ -1,5 +1,5 @@
 class Laser extends entity{
-  constructor(x, y, mouseAngle, speed, maxRange, clientPlayer) {
+  constructor(x, y, mouseAngle, speed, maxRange, clientPlayer, ide) {
     super(x, y);
     this.speed = speed;
     this.width = 15;
@@ -9,6 +9,7 @@ class Laser extends entity{
     this.lastShotTime = -Infinity;
     this.clientPlayer = clientPlayer;
     this.hit = false;
+    this.id = ide;
   }
 
   move() {
@@ -31,6 +32,7 @@ class Laser extends entity{
 
      //rect(-this.width/2, -this.height/2, this.width, this.height);
      circle(0, 0, this.width);
+     //text(this.id, 0, 0);
      
      //undo translation operations
      rotate(-this.angle);

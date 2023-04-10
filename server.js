@@ -26,6 +26,7 @@ http.listen(port, () => {
 //const positions = {};
 const positions = {};
 let bullets = 0;
+let lastKill;
 
 //Socket configuration
 io.on("connection", (socket) => {
@@ -64,6 +65,11 @@ io.on("connection", (socket) => {
     // bullets.a = data.a;
     bullets  = socket.id;
     io.emit("recievebullet", bullets);
+  })
+
+  socket.on("kill", (data) => {
+    lastKill = data;
+    io.emit("recievekill", lastKill);
   })
 });
 
