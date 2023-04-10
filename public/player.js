@@ -1,11 +1,12 @@
 class Player extends entity{
     
-    constructor(playername, x, y, lastShotTime, hp, clientid) {
+    constructor(playername, x, y, lastShotTime, hp, shield, clientid) {
       super(x, y);
       this.width = 20
       this.playername = playername;
       // player stats
       this.hp = hp;
+      this.shield = shield;
       this.movementSpeed = 5;
       this.reloadTime = 300;
       this.points = 0;
@@ -77,14 +78,30 @@ class Player extends entity{
         endShape(CLOSE);
         text(this.playername, this.x, this.y);
         //text(this.hp, this.x, this.y+20);
-        //health bar (no worky)
+
+        //health bar
         stroke(51,0,0);
         strokeWeight(4);
-        noFill();
+        fill(0,0,0);
         rect(this.x-this.width*2-10,this.y+30,100,20);
         noStroke();
         fill(255,0,0);
         rect(this.x-this.width*2-10,this.y+30,this.hp,16);
+
+        //shield bar
+        stroke(51,0,0);
+        strokeWeight(4);
+        noFill()
+        rect(this.x-this.width*2-10,this.y+30,100,20);
+        noStroke();
+        fill(31,190,214);
+        rect(this.x-this.width*2-10,this.y+30,this.shield*4,16);
+
+        
+        // reset colors
+        fill(0,0,0)
+        stroke(255,0,0)
+        strokeWeight(3)
         //text(this.id, this.x, this.y+40);
         //console.log(targetAngle)
     }
