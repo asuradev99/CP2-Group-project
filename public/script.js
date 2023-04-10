@@ -164,7 +164,7 @@ function draw() {
   }
 
   //shield come back
-  if(performance.now() - lastHitTime > 1000) {
+  if(performance.now() - lastHitTime > 5000) {
     if(clientPlayer.shield < 25){
       clientPlayer.shield=clientPlayer.shield+0.1;
     }
