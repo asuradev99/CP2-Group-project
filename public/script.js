@@ -95,6 +95,25 @@ function draw() {
       player.rotate(positions[id].a)
       player.render();
 
+      var circx, circy;
+      var smallerside, dist;
+      dist = player.findDistance(clientPlayer)
+      
+      player.collisionCheck(clientPlayer);
+      if(window.innerHeight < window.innerWidth){
+        smallerside = window.innerHeight;
+      } else{
+        smallerside = window.innerWidth;
+      }
+      if(dist>smallerside/2){
+        r = ((smallerside/2)-50) / dist
+        circx = r * player.x + (1 - r) * clientPlayer.x;
+        circy = r * player.y + (1 - r) * clientPlayer.y;
+      }
+      circle(circx, circy, 200/(dist/100));
+      text(player.playername, circx, circy);
+      text(player.hp, circx, circy+20);
+
       if(newLaser == id) {
         console.log("i ahve to shot")
         laser = new Laser(player.x, player.y, player.currentAngle, 10, 500, player, id);
