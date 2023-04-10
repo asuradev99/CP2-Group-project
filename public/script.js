@@ -25,6 +25,7 @@ socket.on("connect", () => {
 let positions = {};
 let lasers = [];
 let lastShotTime = 0;
+let lastHitTime = 0;
 let canShoot;
 let mill;
 let newLaser;
@@ -34,7 +35,7 @@ let laserThatLastHitThePlayer;
 mouseAngle = 0
 
 let clientname = window.prompt("what is ur name","deez nuts");
-var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, clientid);
+var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid);
 
 
 
@@ -90,7 +91,7 @@ function draw() {
   for (const id in positions) {
     if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, id);
+      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id);
       // rotate that player and render them
       player.rotate(positions[id].a)
       player.render();
@@ -110,9 +111,12 @@ function draw() {
         circx = r * player.x + (1 - r) * clientPlayer.x;
         circy = r * player.y + (1 - r) * clientPlayer.y;
       }
+      noFill();
       circle(circx, circy, 200/(dist/100));
+      fill(0, 0, 0);
       text(player.playername, circx, circy);
       text(player.hp, circx, circy+20);
+      
 
       if(newLaser == id) {
         console.log("i ahve to shot")
@@ -135,19 +139,38 @@ function draw() {
   for (var j = lasers.length - 1; j >= 0; j--) {
     lasers[j].draw();
     lasers[j].move();
+
+    // laser hit player
     if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
-      clientPlayer.hp=clientPlayer.hp-5;
+      if(clientPlayer.shield > 0){
+        clientPlayer.shield=clientPlayer.shield-5;
+        if(clientPlayer.shield < 0){
+          clientPlayer.hp=clientPlayer.hp+clientPlayer.shield-1
+          clientPlayer.shield=0;
+        }
+      } else{
+        clientPlayer.hp=clientPlayer.hp-5;
+      }
       lasers[j].hit = true;
       laserThatLastHitThePlayer = lasers[j].id;
+
+      lastHitTime = performance.now()
     }
+
+    // remove lasers that are not moving
     if (lasers[j].speed == 0){
       lasers.splice(j, 1)
     }
   }
 
+  //shield come back
+  if(performance.now() - lastHitTime > 1000) {
+    if(clientPlayer.shield < 25){
+      clientPlayer.shield=clientPlayer.shield+0.1;
+    }
+  }
 
-
-  
+  // shoot bullet
   if (mouseIsPressed) {
     if(performance.now() - clientPlayer.lastShotTime >= clientPlayer.reloadTime) {
       sendBullet(lasers)
@@ -155,9 +178,6 @@ function draw() {
     }
     clientPlayer.shoot(lasers, performance.now());
 
-    
-
-    
     clientPlayer.isShooting = true;
   } else {
     clientPlayer.isShooting = false;
@@ -190,7 +210,8 @@ async function sendPacket() {
     isShooting: clientPlayer.isShooting,
     lastShotTime: clientPlayer.lastShotTime,
     millis: mill,
-    hp: clientPlayer.hp
+    hp: clientPlayer.hp,
+    shield: clientPlayer.shield
   });
 
 }
