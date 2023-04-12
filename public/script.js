@@ -227,8 +227,10 @@ function draw() {
     text = "you are dead, not big surprise, you were killed by "+positions[laserThatLastHitThePlayer].name;
     node = document.createTextNode(text);
     para.appendChild(node);
+    //para2 = document.createElement('img src="./graphics/death png.png"');
     elmnt = document.getElementById("bruh");
-    elmnt.appendChild(para);
+    //elmnt.appendChild(para);
+    //elmnt.appendChild(para2);
     elmnt = document.getElementById("defaultCanvas0"); elmnt.remove();
   }
 };

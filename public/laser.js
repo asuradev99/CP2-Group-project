@@ -48,8 +48,10 @@ class Laser extends entity{
         this.y += Math.sin(this.angle) * 35;
      }
 
-     if(this.speed > 0){this.speed= this.speed - 0.1}
-     else{this.speed=0}
+     this.maxRange -= 1; 
+     if(this.maxRange <= 0) {
+        this.speed = 0;
+     }
     }
 
 }
