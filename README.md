@@ -9,6 +9,5 @@ Our project is an online 2d shooting game similar to asteroids or diep.io
 - biden: choclate choclate chip ice cream
 
 
+https://user-images.githubusercontent.com/70330869/231475898-aea4411d-b176-4c06-938a-3987390c8397.mov
 
-            gamefootage2.mov
-          
