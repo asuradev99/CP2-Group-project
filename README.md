@@ -1,4 +1,4 @@
-# funee triangle(s) game
+# triangle game (name is a work in progress)
 Our project is an online 2d shooting game similar to asteroids or diep.io
 
 # member variables
