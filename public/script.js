@@ -256,7 +256,8 @@ function leaderboard(){
   stroke(255,0,0)
   let sortedPoints = [
     ['LEADERBOARD', 9999],
-    ['best sorting algorithm', -9999]
+    ['best sorting algorithm', 9998],
+    ['------------------', 9997]
   ];
   for(const id in positions){
     if(sortedPoints[0][1]<positions[id].points){
@@ -269,9 +270,15 @@ function leaderboard(){
       sortedPoints.push(temparray)
     }
   }
-  for(let i = 0; i<sortedPoints.length-1; i++){
+  let temptext = sortedPoints[0][0]
+  text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3)
+  temptext = sortedPoints[1][0]
+  text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+20)
+  temptext = sortedPoints[2][0]
+  text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+40)
+  for(let i = 3; i<sortedPoints.length-1; i++){
     let temptext = sortedPoints[i][0]+': '+sortedPoints[i][1]
-    text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+10*i)
-    console.log('printing leaderboard: '+temptext)
+    text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+20*i)
+    //console.log('printing leaderboard: '+temptext)
   }
 }

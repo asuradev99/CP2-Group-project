@@ -78,7 +78,7 @@ class Player extends entity{
         endShape(CLOSE);
         text(this.playername, this.x, this.y);
         let pointtext = "points: "+this.points
-        text(pointtext, this.x, this.y-10);
+        text(pointtext, this.x, this.y+20);
         //text(this.hp, this.x, this.y+20);
 
         //health bar
