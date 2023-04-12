@@ -1,6 +1,8 @@
 # triangle game (name is a work in progress)
 Our project is an online 2d shooting game similar to asteroids or diep.io
 
+https://triangle.0000727.xyz -- the game
+
 # member variables
 - ethan: server / client
 - steven: server / client
