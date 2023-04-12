@@ -5,7 +5,7 @@ class Laser extends entity{
     this.width = 15;
     this.height = 5;
     this.angle = mouseAngle;
-    this.maxRange = maxRange;
+    this.maxRange = 50;
     this.lastShotTime = -Infinity;
     this.clientPlayer = clientPlayer;
     this.hit = false;
