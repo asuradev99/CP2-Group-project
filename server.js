@@ -26,7 +26,7 @@ http.listen(port, () => {
 //const positions = {};
 const positions = {};
 let bullets = 0;
-let lastKill;
+let lastKill = {};
 
 //Socket configuration
 io.on("connection", (socket) => {
@@ -35,7 +35,7 @@ io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
 
   //lets add a starting position when the client connects
-  positions[socket.id] = { x: 100, y: 100 , a: 0, name: '', isShooting: false, lastShotTime: 0, millis: 0, hp: 100, shield: 25};
+  positions[socket.id] = { x: 100, y: 100 , a: 0, name: '', isShooting: false, lastShotTime: 0, millis: 0, hp: 100, shield: 25, points: 0};
   //players[socket.id] = {player: new Player(''), a: 0}
   socket.on("disconnect", () => {
     //when this client disconnects, lets delete its position from the object.
@@ -58,6 +58,7 @@ io.on("connection", (socket) => {
     positions[socket.id].millis = data.millis;
     positions[socket.id].hp = data.hp;
     positions[socket.id].shield = data.shield;
+    positions[socket.id].points = data.points;
   });
 
   socket.on("bullet", (data) => {
@@ -69,7 +70,8 @@ io.on("connection", (socket) => {
   })
 
   socket.on("kill", (data) => {
-    lastKill = data;
+    lastKill.id = data.id;
+    lastKill.id2 = data.id2;
     io.emit("recievekill", lastKill);
   })
 });

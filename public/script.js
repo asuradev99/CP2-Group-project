@@ -29,13 +29,14 @@ let lastHitTime = 0;
 let canShoot;
 let mill;
 let newLaser;
+let newPoints;
 
 let laserThatLastHitThePlayer;
 
 mouseAngle = 0
 
 let clientname = window.prompt("what is ur name","deez nuts");
-var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid);
+var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid, 0);
 
 
 
@@ -60,8 +61,10 @@ function setup() {
     
   })
   socket.on("recievekill", (data) =>{
-    if(clientid == data){
-      clientPlayer.points+=100;
+    if(clientid == data.id){
+      console.log("kill confirmed")
+      newPoints = 100+positions[data.id2].points;
+      clientPlayer.points = clientPlayer.points + newPoints
     }
   })
 
@@ -81,6 +84,9 @@ function draw() {
   //grid
   grid()
 
+  // leaderboard
+  leaderboard()
+
   //update player position
   clientPlayer.move();
   mouseAngle = atan2(mouseY - height / 2, mouseX - width / 2)
@@ -91,7 +97,7 @@ function draw() {
   for (const id in positions) {
     if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id);
+      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points);
       // rotate that player and render them
       player.rotate(positions[id].a)
       player.render();
@@ -190,10 +196,10 @@ function draw() {
   
 //die
   if(clientPlayer.hp <= 0){
+    sendKill(laserThatLastHitThePlayer, clientid);
     para = document.createElement("p");
     text = "you are dead, not big surprise, you were killed by "+positions[laserThatLastHitThePlayer].name;
     node = document.createTextNode(text);
-    sendKill(laserThatLastHitThePlayer);
     para.appendChild(node);
     elmnt = document.getElementById("bruh");
     elmnt.appendChild(para);
@@ -211,7 +217,8 @@ async function sendPacket() {
     lastShotTime: clientPlayer.lastShotTime,
     millis: mill,
     hp: clientPlayer.hp,
-    shield: clientPlayer.shield
+    shield: clientPlayer.shield,
+    points: clientPlayer.points
   });
 
 }
@@ -225,9 +232,10 @@ async function sendBullet(x, y ,a) {
   })
 }
 
-async function sendKill(id){
+async function sendKill(id, id2){
   socket.emit("kill", {
-    id: id
+    id: id,
+    id2: id2
   })
 }
 
@@ -244,4 +252,26 @@ function grid(){
   }
 }
 
-
+function leaderboard(){
+  stroke(255,0,0)
+  let sortedPoints = [
+    ['LEADERBOARD', 9999],
+    ['best sorting algorithm', -9999]
+  ];
+  for(const id in positions){
+    if(sortedPoints[0][1]<positions[id].points){
+      sortedPoints = [
+        [positions[id].name, positions[id].points],
+        ...sortedPoints
+      ]
+    } else{
+      temparray = [positions[id].name, positions[id].points]
+      sortedPoints.push(temparray)
+    }
+  }
+  for(let i = 0; i<sortedPoints.length-1; i++){
+    let temptext = sortedPoints[i][0]+': '+sortedPoints[i][1]
+    text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+10*i)
+    console.log('printing leaderboard: '+temptext)
+  }
+}

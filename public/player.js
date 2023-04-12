@@ -1,6 +1,6 @@
 class Player extends entity{
     
-    constructor(playername, x, y, lastShotTime, hp, shield, clientid) {
+    constructor(playername, x, y, lastShotTime, hp, shield, clientid, points) {
       super(x, y);
       this.width = 20
       this.playername = playername;
@@ -9,7 +9,7 @@ class Player extends entity{
       this.shield = shield;
       this.movementSpeed = 5;
       this.reloadTime = 300;
-      this.points = 0;
+      this.points = points;
 
       // player variables
       this.smoothSpeed = 1;
@@ -77,6 +77,8 @@ class Player extends entity{
         strokeWeight(3)
         endShape(CLOSE);
         text(this.playername, this.x, this.y);
+        let pointtext = "points: "+this.points
+        text(pointtext, this.x, this.y-10);
         //text(this.hp, this.x, this.y+20);
 
         //health bar
