@@ -7,3 +7,8 @@ Our project is an online 2d shooting game similar to asteroids or diep.io
 - ayush: code the objects
 - alon: code the objects
 - biden: choclate choclate chip ice cream
+
+
+
+            gamefootage2.mov
+          
