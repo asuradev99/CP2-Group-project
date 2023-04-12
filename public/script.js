@@ -70,6 +70,31 @@ function setup() {
 
 };
 
+function drawGrid() {
+  let step = 100;
+
+   //calculate starting and ending coordinates of the grid based on the position of the camera and the zoom level
+   let left = -step + Math.ceil((clientPlayer.x - 1.5 * (canvas.width / 2)) / step) * step;
+   let top = -step + Math.ceil((clientPlayer.y - 1.5 * (canvas.height / 2 )) / step) * step;
+   let right = clientPlayer.x + 1.5 * (canvas.width / 2);
+   let bottom = clientPlayer.x + 1.5 * (canvas.height / 2);
+
+
+   strokeWeight(6);
+   stroke(40);
+
+
+   for (let x = left; x < right; x += step) {
+      line(x, top, x, bottom);
+   }
+
+   for (let y = top; y < bottom; y += step) {
+      line(left, y, right, y);
+   }
+
+}
+
+
 //the p5js draw function, runs every frame rate
 //(30-60 times / sec)
 function draw() {
@@ -82,7 +107,8 @@ function draw() {
   translate(-clientPlayer.x, -clientPlayer.y);
 
   //grid
-  grid()
+  //grid()
+  drawGrid();
 
   // leaderboard
   leaderboard()

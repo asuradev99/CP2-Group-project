@@ -19,7 +19,7 @@ class Laser extends entity{
 
   draw() {
     //undo camera translations to center bullet
-     translate(this.clientPlayer.x , this.clientPlayer.y);
+    translate(this.clientPlayer.x , this.clientPlayer.y);
     // translate(-width / 2, -height / 2);
     // translate(this.x, this.y);
 
