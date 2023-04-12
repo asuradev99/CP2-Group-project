@@ -77,7 +77,7 @@ function drawGrid() {
    let left = -step + Math.ceil((clientPlayer.x - 1.5 * (canvas.width / 2)) / step) * step;
    let top = -step + Math.ceil((clientPlayer.y - 1.5 * (canvas.height / 2 )) / step) * step;
    let right = clientPlayer.x + 1.5 * (canvas.width / 2);
-   let bottom = clientPlayer.x + 1.5 * (canvas.height / 2);
+   let bottom = clientPlayer.y + 1.5 * (canvas.height / 2);
 
 
    strokeWeight(6);
