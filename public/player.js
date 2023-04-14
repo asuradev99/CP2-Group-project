@@ -10,7 +10,7 @@ class Player extends entity{
       this.movementSpeed = 5;
       this.reloadTime = 300;
       this.points = points;
-      this.money = money;
+      this.money = 0;
 
       // player variables
       this.smoothSpeed = 1;

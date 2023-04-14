@@ -27,6 +27,7 @@ http.listen(port, () => {
 const positions = {};
 let bullets = 0;
 let lastKill = {};
+let numberOfPlayers = 0;
 
 //Socket configuration
 io.on("connection", (socket) => {
@@ -40,10 +41,12 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     //when this client disconnects, lets delete its position from the object.
     delete positions[socket.id];
+    numberOfPlayers=numberOfPlayers-1;
     console.log(`${socket.id} disconnected`);
   });
 
   io.sockets.on('connect', function(socket) {
+    numberOfPlayers=numberOfPlayers+1;
     const sessionID = socket.id;
   });
 
@@ -79,9 +82,10 @@ io.on("connection", (socket) => {
 //send positions every framerate to each client
 const frameRate = 60;
 setInterval(() => {
+  numberOfPlayers=
   io.emit("positions", positions);
   
-  io.emit("time", performance.now());
+  io.emit("time", numberOfPlayers);
 }, 1000 / frameRate);
 
 

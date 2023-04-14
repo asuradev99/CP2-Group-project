@@ -27,11 +27,11 @@ let lasers = [];
 let lastShotTime = 0;
 let lastHitTime = 0;
 let canShoot;
-let mill;
+let numberOfPlayers;
 let newLaser;
 let newPoints;
 let newMoney;
-let diesound = new Audio('./sound/die.wav');
+let diesound = new Audio('/public/sound/die.wav');
 
 let laserThatLastHitThePlayer;
 
@@ -47,7 +47,10 @@ function setup() {
   //to fill up the full container, get the width an height
   // create the canvas as large as the screen width and height
   createCanvas(window.innerWidth, window.innerHeight);
-
+   S = new Store();
+  StoreButton = createButton('Store');
+  StoreButton.position(window.innerWidth- 100, 100);
+  StoreButton.mousePressed(S.Display());
   frameRate(60); //set framerate to 30, same as server
 
   socket.on("positions", (data) => {
@@ -55,7 +58,7 @@ function setup() {
     positions = data;
   });
   socket.on("time", (data) => {
-    mill = data;
+    numberOfPlayers = data;
   });
   socket.on("recievebullet", (data) => {
     console.log("we bullet")
@@ -248,7 +251,7 @@ async function sendPacket() {
     name: clientname,
     isShooting: clientPlayer.isShooting,
     lastShotTime: clientPlayer.lastShotTime,
-    millis: mill,
+    millis: 0,
     hp: clientPlayer.hp,
     shield: clientPlayer.shield,
     points: clientPlayer.points,
@@ -286,7 +289,9 @@ function grid(){
   }
 }
 
+
 function leaderboard(){
+  console.log(numberOfPlayers)
   stroke(255,0,0)
   let sortedPoints = [
     ['LEADERBOARD', 9999],
@@ -294,7 +299,7 @@ function leaderboard(){
     ['------------------', 9998]
   ];
   for(const id in positions){
-    for(let i = 0; i<positions.length+3; i++){
+    for(let i = 0; i<numberOfPlayers; i++){
       if(sortedPoints[i][1]<positions[id].points){
         sortedPoints = [
           [positions[id].name, positions[id].points],
