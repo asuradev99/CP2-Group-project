@@ -30,6 +30,8 @@ let canShoot;
 let mill;
 let newLaser;
 let newPoints;
+let newMoney;
+let diesound = new Audio('./sound/die.wav');
 
 let laserThatLastHitThePlayer;
 
@@ -64,7 +66,9 @@ function setup() {
     if(clientid == data.id){
       console.log("kill confirmed")
       newPoints = 100+positions[data.id2].points;
+      newMoney = 100+positions[data.id2].money;
       clientPlayer.points = clientPlayer.points + newPoints
+      clientPlayer.money = clientPlayer.money + newMoney
     }
   })
 
@@ -123,7 +127,7 @@ function draw() {
   for (const id in positions) {
     if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points);
+      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points, positions[id].money);
       // rotate that player and render them
       player.rotate(positions[id].a)
       player.render();
@@ -225,6 +229,7 @@ function draw() {
     sendKill(laserThatLastHitThePlayer, clientid);
     para = document.createElement("p");
     text = "you are dead, not big surprise, you were killed by "+positions[laserThatLastHitThePlayer].name;
+    diesound.play();
     node = document.createTextNode(text);
     para.appendChild(node);
     //para2 = document.createElement('img src="./graphics/death png.png"');
@@ -246,7 +251,8 @@ async function sendPacket() {
     millis: mill,
     hp: clientPlayer.hp,
     shield: clientPlayer.shield,
-    points: clientPlayer.points
+    points: clientPlayer.points,
+    money: clientPlayer.money
   });
 
 }
@@ -284,20 +290,43 @@ function leaderboard(){
   stroke(255,0,0)
   let sortedPoints = [
     ['LEADERBOARD', 9999],
-    ['best sorting algorithm', 9998],
-    ['------------------', 9997]
+    ['best sorting algorithm', 2],
+    ['------------------', 9998]
   ];
   for(const id in positions){
-    if(sortedPoints[0][1]<positions[id].points){
-      sortedPoints = [
-        [positions[id].name, positions[id].points],
-        ...sortedPoints
-      ]
-    } else{
-      temparray = [positions[id].name, positions[id].points]
-      sortedPoints.push(temparray)
+    for(let i = 0; i<positions.length+3; i++){
+      if(sortedPoints[i][1]<positions[id].points){
+        sortedPoints = [
+          [positions[id].name, positions[id].points],
+          ...sortedPoints
+        ]
+      } else{
+        temparray = [positions[id].name, positions[id].points]
+        sortedPoints.push(temparray)
+      }
     }
   }
+
+  // for(const id in positions){
+  //   temparray = [positions[id].name, positions[id].points];
+  //   sortedPoints.push(temparray);
+  // };
+  // for(let i = 0; i < sortedPoints.length; i++){
+  //   let minindex = i
+  //   j = i+1;
+  //   for(j< sortedPoints.length; j++;){
+  //     jValue = sortedPoints[j]
+  //     indexValue = sortedPoints[minindex]
+  //     // if(jValue < indexValue){
+  //     //   minindex = j;
+  //     // }
+  //   }
+  //   let tempi = sortedPoints[i][1]
+  //   let tempminindex = sortedPoints[minindex][1]
+  //   sortedPoints[i][1] = tempminindex;
+  //   sortedPoints[minindex][1] = tempi;
+  // }
+
   let temptext = sortedPoints[0][0]
   text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3)
   temptext = sortedPoints[1][0]
@@ -308,5 +337,6 @@ function leaderboard(){
     let temptext = sortedPoints[i][0]+': '+sortedPoints[i][1]
     text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+20*i)
     //console.log('printing leaderboard: '+temptext)
+ 
   }
 }
