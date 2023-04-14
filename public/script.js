@@ -30,6 +30,7 @@ let canShoot;
 let mill;
 let newLaser;
 let newPoints;
+let newMoney;
 
 let laserThatLastHitThePlayer;
 
@@ -64,7 +65,9 @@ function setup() {
     if(clientid == data.id){
       console.log("kill confirmed")
       newPoints = 100+positions[data.id2].points;
+      newMoney = 100+positions[data.id2].money;
       clientPlayer.points = clientPlayer.points + newPoints
+      clientPlayer.money = clientPlayer.money + newMoney
     }
   })
 
@@ -123,7 +126,7 @@ function draw() {
   for (const id in positions) {
     if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points);
+      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points, positions[id].money);
       // rotate that player and render them
       player.rotate(positions[id].a)
       player.render();
@@ -246,7 +249,8 @@ async function sendPacket() {
     millis: mill,
     hp: clientPlayer.hp,
     shield: clientPlayer.shield,
-    points: clientPlayer.points
+    points: clientPlayer.points,
+    money: clientPlayer.money
   });
 
 }
@@ -298,6 +302,27 @@ function leaderboard(){
       sortedPoints.push(temparray)
     }
   }
+
+  // for(const id in positions){
+  //   temparray = [positions[id].name, positions[id].points];
+  //   sortedPoints.push(temparray);
+  // };
+  // for(let i = 0; i < sortedPoints.length; i++){
+  //   let minindex = i
+  //   j = i+1;
+  //   for(j< sortedPoints.length; j++;){
+  //     jValue = sortedPoints[j]
+  //     indexValue = sortedPoints[minindex]
+  //     // if(jValue < indexValue){
+  //     //   minindex = j;
+  //     // }
+  //   }
+  //   let tempi = sortedPoints[i][1]
+  //   let tempminindex = sortedPoints[minindex][1]
+  //   sortedPoints[i][1] = tempminindex;
+  //   sortedPoints[minindex][1] = tempi;
+  // }
+
   let temptext = sortedPoints[0][0]
   text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3)
   temptext = sortedPoints[1][0]
