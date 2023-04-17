@@ -32,7 +32,6 @@ let newLaser;
 let newPoints;
 let newMoney;
 let diesound = new Audio('./sound/die.wav');
-let hitsound = new Audio('./sound/hitHurt.wav');
 
 let laserThatLastHitThePlayer;
 
@@ -184,14 +183,12 @@ function draw() {
     if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
       if(clientPlayer.shield > 0){
         clientPlayer.shield=clientPlayer.shield-5;
-        hitHurt.play();
         if(clientPlayer.shield < 0){
           clientPlayer.hp=clientPlayer.hp+clientPlayer.shield-1
           clientPlayer.shield=0;
         }
       } else{
         clientPlayer.hp=clientPlayer.hp-5;
-        hitHurt.play();
       }
       lasers[j].hit = true;
       laserThatLastHitThePlayer = lasers[j].id;
