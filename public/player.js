@@ -1,3 +1,4 @@
+//everybody
 class Player extends entity{
     
     constructor(playername, x, y, lastShotTime, hp, shield, clientid, points) {

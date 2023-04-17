@@ -2,7 +2,7 @@
 //const sketchContainer = document.getElementById("sketch-container");
 
 //get socket which only uses websockets as a means of communication
-
+//everybody wrote script
 const socket = io({
   transports: ["websocket"]
 });
@@ -27,11 +27,12 @@ let lasers = [];
 let lastShotTime = 0;
 let lastHitTime = 0;
 let canShoot;
-let numberOfPlayers;
+let numberOfPlayers = 0;
 let newLaser;
 let newPoints;
 let newMoney;
-let diesound = new Audio('/public/sound/die.wav');
+let diesound = new Audio('./sound/die.wav');
+let hitsound = new Audio('./sound/hitHurt.wav');
 
 let laserThatLastHitThePlayer;
 
@@ -47,10 +48,10 @@ function setup() {
   //to fill up the full container, get the width an height
   // create the canvas as large as the screen width and height
   createCanvas(window.innerWidth, window.innerHeight);
-   S = new Store();
-  StoreButton = createButton('Store');
-  StoreButton.position(window.innerWidth- 100, 100);
-  StoreButton.mousePressed(S.Display());
+  //  S = new Store();
+  // StoreButton = createButton('Store');
+  // StoreButton.position(window.innerWidth- 100, 100);
+  // StoreButton.mousePressed(S.Display());
   frameRate(60); //set framerate to 30, same as server
 
   socket.on("positions", (data) => {
@@ -183,12 +184,14 @@ function draw() {
     if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
       if(clientPlayer.shield > 0){
         clientPlayer.shield=clientPlayer.shield-5;
+        hitHurt.play();
         if(clientPlayer.shield < 0){
           clientPlayer.hp=clientPlayer.hp+clientPlayer.shield-1
           clientPlayer.shield=0;
         }
       } else{
         clientPlayer.hp=clientPlayer.hp-5;
+        hitHurt.play();
       }
       lasers[j].hit = true;
       laserThatLastHitThePlayer = lasers[j].id;
@@ -235,10 +238,16 @@ function draw() {
     diesound.play();
     node = document.createTextNode(text);
     para.appendChild(node);
-    //para2 = document.createElement('img src="./graphics/death png.png"');
     elmnt = document.getElementById("bruh");
-    //elmnt.appendChild(para);
-    //elmnt.appendChild(para2);
+    elmnt.appendChild(para);
+    var img = document.createElement("img");
+    if(Math.floor(Math.random()*2)==0){
+      img.src = "./graphics/death png.png";
+    } else{
+      img.src = "./graphics/elon_game_over.png"
+    }
+    var src = document.getElementById("bruh");
+    src.appendChild(img);
     elmnt = document.getElementById("defaultCanvas0"); elmnt.remove();
   }
 };
@@ -295,16 +304,13 @@ function leaderboard(){
   stroke(255,0,0)
   let sortedPoints = [
     ['LEADERBOARD', 9999],
-    ['best sorting algorithm', 2],
-    ['------------------', 9998]
+    ['best sorting algorithm', 9998],
+    ['------------------', 9997]
   ];
   for(const id in positions){
-    for(let i = 0; i<numberOfPlayers; i++){
+    for(let i = 0; i<numberOfPlayers+1; i++){
       if(sortedPoints[i][1]<positions[id].points){
-        sortedPoints = [
-          [positions[id].name, positions[id].points],
-          ...sortedPoints
-        ]
+        sortedPoints.splice(i, 0, [positions[id].name, positions[id].points])
       } else{
         temparray = [positions[id].name, positions[id].points]
         sortedPoints.push(temparray)
