@@ -29,12 +29,21 @@ let bullets = 0;
 let lastKill = {};
 let numberOfPlayers = 0;
 let e = performance.now();
+let cheaters = {};
 
 //Socket configuration
 io.on("connection", (socket) => {
+  function antiCheat(a, b, c){
+    if(Math.abs(a-b) > c){
+      cheaters[socket.id] = true;
+      return false;
+    } else{
+      return true;
+    }
+  }
   //each time someone visits the site and connect to socket.io this function  gets called
   //it includes the socket object from which you can get the id, useful for identifying each client
-  if(performance.now()-e < 1000){
+  if(performance.now()-e < 5000 || cheaters[socket.id]){
     socket.disconnect();
   } else{
   console.log(`${socket.id} connected`);
@@ -53,19 +62,33 @@ io.on("connection", (socket) => {
     numberOfPlayers=numberOfPlayers+1;
     const sessionID = socket.id;
   });
-
+  
   //client can send a message 'updatePosition' each time the clients position changes
   socket.on("updatePosition", (data) => {
-    positions[socket.id].x = data.x;
-    positions[socket.id].y = data.y;
+    if(!antiCheat(positions[socket.id].x, data.x, 20)){
+      positions[socket.id].x = data.x;
+    }
+    if(!antiCheat(positions[socket.id].y, data.y, 20)){
+      positions[socket.id].y = data.y;
+    }
+
     positions[socket.id].a = data.a;
+
+    if(!antiCheat(positions[socket.id].hp, data.hp, 25)){
+      positions[socket.id].hp = data.hp;
+    }
+    if(!antiCheat(positions[socket.id].shield, data.shield, 100)){
+      positions[socket.id].shield = data.shield;
+    }
+    // will fix points later
+    // if(!antiCheat(positions[socket.id].points, data.points, 1000)){
+    //   positions[socket.id].points = data.points;
+    // }
+    positions[socket.id].points = data.points;
     positions[socket.id].name = data.name;
     positions[socket.id].isShooting = data.isShooting;
     positions[socket.id].lastShotTime = data.lastShotTime;
     positions[socket.id].millis = data.millis;
-    positions[socket.id].hp = data.hp;
-    positions[socket.id].shield = data.shield;
-    positions[socket.id].points = data.points;
   });
 
   socket.on("bullet", (data) => {
