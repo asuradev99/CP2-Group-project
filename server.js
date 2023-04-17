@@ -28,11 +28,15 @@ const positions = {};
 let bullets = 0;
 let lastKill = {};
 let numberOfPlayers = 0;
+let e = performance.now();
 
 //Socket configuration
 io.on("connection", (socket) => {
   //each time someone visits the site and connect to socket.io this function  gets called
   //it includes the socket object from which you can get the id, useful for identifying each client
+  if(performance.now()-e < 1000){
+    socket.disconnect();
+  } else{
   console.log(`${socket.id} connected`);
 
   //lets add a starting position when the client connects
@@ -77,7 +81,7 @@ io.on("connection", (socket) => {
     lastKill.id2 = data.id2;
     io.emit("recievekill", lastKill);
   })
-});
+}});
 
 //send positions every framerate to each client
 const frameRate = 60;

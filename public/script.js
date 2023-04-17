@@ -246,6 +246,7 @@ function draw() {
     var src = document.getElementById("bruh");
     src.appendChild(img);
     elmnt = document.getElementById("defaultCanvas0"); elmnt.remove();
+    0/0;
   }
 };
 
@@ -295,6 +296,10 @@ function grid(){
   }
 }
 
+//ANTI CHEAT (idk if it works probably not) - ayush
+if(clientPlayer.hp>100||clientPlayer.shield>100||clientPlayer.reloadTime>300||clientPlayer.movementSpeed>5) {
+  hp = 0;
+}
 
 function leaderboard(){
   console.log(numberOfPlayers)
