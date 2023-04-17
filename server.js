@@ -65,21 +65,21 @@ io.on("connection", (socket) => {
   
   //client can send a message 'updatePosition' each time the clients position changes
   socket.on("updatePosition", (data) => {
-    if(!antiCheat(positions[socket.id].x, data.x, 20)){
+    //if(!antiCheat(positions[socket.id].x, data.x, 20)){
       positions[socket.id].x = data.x;
-    }
-    if(!antiCheat(positions[socket.id].y, data.y, 20)){
+    //}
+    //if(!antiCheat(positions[socket.id].y, data.y, 20)){
       positions[socket.id].y = data.y;
-    }
+    //}
 
     positions[socket.id].a = data.a;
 
-    if(!antiCheat(positions[socket.id].hp, data.hp, 25)){
+    //if(!antiCheat(positions[socket.id].hp, data.hp, 25)){
       positions[socket.id].hp = data.hp;
-    }
-    if(!antiCheat(positions[socket.id].shield, data.shield, 100)){
+    //}
+    //if(!antiCheat(positions[socket.id].shield, data.shield, 100)){
       positions[socket.id].shield = data.shield;
-    }
+    //}
     // will fix points later
     // if(!antiCheat(positions[socket.id].points, data.points, 1000)){
     //   positions[socket.id].points = data.points;
