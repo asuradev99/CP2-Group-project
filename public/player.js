@@ -109,6 +109,5 @@ class Player extends entity{
         //text(this.id, this.x, this.y+40);
         //console.log(targetAngle)
     }
-    
 }
 
