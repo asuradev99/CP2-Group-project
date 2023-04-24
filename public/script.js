@@ -31,7 +31,7 @@ let numberOfPlayers = 0;
 let newLaser;
 let newPoints;
 let newMoney;
-let diesound = new Audio('./sound/die.wav');
+var diesound = new Audio('die.wav');
 
 let laserThatLastHitThePlayer;
 
@@ -49,10 +49,10 @@ function setup() {
   //to fill up the full container, get the width an height
   // create the canvas as large as the screen width and height
   createCanvas(window.innerWidth, window.innerHeight);
-  //  S = new Store();
-  // StoreButton = createButton('Store');
-  // StoreButton.position(window.innerWidth- 100, 100);
-  // StoreButton.mousePressed(S.Display());
+  S = new Store();
+  let StoreButton = createButton('Store');
+  StoreButton.position(window.innerWidth- 100, 100);
+  StoreButton.mousePressed(S.Display());
   frameRate(60); //set framerate to 60, same as server
 
   socket.on("positions", (data) => {
@@ -111,7 +111,7 @@ function draw() {
 
   //draw background color and grid ethan
   background(0); 
-
+  
   //apply camera transformation ethan
   translate(width / 2, height / 2);
   translate(-clientPlayer.x, -clientPlayer.y);
