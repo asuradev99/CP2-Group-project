@@ -1,19 +1,24 @@
-//everybody
+//alon + ayush mostly
 class Player extends entity{
     
     constructor(playername, x, y, lastShotTime, hp, shield, clientid, points) {
+
+      // steven
       super(x, y);
       this.width = 20
       this.playername = playername;
-      // player stats
+      this.points = points;
+
+      // player stats ayush
       this.hp = hp;
       this.shield = shield;
       this.movementSpeed = 5;
       this.reloadTime = 300;
-      this.points = points;
+
+      // alon
       this.money = 0;
 
-      // player variables
+      // player variables ayush + alon
       this.smoothSpeed = 1;
       this.targetAngle = 0;
       this.currentAngle = 0;
@@ -24,7 +29,8 @@ class Player extends entity{
       this.millisBuffer = 0;
       this.id = clientid;
     }
-    
+
+    //ayush
     move(){
       if(keyIsPressed) {
         if(keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
@@ -41,7 +47,7 @@ class Player extends entity{
         }
       }
     }
-    
+    //alon
     shoot(lasers, millis) {
       if (millis - this.lastShotTime >= this.reloadTime) {
         let laser = new Laser(this.x, this.y, this.currentAngle, 10, 500, this, this.id);
@@ -50,7 +56,7 @@ class Player extends entity{
       }
 
     }
-
+    //alon + ayush
     lerpAngle(a, b, step) {
       // Prefer shortest distance,
       const delta = b - a;
@@ -78,12 +84,16 @@ class Player extends entity{
         stroke(255,0,0)
         strokeWeight(3)
         endShape(CLOSE);
+
+        // steven
         text(this.playername, this.x, this.y);
+
+        // steven
         let pointtext = "points: "+this.points
         text(pointtext, this.x, this.y+20);
         //text(this.hp, this.x, this.y+20);
 
-        //health bar
+        //health bar ayush
         stroke(51,0,0);
         strokeWeight(4);
         fill(0,0,0);
@@ -92,7 +102,7 @@ class Player extends entity{
         fill(255,0,0);
         rect(this.x-this.width*2-10,this.y+30,this.hp,16);
 
-        //shield bar
+        //shield bar ayush
         stroke(51,0,0);
         strokeWeight(4);
         noFill()

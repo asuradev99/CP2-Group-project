@@ -18,7 +18,7 @@ class Laser extends entity{
     this.y += Math.sin(this.angle) * this.speed;
   }
 
-  draw() {
+  draw() { 
     //undo camera translations to center bullet
     translate(this.clientPlayer.x , this.clientPlayer.y);
     // translate(-width / 2, -height / 2);
@@ -43,12 +43,14 @@ class Laser extends entity{
      //translate(width / 2, height / 2);
      translate(-this.clientPlayer.x, -this.clientPlayer.y);
 
-     // first move for laser
+     // first move for laser (move laser out of player so it doesn't hit the player)
+     // steven
      if(this.collisionCheck(this.clientPlayer)){
         this.x += Math.cos(this.angle) * 35;
         this.y += Math.sin(this.angle) * 35;
      }
 
+     // ethan
      this.maxRange -= 1; 
      if(this.maxRange <= 0) {
         this.speed = 0;

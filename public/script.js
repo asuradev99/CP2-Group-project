@@ -37,12 +37,14 @@ let laserThatLastHitThePlayer;
 
 mouseAngle = 0
 
+// steven
 let clientname = window.prompt("what is ur name","deez nuts");
 var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid, 0);
 
 
 
 //the p5js setup function
+// steven and ethan
 function setup() {
   //to fill up the full container, get the width an height
   // create the canvas as large as the screen width and height
@@ -51,7 +53,7 @@ function setup() {
   // StoreButton = createButton('Store');
   // StoreButton.position(window.innerWidth- 100, 100);
   // StoreButton.mousePressed(S.Display());
-  frameRate(60); //set framerate to 30, same as server
+  frameRate(60); //set framerate to 60, same as server
 
   socket.on("positions", (data) => {
     //get the data from the server to continually update the positions
@@ -77,6 +79,7 @@ function setup() {
 
 };
 
+// ethan
 function drawGrid() {
   let step = 100;
 
@@ -106,10 +109,10 @@ function drawGrid() {
 //(30-60 times / sec)
 function draw() {
 
-  //draw background color and grid
+  //draw background color and grid ethan
   background(0); 
 
-  //apply camera transformation
+  //apply camera transformation ethan
   translate(width / 2, height / 2);
   translate(-clientPlayer.x, -clientPlayer.y);
 
@@ -127,6 +130,7 @@ function draw() {
   clientPlayer.render();
 
   // for each client id got from the server except your client, render them
+  // steven
   for (const id in positions) {
     if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
@@ -156,7 +160,7 @@ function draw() {
       text(player.playername, circx, circy);
       text(player.hp, circx, circy+20);
       
-
+      // ethan
       if(newLaser == id) {
         console.log("i ahve to shot")
         laser = new Laser(player.x, player.y, player.currentAngle, 10, 500, player, id);
@@ -174,13 +178,14 @@ function draw() {
   }
 
 
-  //laser stuff
+  //laser stuff ayush + alon
   for (var j = lasers.length - 1; j >= 0; j--) {
     lasers[j].draw();
     lasers[j].move();
 
-    // laser hit player
+    //laser hit player
     if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
+      //shield steven
       if(clientPlayer.shield > 0){
         clientPlayer.shield=clientPlayer.shield-5;
         if(clientPlayer.shield < 0){
@@ -197,12 +202,14 @@ function draw() {
     }
 
     // remove lasers that are not moving
+    // steven
     if (lasers[j].speed == 0){
       lasers.splice(j, 1)
     }
   }
 
   //shield come back
+  // steven
   if(performance.now() - lastHitTime > 5000) {
     if(clientPlayer.shield < 25){
       clientPlayer.shield=clientPlayer.shield+0.1;
@@ -225,14 +232,19 @@ function draw() {
   //send updated packet to server
   sendPacket();
 
+  // steven and ethan
   newLaser = -1;
   
 //die
+// steven
   if(clientPlayer.hp <= 0){
     sendKill(laserThatLastHitThePlayer, clientid);
     para = document.createElement("p");
     text = "you are dead, not big surprise, you were killed by "+positions[laserThatLastHitThePlayer].name;
+
+    // ayush
     diesound.play();
+
     node = document.createTextNode(text);
     para.appendChild(node);
     elmnt = document.getElementById("bruh");
@@ -250,6 +262,7 @@ function draw() {
   }
 };
 
+// steven and ethan
 async function sendPacket() {
   socket.emit("updatePosition", {
     x: clientPlayer.x,
@@ -266,7 +279,7 @@ async function sendPacket() {
   });
 
 }
-
+// seteven and ethan
 async function sendBullet(x, y ,a) {
   socket.emit("bullet", {
     x: x,
@@ -275,7 +288,7 @@ async function sendBullet(x, y ,a) {
     
   })
 }
-
+// steven
 async function sendKill(id, id2){
   socket.emit("kill", {
     id: id,
@@ -283,21 +296,7 @@ async function sendKill(id, id2){
   })
 }
 
-//grid
-function grid(){
-  stroke(51)
-  for (let i = 0; i < window.innerWidth; i+=100){
-    for (let j = 0; j < window.innerHeight; j+=100){
-      x=clientPlayer.x - window.innerWidth/2;
-      y=clientPlayer.y - window.innerHeight/2;
-      line(x, y, x, y+window.innerHeight)
-      line(x+window.innerWidth/2, y, x-window.innerWidth/2, y)
-    }
-  }
-}
-
-
-
+// steven
 function leaderboard(){
   console.log(numberOfPlayers)
   stroke(255,0,0)
@@ -337,6 +336,7 @@ function leaderboard(){
   //   sortedPoints[minindex][1] = tempi;
   // }
 
+  //steven
   let temptext = sortedPoints[0][0]
   text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3)
   temptext = sortedPoints[1][0]
