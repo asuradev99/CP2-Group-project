@@ -8,6 +8,7 @@ class Player extends entity{
       this.width = 20
       this.playername = playername;
       this.points = points;
+      this.maxShield = 25;
 
       // player stats ayush
       this.hp = hp;

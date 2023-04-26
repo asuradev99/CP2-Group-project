@@ -31,7 +31,7 @@ let numberOfPlayers = 0;
 let newLaser;
 let newPoints;
 let newMoney;
-var diesound = new Audio('die.wav');
+var diesound = new Audio('/sound/die.wav');
 
 let laserThatLastHitThePlayer;
 
@@ -211,7 +211,7 @@ function draw() {
   //shield come back
   // steven
   if(performance.now() - lastHitTime > 5000) {
-    if(clientPlayer.shield < 25){
+    if(clientPlayer.shield < clientPlayer.maxShield){
       clientPlayer.shield=clientPlayer.shield+0.1;
     }
   }

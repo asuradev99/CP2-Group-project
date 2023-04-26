@@ -14,6 +14,7 @@ class Store{
             } else{
                 hidden = true;
                 select('#defaultCanvas0').hide() 
+                exitButton.hide
             }
         }
 
