@@ -11,6 +11,6 @@ https://user-images.githubusercontent.com/70330869/232074813-a5caac2b-a6ca-489b-
 
 # members
 - ethan: server / client
-- steven: server / client (he committed every time he didn't code the entire thing by himself)
+- steven: server / client (he committed most times, he didn't code the entire thing by himself)
 - ayush: code the objects
 - alon: code the objects
