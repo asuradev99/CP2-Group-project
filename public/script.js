@@ -240,7 +240,11 @@ function draw() {
   if(clientPlayer.hp <= 0){
     sendKill(laserThatLastHitThePlayer, clientid);
     para = document.createElement("p");
+    try{
     text = "you are dead, not big surprise, you were killed by "+positions[laserThatLastHitThePlayer].name;
+    }catch{
+      text = "you committed suicide"
+    }
 
     // ayush
     diesound.play();
