@@ -1,7 +1,7 @@
 # triangle game (name is a work in progress)
 Our project is an online 2d shooting game similar to asteroids or diep.io
 
-https://triangle.0000727.xyz -- the game
+https://triangle.diced.duckdns.org/ -- the game
 
 # screenshots/footage
 https://user-images.githubusercontent.com/70330869/232074813-a5caac2b-a6ca-489b-8199-4b349447b547.mov
