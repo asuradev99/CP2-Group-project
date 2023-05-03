@@ -7,7 +7,8 @@ https://triangle.0000727.xyz -- the game
 https://user-images.githubusercontent.com/70330869/232074813-a5caac2b-a6ca-489b-8199-4b349447b547.mov
 
 # gannt chart
-<img width="2042" alt="Screen Shot 2023-04-12 at 7 45 39 AM" src="https://user-images.githubusercontent.com/70330869/231477489-95caf344-32c2-41c6-8214-0232660a527a.png">
+<img width="2042" alt="Screen Shot 2023-05-03 at 7 51 46 AM" src="https://user-images.githubusercontent.com/70330869/235936209-dae5cb24-80bf-4035-ab84-9dab275bc393.png">
+
 
 # members
 - ethan: server / client
