@@ -23,7 +23,7 @@ class Enemy {
 }
 
   draw() {
-	stroke('red');
+	stroke();
 	rect(x,y,50,50);
 	fill(51);
   } 

@@ -32,7 +32,8 @@ let newLaser;
 let newPoints;
 let newMoney;
 var diesound = new Audio('/sound/die.wav');
-
+var boundaryX= 2000;
+var boundaryY = 2000;
 let laserThatLastHitThePlayer;
 
 mouseAngle = 0
@@ -49,10 +50,14 @@ function setup() {
   //to fill up the full container, get the width an height
   // create the canvas as large as the screen width and height
   createCanvas(window.innerWidth, window.innerHeight);
-  S = new Store();
-  let StoreButton = createButton('Store');
-  StoreButton.position(window.innerWidth- 100, 100);
-  StoreButton.mousePressed(S.Display());
+  // S = new Store();
+  // let StoreButton = createButton('Store');
+  // StoreButton.position(window.innerWidth- 100, 100);
+  // StoreButton.mousePressed(S.Display());
+
+  store = new Store();
+  store.init()
+
   frameRate(60); //set framerate to 60, same as server
 
   socket.on("positions", (data) => {
@@ -111,7 +116,7 @@ function draw() {
 
   //draw background color and grid ethan
   background(0); 
-  
+  checkBoundary();
   //apply camera transformation ethan
   translate(width / 2, height / 2);
   translate(-clientPlayer.x, -clientPlayer.y);
@@ -298,6 +303,15 @@ async function sendKill(id, id2){
     id: id,
     id2: id2
   })
+}
+//boundary alon + ayush
+function checkBoundary(){
+  if (clientPlayer.x <= -boundaryX || clientPlayer.X >= boundaryX){
+    clientPlayer.x = 1999;
+  }
+  if (clientPlayer.y <= -boundaryY || clientPlayer.y >= boundaryY) {
+    clientPlayer.y = 1999;
+  }
 }
 
 // steven
