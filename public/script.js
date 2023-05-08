@@ -32,6 +32,7 @@ let newLaser;
 let newPoints;
 let newMoney;
 var diesound = new Audio('/sound/die.wav');
+var bidensong = new Audio('/sound/the_song.wav');
 var boundaryX= 2000;
 var boundaryY = 2000;
 let laserThatLastHitThePlayer;
@@ -43,7 +44,7 @@ let clientname = "";
 while(clientname.length < 1 || clientname.length > 30){
   clientname = window.prompt("what is ur name (max length is 30 characters)","deez nuts");
 }
-var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid, 0);
+var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid, 0, 0);
 
 
 
@@ -79,7 +80,7 @@ function setup() {
     if(clientid == data.id){
       console.log("kill confirmed")
       newPoints = 100+positions[data.id2].points;
-      newMoney = 100+positions[data.id2].money;
+      newMoney = 1+positions[data.id2].money;
       clientPlayer.points = clientPlayer.points + newPoints
       clientPlayer.money = clientPlayer.money + newMoney
     }
@@ -195,13 +196,14 @@ function draw() {
     if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
       //shield steven
       if(clientPlayer.shield > 0){
-        clientPlayer.shield=clientPlayer.shield-laser.damage;
+        //clientPlayer.shield=clientPlayer.shield - lasers[j].damage;
+        clientPlayer.shield=clientPlayer.shield - 5;
         if(clientPlayer.shield < 0){
           clientPlayer.hp=clientPlayer.hp+clientPlayer.shield-1
           clientPlayer.shield=0;
         }
       } else{
-        clientPlayer.hp=clientPlayer.hp-laser.damage;
+        clientPlayer.hp=clientPlayer.hp-5;
       }
       lasers[j].hit = true;
       laserThatLastHitThePlayer = lasers[j].id;
@@ -221,6 +223,11 @@ function draw() {
   if(performance.now() - lastHitTime > 5000) {
     if(clientPlayer.shield < clientPlayer.maxShield){
       clientPlayer.shield=clientPlayer.shield+clientPlayer.shieldRegen;
+    }
+    if(clientPlayer.isHpRegen){
+      if(clientPlayer.hp < clientPlayer.maxHp){
+        clientPlayer.hp = clientPlayer.hp + clientPlayer.hpRegen;
+      }
     }
   }
 
@@ -309,17 +316,22 @@ async function sendKill(id, id2){
 }
 //boundary alon + ayush
 function checkBoundary(){
-  if (clientPlayer.x <= -boundaryX || clientPlayer.X >= boundaryX){
+  if (clientPlayer.x <= -boundaryX) { 
     clientPlayer.x = 1999;
   }
-  if (clientPlayer.y <= -boundaryY || clientPlayer.y >= boundaryY) {
+  if (clientPlayer.x >= boundaryX) {
+    clientPlayer.x = 1999;
+  }
+  if (clientPlayer.y <= -boundaryY) { 
+    clientPlayer.y = -1999;
+  }
+  if (clientPlayer.y >= boundaryY) {
     clientPlayer.y = 1999;
   }
 }
 
 // steven
 function leaderboard(){
-  console.log(numberOfPlayers)
   stroke(255,0,0)
   let sortedPoints = [
     ['LEADERBOARD', 9999],

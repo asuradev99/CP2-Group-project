@@ -87,6 +87,7 @@ io.on("connection", (socket) => {
     //   positions[socket.id].points = data.points;
     // }
     positions[socket.id].points = data.points;
+    positions[socket.id].money = data.money;
     positions[socket.id].name = data.name;
     positions[socket.id].isShooting = data.isShooting;
     positions[socket.id].lastShotTime = data.lastShotTime;

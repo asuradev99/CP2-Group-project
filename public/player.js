@@ -1,7 +1,7 @@
 //alon + ayush mostly
 class Player extends entity{
     
-    constructor(playername, x, y, lastShotTime, hp, shield, clientid, points) {
+    constructor(playername, x, y, lastShotTime, hp, shield, clientid, points, money) {
 
       // steven
       super(x, y);
@@ -10,6 +10,11 @@ class Player extends entity{
       this.points = points;
       this.maxShield = 25;
       this.shieldRegen = 0.1;
+      this.laserDamage = 1;
+      this.laserSpeed = 10;
+      this.isHpRegen = false;
+      this.hpRegen = 0;
+      this.maxHp = 100;
 
       // player stats ayush
       this.hp = hp;
@@ -18,7 +23,7 @@ class Player extends entity{
       this.reloadTime = 300;
 
       // alon
-      this.money = 0;
+      this.money = money;
 
       // player variables ayush + alon
       this.smoothSpeed = 1;
@@ -30,6 +35,10 @@ class Player extends entity{
       this.isShooting = false;
       this.millisBuffer = 0;
       this.id = clientid;
+    }
+
+    removeMoney(i){
+      this.money-=i;
     }
 
     //ayush
@@ -52,7 +61,7 @@ class Player extends entity{
     //alon
     shoot(lasers, millis) {
       if (millis - this.lastShotTime >= this.reloadTime) {
-        let laser = new Laser(this.x, this.y, this.currentAngle, 10, 500, this, this.id);
+        let laser = new Laser(this.x, this.y, this.currentAngle, this.laserSpeed, 500, this, this.id, this.laserDamage);
         lasers.push(laser);
         this.lastShotTime = millis;
       }
@@ -111,9 +120,17 @@ class Player extends entity{
         rect(this.x-this.width*2-10,this.y+30,100,20);
         noStroke();
         fill(31,190,214);
-        rect(this.x-this.width*2-10,this.y+30,this.shield*4,16);
+        rect(this.x-this.width*2-10,this.y+30,this.shield*(100/this.maxShield),16);
 
-        
+        //money bar ayush
+        stroke(51,0,0);
+        strokeWeight(4);
+        noFill()
+        rect(this.x-this.width*2-10,this.y+60,100,20);
+        noStroke();
+        fill(255,215,0);
+        rect(this.x-this.width*2-10,this.y+60,this.money,16);
+
         // reset colors
         fill(0,0,0)
         stroke(255,0,0)

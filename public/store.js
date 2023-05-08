@@ -1,4 +1,4 @@
-//alon
+// ayush and steven
 class Store{
     // constructor(){
     //     let ReloadUpgradeCost = 1000;
@@ -56,7 +56,7 @@ class Store{
         let bulletSpeedButton;
         let hpRegenButton;
         let joeBidenButton;
-
+        
     }
 
     
@@ -66,7 +66,7 @@ class Store{
         this.hpButton = createButton('hp - 2');
         this.hpButton.position(0, 0);
         
-        this.shieldButton = createButton('shield - 2');
+        this.shieldButton = createButton('maxShield - 2');
         this.shieldButton.position(0, 20);
 
         this.shieldRegenButton = createButton('shieldRegen - 3');
@@ -87,51 +87,90 @@ class Store{
         this.hpRegenButton = createButton('hpRegen - 10');
         this.hpRegenButton.position(0, 140);
 
-        //garbage powerup (purely cosmetic, scams player out of 100 points)
+        //buy this to win the game (actually scams you out of 100 points)
         this.joeBidenButton = createButton('joeBiden - 100');
         this.joeBidenButton.position(0,160);
 
         this.hpButton.mousePressed(hpButtonAction)
         function hpButtonAction() {
-            player.hp += 100;
+        if (player.money>=2) {
+            player.hp = 100;
+            player.removeMoney(2)
         }
+    }
         this.shieldButton.mousePressed(shieldButtonAction)
         function shieldButtonAction() {
+            if (player.money>=2) {
             player.maxShield += 25;
+            player.removeMoney(2)
+            }
         }
         this.shieldRegenButton.mousePressed(shieldRegenAction)
         function shieldRegenAction() {
+            if (player.money>=3) {
             player.shieldRegen += 0.1;
+            player.removeMoney(3)
+            }
         }
         this.reloadTimeButton.mousePressed(reloadTimeAction)
         function reloadTimeAction() {
+            if (player.money>=2) {
             player.reloadTime -= 10;
+            player.removeMoney(2)
+            }
         }
         this.bulletDamageButton.mousePressed(bulletDamageAction)
         function bulletDamageAction() {
-            player.hp += 100;
+            if (player.money>=2) {
+            player.laserDamage += 5;
+            player.removeMoney(2)
+            }
         }
         this.movementSpeedButton.mousePressed(movementSpeedButtonAction)
         function movementSpeedButtonAction() {
+            if (player.money>=3) {
             player.movementSpeed += 1;
+            player.removeMoney(3)
+            }
         }
         this.bulletSpeedButton.mousePressed(bulletSpeedButtonAction)
         function bulletSpeedButtonAction() {
-            player.hp += 100;
+            if (player.money>=2) {
+            player.laserSpeed += 1;
+            player.removeMoney(2)
+            }
         }
         this.hpRegenButton.mousePressed(hpRegenButtonAction)
         function hpRegenButtonAction() {
             //no
-            player.hp += 100;
+            if (player.money>=10) {
+            player.hpRegen += 0.1;
+            player.isHpRegen = true;
+            player.removeMoney(10)
+            }
         }
         this.joeBidenButton.mousePressed(joeBidenButtonAction)
         function joeBidenButtonAction() {
-            //no
-            player.hp += 100;
+            if (player.money>=100) {
+                player.removeMoney(100)
+            var para = document.createElement("p");
+            var text = "YOU WIN!!!!!!!! 好工作！";
+
+            var node = document.createTextNode(text);
+            para.appendChild(node);
+            elmnt = document.getElementById("bruh");
+            elmnt.appendChild(para);
+
+            var elmnt = document.getElementById("bruh");
+            var img = document.createElement("img");
+            bidensong.play();
+            img.src = "./graphics/biden.jpg";
+            var src = document.getElementById("bruh");
+            src.appendChild(img);
+            elmnt = document.getElementById("defaultCanvas0"); elmnt.remove();
+            
+            }
         }
-
-        
-
     }
 }
 
