@@ -39,7 +39,10 @@ let laserThatLastHitThePlayer;
 mouseAngle = 0
 
 // steven
-let clientname = window.prompt("what is ur name","deez nuts");
+let clientname = "";
+while(clientname.length < 1 || clientname.length > 30){
+  clientname = window.prompt("what is ur name (max length is 30 characters)","deez nuts");
+}
 var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid, 0);
 
 
@@ -320,48 +323,39 @@ function leaderboard(){
   stroke(255,0,0)
   let sortedPoints = [
     ['LEADERBOARD', 9999],
-    ['best sorting algorithm', 9998],
     ['------------------', 9997]
   ];
   for(const id in positions){
-    for(let i = 0; i<numberOfPlayers+1; i++){
-      if(sortedPoints[i][1]<positions[id].points){
-        sortedPoints.splice(i, 0, [positions[id].name, positions[id].points])
-      } else{
-        temparray = [positions[id].name, positions[id].points]
-        sortedPoints.push(temparray)
-      }
+    // for(let i = 0; i<numberOfPlayers+1; i++){
+    //   if(sortedPoints[i][1]<positions[id].points){
+    //     sortedPoints.splice(i, 0, [positions[id].name, positions[id].points])
+    //   } else{
+    //     temparray = [positions[id].name, positions[id].points]
+    //     sortedPoints.push(temparray)
+    //   }
+    // }
+    if(positions[id].hp > 0 && positions[id].name.length > 0){
+      temparray = [positions[id].name, positions[id].points]
+      sortedPoints.push(temparray)
     }
   }
 
-  // for(const id in positions){
-  //   temparray = [positions[id].name, positions[id].points];
-  //   sortedPoints.push(temparray);
-  // };
-  // for(let i = 0; i < sortedPoints.length; i++){
-  //   let minindex = i
-  //   j = i+1;
-  //   for(j< sortedPoints.length; j++;){
-  //     jValue = sortedPoints[j]
-  //     indexValue = sortedPoints[minindex]
-  //     // if(jValue < indexValue){
-  //     //   minindex = j;
-  //     // }
-  //   }
-  //   let tempi = sortedPoints[i][1]
-  //   let tempminindex = sortedPoints[minindex][1]
-  //   sortedPoints[i][1] = tempminindex;
-  //   sortedPoints[minindex][1] = tempi;
-  // }
+  for(let i = 0; i < sortedPoints.length; i++){
+    for(let j = i+1; j < sortedPoints.length; j++){
+      if(sortedPoints[j][1] > sortedPoints[i][1]){
+        let temp = sortedPoints[i];
+        sortedPoints[i] = sortedPoints[j];
+        sortedPoints[j] = temp;
+      }
+    }
+  }
 
   //steven
   let temptext = sortedPoints[0][0]
   text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3)
   temptext = sortedPoints[1][0]
   text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+20)
-  temptext = sortedPoints[2][0]
-  text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+40)
-  for(let i = 3; i<sortedPoints.length-1; i++){
+  for(let i = 3; i<sortedPoints.length; i++){
     let temptext = sortedPoints[i][0]+': '+sortedPoints[i][1]
     text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+20*i)
     //console.log('printing leaderboard: '+temptext)
