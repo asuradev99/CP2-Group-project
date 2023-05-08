@@ -59,7 +59,7 @@ function setup() {
   // StoreButton.mousePressed(S.Display());
 
   store = new Store();
-  store.init()
+  store.init(clientPlayer)
 
   frameRate(60); //set framerate to 60, same as server
 

@@ -55,33 +55,39 @@ class Store{
         let movementSpeedButton;
         let bulletSpeedButton;
         let hpRegenButton;
-        let vanguardPartyRuleButton;
         let joeBidenButton;
     }
 
-    init(){
-        this.hpButton = createButton('hp');
+    init(player){
+        
+        function buttonAction(){
+            
+        }
+        
+        this.hpButton = createButton('hp - 2');
         this.hpButton.position(0, 0);
-        this.shieldButton = createButton('shield');
+        this.shieldButton = createButton('shield - 2');
         this.shieldButton.position(0, 20);
-        this.shieldRegenButton = createButton('shieldRegen');
+        this.shieldRegenButton = createButton('shieldRegen - 3');
         this.shieldRegenButton.position(0, 40); 
-        this.reloadTimeButton = createButton('reloadTime');
+        this.reloadTimeButton = createButton('reloadTime - 2');
         this.reloadTimeButton.position(0, 60);
-        this.bulletDamageButton = createButton('bulletDamage');
+        this.bulletDamageButton = createButton('bulletDamage - 2');
         this.bulletDamageButton.position(0, 80);
-        this.bulletPenetrationButton = createButton('bulletPenetration');
-        this.bulletPenetrationButton.position(0, 100); 
-        this.movementSpeedButton = createButton('movementSpeed');
-        this.movementSpeedButton.position(0, 120);
-        this.bulletSpeedButton = createButton('bulletSpeed');
-        this.bulletSpeedButton.position(0, 140);
-        this.hpRegenButton = createButton('hpRegen');
-        this.hpRegenButton.position(0, 160);
-        this.vanguardPartyRuleButton = createButton('vanguard party rule');
-        this.vanguardPartyRuleButton.position(0, 180);
-        this.joeBidenButton = createButton('joeBiden');
-        this.joeBidenButton.position(0, 200);
-    
+        this.movementSpeedButton = createButton('movementSpeed - 3');
+        this.movementSpeedButton.position(0, 100);
+        this.bulletSpeedButton = createButton('bulletSpeed - 2');
+        this.bulletSpeedButton.position(0, 120);
+        this.hpRegenButton = createButton('hpRegen - 10');
+        this.hpRegenButton.position(0, 140);
+        
+        //secret powerup (purely cosmetic, scams player out of 100 points)
+        if (player.money>=100) {
+            this.joeBidenButton = createButton('joeBiden - 100');
+            this.joeBidenButton.position(0,160);
+        };
+        
+        
+
     }
 }
