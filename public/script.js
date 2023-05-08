@@ -59,7 +59,7 @@ function setup() {
   // StoreButton.mousePressed(S.Display());
 
   store = new Store();
-  store.init(clientPlayer)
+  store.start(clientPlayer);
 
   frameRate(60); //set framerate to 60, same as server
 
@@ -195,13 +195,13 @@ function draw() {
     if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
       //shield steven
       if(clientPlayer.shield > 0){
-        clientPlayer.shield=clientPlayer.shield-5;
+        clientPlayer.shield=clientPlayer.shield-laser.damage;
         if(clientPlayer.shield < 0){
           clientPlayer.hp=clientPlayer.hp+clientPlayer.shield-1
           clientPlayer.shield=0;
         }
       } else{
-        clientPlayer.hp=clientPlayer.hp-5;
+        clientPlayer.hp=clientPlayer.hp-laser.damage;
       }
       lasers[j].hit = true;
       laserThatLastHitThePlayer = lasers[j].id;
@@ -220,7 +220,7 @@ function draw() {
   // steven
   if(performance.now() - lastHitTime > 5000) {
     if(clientPlayer.shield < clientPlayer.maxShield){
-      clientPlayer.shield=clientPlayer.shield+0.1;
+      clientPlayer.shield=clientPlayer.shield+clientPlayer.shieldRegen;
     }
   }
 

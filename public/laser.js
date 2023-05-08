@@ -1,6 +1,6 @@
 //alon + ayush
 class Laser extends entity{
-  constructor(x, y, mouseAngle, speed, maxRange, clientPlayer, ide) {
+  constructor(x, y, mouseAngle, speed, maxRange, clientPlayer, ide, damage) {
     super(x, y);
     this.speed = speed;
     this.width = 15;
@@ -11,6 +11,7 @@ class Laser extends entity{
     this.clientPlayer = clientPlayer;
     this.hit = false;
     this.id = ide;
+    this.damage = damage
   }
 
   move() {

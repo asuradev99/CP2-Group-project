@@ -56,38 +56,82 @@ class Store{
         let bulletSpeedButton;
         let hpRegenButton;
         let joeBidenButton;
+
     }
 
-    init(player){
-        
-        function buttonAction(){
-            
-        }
-        
+    
+
+    start(player){
+
         this.hpButton = createButton('hp - 2');
         this.hpButton.position(0, 0);
+        
         this.shieldButton = createButton('shield - 2');
         this.shieldButton.position(0, 20);
+
         this.shieldRegenButton = createButton('shieldRegen - 3');
         this.shieldRegenButton.position(0, 40); 
+
         this.reloadTimeButton = createButton('reloadTime - 2');
         this.reloadTimeButton.position(0, 60);
+
         this.bulletDamageButton = createButton('bulletDamage - 2');
         this.bulletDamageButton.position(0, 80);
+        
         this.movementSpeedButton = createButton('movementSpeed - 3');
         this.movementSpeedButton.position(0, 100);
+
         this.bulletSpeedButton = createButton('bulletSpeed - 2');
         this.bulletSpeedButton.position(0, 120);
+
         this.hpRegenButton = createButton('hpRegen - 10');
         this.hpRegenButton.position(0, 140);
-        
-        //secret powerup (purely cosmetic, scams player out of 100 points)
-        if (player.money>=100) {
-            this.joeBidenButton = createButton('joeBiden - 100');
-            this.joeBidenButton.position(0,160);
-        };
-        
+
+        //garbage powerup (purely cosmetic, scams player out of 100 points)
+        this.joeBidenButton = createButton('joeBiden - 100');
+        this.joeBidenButton.position(0,160);
+
+        this.hpButton.mousePressed(hpButtonAction)
+        function hpButtonAction() {
+            player.hp += 100;
+        }
+        this.shieldButton.mousePressed(shieldButtonAction)
+        function shieldButtonAction() {
+            player.maxShield += 25;
+        }
+        this.shieldRegenButton.mousePressed(shieldRegenAction)
+        function shieldRegenAction() {
+            player.shieldRegen += 0.1;
+        }
+        this.reloadTimeButton.mousePressed(reloadTimeAction)
+        function reloadTimeAction() {
+            player.reloadTime -= 10;
+        }
+        this.bulletDamageButton.mousePressed(bulletDamageAction)
+        function bulletDamageAction() {
+            player.hp += 100;
+        }
+        this.movementSpeedButton.mousePressed(movementSpeedButtonAction)
+        function movementSpeedButtonAction() {
+            player.movementSpeed += 1;
+        }
+        this.bulletSpeedButton.mousePressed(bulletSpeedButtonAction)
+        function bulletSpeedButtonAction() {
+            player.hp += 100;
+        }
+        this.hpRegenButton.mousePressed(hpRegenButtonAction)
+        function hpRegenButtonAction() {
+            //no
+            player.hp += 100;
+        }
+        this.joeBidenButton.mousePressed(joeBidenButtonAction)
+        function joeBidenButtonAction() {
+            //no
+            player.hp += 100;
+        }
+
         
 
     }
 }
+
