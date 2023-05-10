@@ -1,7 +1,7 @@
 //alon + ayush mostly
 class Player extends entity{
     
-    constructor(playername, x, y, lastShotTime, hp, shield, clientid, points, money) {
+    constructor(playername, x, y, lastShotTime, hp, shield, clientid, points, money, inertia, laserDamage, laserSpeed) {
 
       // steven
       super(x, y);
@@ -10,11 +10,12 @@ class Player extends entity{
       this.points = points;
       this.maxShield = 25;
       this.shieldRegen = 0.1;
-      this.laserDamage = 1;
-      this.laserSpeed = 10;
+      this.laserDamage = laserDamage;
+      this.laserSpeed = laserSpeed;
       this.isHpRegen = false;
       this.hpRegen = 0;
       this.maxHp = 100;
+      this.inertia = inertia;
 
       // player stats ayush
       this.hp = hp;
@@ -43,25 +44,30 @@ class Player extends entity{
 
     //ayush
     move(){
+      this.inertia = [0,0];
       if(keyIsPressed) {
         if(keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
           this.x-=this.movementSpeed;
+          this.inertia = [-this.movementSpeed, this.inertia[1]]
         } 
         if(keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
           this.x+=this.movementSpeed;
+          this.inertia = [+this.movementSpeed, this.inertia[1]]
         }
         if(keyIsDown(UP_ARROW)||keyIsDown(87)) {
           this.y-=this.movementSpeed;
+          this.inertia = [this.inertia[0], -this.movementSpeed]
         } 
         if(keyIsDown(DOWN_ARROW)||keyIsDown(83)) {
           this.y+=this.movementSpeed;
+          this.inertia = [this.inertia[0], +this.movementSpeed]
         }
       }
     }
     //alon
     shoot(lasers, millis) {
       if (millis - this.lastShotTime >= this.reloadTime) {
-        let laser = new Laser(this.x, this.y, this.currentAngle, this.laserSpeed, 500, this, this.id, this.laserDamage);
+        let laser = new Laser(this.x, this.y, this.currentAngle, this.laserSpeed, 500, this, this.id, this.laserDamage, this.inertia);
         lasers.push(laser);
         this.lastShotTime = millis;
       }
@@ -128,8 +134,16 @@ class Player extends entity{
         noFill()
         rect(this.x-this.width*2-10,this.y+60,100,20);
         noStroke();
-        fill(255,215,0);
-        rect(this.x-this.width*2-10,this.y+60,this.money,16);
+
+        if(this.money<101){
+          fill(255,215,0);
+          rect(this.x-this.width*2-10,this.y+60,this.money,16);
+        } else{
+          fill(255-(this.money-100)/2,215,0);
+          rect(this.x-this.width*2-10,this.y+60,100,16);
+          fill(255-this.money/2,100,0);
+          rect(this.x-this.width*2-10,this.y+60,this.money%100,16);
+        }
 
         // reset colors
         fill(0,0,0)

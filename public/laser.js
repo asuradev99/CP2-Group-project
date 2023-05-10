@@ -1,6 +1,6 @@
 //alon + ayush
 class Laser extends entity{
-  constructor(x, y, mouseAngle, speed, maxRange, clientPlayer, ide, adamage) {
+  constructor(x, y, mouseAngle, speed, maxRange, clientPlayer, ide, adamage, inertia) {
     super(x, y);
     this.speed = speed;
     this.width = 15;
@@ -12,6 +12,7 @@ class Laser extends entity{
     this.hit = false;
     this.id = ide;
     this.damage = adamage;
+    this.inertia = inertia;
   }
 
   move() {
@@ -29,6 +30,8 @@ class Laser extends entity{
 
     const dx = this.x - this.clientPlayer.x;
     const dy = this.y - this.clientPlayer.y;
+    this.x += this.inertia[0]
+    this.y += this.inertia[1]
      translate(dx, dy)
      rotate(this.angle);
 

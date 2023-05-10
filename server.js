@@ -88,10 +88,13 @@ io.on("connection", (socket) => {
     // }
     positions[socket.id].points = data.points;
     positions[socket.id].money = data.money;
+    positions[socket.id].inertia = data.inertia;
+    positions[socket.id].laserDamage = data.laserDamage;
     positions[socket.id].name = data.name;
     positions[socket.id].isShooting = data.isShooting;
     positions[socket.id].lastShotTime = data.lastShotTime;
     positions[socket.id].millis = data.millis;
+    positions[socket.id].laserSpeed = data.laserSpeed
   });
 
   socket.on("bullet", (data) => {

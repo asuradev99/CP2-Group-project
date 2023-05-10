@@ -44,7 +44,7 @@ let clientname = "";
 while(clientname.length < 1 || clientname.length > 30){
   clientname = window.prompt("what is ur name (max length is 30 characters)","deez nuts");
 }
-var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid, 0, 0);
+var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid, 0, 0, 0, 5, 10);
 
 
 
@@ -72,13 +72,13 @@ function setup() {
     numberOfPlayers = data;
   });
   socket.on("recievebullet", (data) => {
-    console.log("we bullet")
+    //console.log("we bullet")
     newLaser = data;
     
   })
   socket.on("recievekill", (data) =>{
     if(clientid == data.id){
-      console.log("kill confirmed")
+      //console.log("kill confirmed")
       newPoints = 100+positions[data.id2].points;
       newMoney = 1+positions[data.id2].money;
       clientPlayer.points = clientPlayer.points + newPoints
@@ -143,7 +143,7 @@ function draw() {
   for (const id in positions) {
     if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points, positions[id].money);
+      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points, positions[id].money, positions[id].inertia, positions[id].laserDamage, positions[id].laserSpeed);
       // rotate that player and render them
       player.rotate(positions[id].a)
       player.render();
@@ -171,8 +171,8 @@ function draw() {
       
       // ethan
       if(newLaser == id) {
-        console.log("i ahve to shot")
-        laser = new Laser(player.x, player.y, player.currentAngle, 10, 500, player, id);
+        //console.log("i ahve to shot")
+        laser = new Laser(player.x, player.y, player.currentAngle, player.laserSpeed, 500, player, id, player.laserDamage, player.inertia);
         
         lasers.push(laser)
       }
@@ -197,13 +197,13 @@ function draw() {
       //shield steven
       if(clientPlayer.shield > 0){
         //clientPlayer.shield=clientPlayer.shield - lasers[j].damage;
-        clientPlayer.shield=clientPlayer.shield - 5;
+        clientPlayer.shield=clientPlayer.shield - lasers[j].damage;
         if(clientPlayer.shield < 0){
           clientPlayer.hp=clientPlayer.hp+clientPlayer.shield-1
           clientPlayer.shield=0;
         }
       } else{
-        clientPlayer.hp=clientPlayer.hp-5;
+        clientPlayer.hp=clientPlayer.hp-lasers[j].damage;
       }
       lasers[j].hit = true;
       laserThatLastHitThePlayer = lasers[j].id;
@@ -294,7 +294,10 @@ async function sendPacket() {
     hp: clientPlayer.hp,
     shield: clientPlayer.shield,
     points: clientPlayer.points,
-    money: clientPlayer.money
+    money: clientPlayer.money,
+    inertia: clientPlayer.inertia,
+    laserDamage: clientPlayer.laserDamage,
+    laserSpeed: clientPlayer.laserSpeed
   });
 
 }
