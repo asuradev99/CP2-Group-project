@@ -101,8 +101,14 @@ io.on("connection", (socket) => {
     // bullets.x = data.x;
     // bullets.y = data.y;
     // bullets.a = data.a;
-    bullets  = socket.id;
+    bullets  = [socket.id, data.c];
     io.emit("recievebullet", bullets);
+  })
+  socket.on("deleteBullet", (data) => {
+    // bullets.x = data.x;
+    // bullets.y = data.y;
+    // bullets.a = data.a;
+    io.emit("recieveDeleteBullet", data);
   })
 
   socket.on("kill", (data) => {

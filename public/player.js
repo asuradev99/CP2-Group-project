@@ -4,7 +4,7 @@ class Player extends entity{
     constructor(playername, x, y, lastShotTime, hp, shield, clientid, points, money, inertia, laserDamage, laserSpeed) {
 
       // steven
-      super(x, y);
+      super(x, y, hp);
       this.width = 20
       this.playername = playername;
       this.points = points;
@@ -16,9 +16,10 @@ class Player extends entity{
       this.hpRegen = 0;
       this.maxHp = 100;
       this.inertia = inertia;
+      this.bulletcounter = 0;
 
       // player stats ayush
-      this.hp = hp;
+      //this.hp = hp;
       this.shield = shield;
       this.movementSpeed = 5;
       this.reloadTime = 300;
@@ -67,9 +68,10 @@ class Player extends entity{
     //alon
     shoot(lasers, millis) {
       if (millis - this.lastShotTime >= this.reloadTime) {
-        let laser = new Laser(this.x, this.y, this.currentAngle, this.laserSpeed, 500, this, this.id, this.laserDamage, this.inertia);
+        let laser = new Laser(this.x, this.y, this.currentAngle, this.laserSpeed, 500, this, this.id, this.laserDamage, this.inertia, bulletCounter);
         lasers.push(laser);
         this.lastShotTime = millis;
+        this.bulletcounter++;
       }
 
     }

@@ -1,8 +1,9 @@
 //ethan
 class entity {
-    constructor(x, y){
+    constructor(x, y, hp){
         this.x = x;
         this.y = y;
+        this.hp = hp;
         this.width;
     }
 

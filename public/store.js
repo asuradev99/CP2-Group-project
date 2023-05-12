@@ -56,13 +56,13 @@ class Store{
         let bulletSpeedButton;
         let hpRegenButton;
         let joeBidenButton;
-        
+        let cost;
     }
 
     
 
     start(player){
-
+        
         this.hpButton = createButton('hp - 2');
         this.hpButton.position(0, 0);
         
@@ -168,7 +168,7 @@ class Store{
             var src = document.getElementById("bruh");
             src.appendChild(img);
             elmnt = document.getElementById("defaultCanvas0"); elmnt.remove();
-            
+            //outside of play field
             }
         }
     }

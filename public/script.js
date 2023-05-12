@@ -23,12 +23,13 @@ socket.on("connect", () => {
 
 // ----------------- create variables
 let positions = {};
+let players = [];
 let lasers = [];
 let lastShotTime = 0;
 let lastHitTime = 0;
 let canShoot;
 let numberOfPlayers = 0;
-let newLaser;
+let newLaser = [-1, -1];
 let newPoints;
 let newMoney;
 var diesound = new Audio('/sound/die.wav');
@@ -36,13 +37,17 @@ var bidensong = new Audio('/sound/the_song.wav');
 var boundaryX= 2000;
 var boundaryY = 2000;
 let laserThatLastHitThePlayer;
+let bulletCounter = 0;
+
+// its like garbagew collection but for lasers
+let laserCollection = [-1, -1]
 
 mouseAngle = 0
 
 // steven
 let clientname = "";
 while(clientname.length < 1 || clientname.length > 30){
-  clientname = window.prompt("what is ur name (max length is 30 characters)","deez nuts");
+  clientname = window.prompt("what is ur name (max length is 30 characters)","Name");
 }
 var clientPlayer = new Player(clientname, window.innerWidth/2, window.innerHeight/2, lastShotTime, 100, 25, clientid, 0, 0, 0, 5, 10);
 
@@ -86,6 +91,10 @@ function setup() {
     }
   })
 
+  socket.on("recieveDeleteBullet", (data) =>{
+    laserCollection = data;
+  })
+
 };
 
 // ethan
@@ -120,7 +129,7 @@ function draw() {
 
   //draw background color and grid ethan
   background(0); 
-  checkBoundary();
+
   //apply camera transformation ethan
   translate(width / 2, height / 2);
   translate(-clientPlayer.x, -clientPlayer.y);
@@ -128,6 +137,9 @@ function draw() {
   //grid
   //grid()
   drawGrid();
+
+  //boundary
+  checkBoundary();
 
   // leaderboard
   leaderboard()
@@ -148,6 +160,7 @@ function draw() {
       player.rotate(positions[id].a)
       player.render();
 
+      // put a circle if the player is offscreen
       var circx, circy;
       var smallerside, dist;
       dist = player.findDistance(clientPlayer)
@@ -170,9 +183,9 @@ function draw() {
       text(player.hp, circx, circy+20);
       
       // ethan
-      if(newLaser == id) {
+      if(newLaser[0] == id) {
         //console.log("i ahve to shot")
-        laser = new Laser(player.x, player.y, player.currentAngle, player.laserSpeed, 500, player, id, player.laserDamage, player.inertia);
+        laser = new Laser(player.x, player.y, player.currentAngle, player.laserSpeed, 500, player, id, player.laserDamage, player.inertia, newLaser[1]);
         
         lasers.push(laser)
       }
@@ -192,8 +205,15 @@ function draw() {
     lasers[j].draw();
     lasers[j].move();
 
+    // remove lasers that are not moving
+    // steven
+    if (lasers[j].speed == 0 || lasers[j].hit){
+      lasers.splice(j, 1)
+    }
+
     //laser hit player
     if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
+      sendDeleteBullet([lasers[j].id, lasers[j].bulletid]);
       //shield steven
       if(clientPlayer.shield > 0){
         //clientPlayer.shield=clientPlayer.shield - lasers[j].damage;
@@ -209,13 +229,15 @@ function draw() {
       laserThatLastHitThePlayer = lasers[j].id;
 
       lastHitTime = performance.now()
+
+      if(lasers[j].id == laserCollection[0] && lasers[j].bulletid == laserCollection[1]){
+        lasers[j].speed = 0;
+      }
+      lasers.splice(j, 1);
+      break;
     }
 
-    // remove lasers that are not moving
-    // steven
-    if (lasers[j].speed == 0){
-      lasers.splice(j, 1)
-    }
+    
   }
 
   //shield come back
@@ -234,7 +256,8 @@ function draw() {
   // shoot bullet
   if (mouseIsPressed) {
     if(performance.now() - clientPlayer.lastShotTime >= clientPlayer.reloadTime) {
-      sendBullet(lasers)
+      sendBullet(bulletCounter);
+      bulletCounter++;
       
     }
     clientPlayer.shoot(lasers, performance.now());
@@ -248,7 +271,7 @@ function draw() {
   sendPacket();
 
   // steven and ethan
-  newLaser = -1;
+  newLaser = [-1, -1];
   
 //die
 // steven
@@ -302,11 +325,9 @@ async function sendPacket() {
 
 }
 // seteven and ethan
-async function sendBullet(x, y ,a) {
+async function sendBullet(c) {
   socket.emit("bullet", {
-    x: x,
-    y: y,
-    a: a
+    c: c
     
   })
 }
@@ -317,25 +338,39 @@ async function sendKill(id, id2){
     id2: id2
   })
 }
+//delete laser
+async function sendDeleteBullet(id){
+  socket.emit("deleteBullet", {
+    id: id
+  })
+}
+
+
 //boundary alon + ayush
 function checkBoundary(){
-  if (clientPlayer.x <= -boundaryX) { 
-    clientPlayer.x = 1999;
-  }
-  if (clientPlayer.x >= boundaryX) {
-    clientPlayer.x = 1999;
-  }
-  if (clientPlayer.y <= -boundaryY) { 
-    clientPlayer.y = -1999;
-  }
-  if (clientPlayer.y >= boundaryY) {
-    clientPlayer.y = 1999;
-  }
+  stroke(255,255,255);
+  strokeWeight(10);
+  noFill();
+  rect(-2010,-2010,4010,4010);
+    if (clientPlayer.x <= -boundaryX) { 
+      clientPlayer.x = -1999;
+    }
+    if (clientPlayer.x >= boundaryX) {
+      clientPlayer.x = 1999;
+    }
+    if (clientPlayer.y <= -boundaryY) { 
+      clientPlayer.y = -1999;
+    }
+    if (clientPlayer.y >= boundaryY) {
+     clientPlayer.y = 1999;
+ }
+ fill(0,0,0);
 }
 
 // steven
 function leaderboard(){
   stroke(255,0,0)
+  strokeWeight(6);
   let sortedPoints = [
     ['LEADERBOARD', 9999],
     ['------------------', 9997]
