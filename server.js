@@ -32,6 +32,8 @@ let lastKill = {};
 let numberOfPlayers = 0;
 let e = performance.now();
 let cheaters = {};
+let foodCounter = 0;
+let foodList = {};
 
 //Socket configuration
 io.on("connection", (socket) => {
@@ -124,13 +126,29 @@ io.on("connection", (socket) => {
   })
 }});
 
+function updateFood(){
+  foodCounter++
+  if(foodCounter == 6000 && foodList.length < 100){
+    foodList.push({
+      x: Math.floor(Math.random()*4000)-2000,
+      y: Math.floor(Math.random()*4000)-2000,
+      hp: 10,
+      width: 20,
+    })
+
+    
+  }
+
+  io.emit("foodUpdate", foodList);
+}
+
 //send positions every framerate to each client
 const frameRate = 60;
 setInterval(() => {
   numberOfPlayers=
   io.emit("positions", positions);
+
+  updateFood()
   
   io.emit("time", numberOfPlayers);
 }, 1000 / frameRate);
-
-

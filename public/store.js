@@ -16,28 +16,28 @@ class Store{
 
     start(player){
         
-        this.hpButton = createButton('hp - 2');
+        this.hpButton = createButton('hp - 4');
         this.hpButton.position(0, 0);
         
-        this.shieldButton = createButton('maxShield - 2');
+        this.shieldButton = createButton('maxShield - 4');
         this.shieldButton.position(0, 20);
 
-        this.shieldRegenButton = createButton('shieldRegen - 3');
+        this.shieldRegenButton = createButton('shieldRegen - 6');
         this.shieldRegenButton.position(0, 40); 
 
-        this.reloadTimeButton = createButton('reloadTime - 2');
+        this.reloadTimeButton = createButton('reloadTime - 4');
         this.reloadTimeButton.position(0, 60);
 
-        this.bulletDamageButton = createButton('bulletDamage - 3');
+        this.bulletDamageButton = createButton('bulletDamage - 6');
         this.bulletDamageButton.position(0, 80);
         
-        this.movementSpeedButton = createButton('movementSpeed - 3');
+        this.movementSpeedButton = createButton('movementSpeed - 6');
         this.movementSpeedButton.position(0, 100);
 
-        this.bulletSpeedButton = createButton('bulletSpeed - 2');
+        this.bulletSpeedButton = createButton('bulletSpeed - 4');
         this.bulletSpeedButton.position(0, 120);
 
-        this.hpRegenButton = createButton('hpRegen - 10');
+        this.hpRegenButton = createButton('hpRegen - 20');
         this.hpRegenButton.position(0, 140);
 
         //buy this to win the game (actually scams you out of 100 points)
@@ -46,60 +46,60 @@ class Store{
 
         this.hpButton.mousePressed(hpButtonAction)
         function hpButtonAction() {
-        if (player.money>=2) {
+        if (player.money>=4) {
             player.hp = 100;
-            player.removeMoney(2)
+            player.removeMoney(4)
         }
     }
         this.shieldButton.mousePressed(shieldButtonAction)
         function shieldButtonAction() {
-            if (player.money>=2) {
+            if (player.money>=4) {
             player.maxShield += 25;
-            player.removeMoney(2)
+            player.removeMoney(4)
             }
         }
         this.shieldRegenButton.mousePressed(shieldRegenAction)
         function shieldRegenAction() {
-            if (player.money>=3) {
+            if (player.money>=6) {
             player.shieldRegen += 0.1;
-            player.removeMoney(3)
+            player.removeMoney(6)
             }
         }
         this.reloadTimeButton.mousePressed(reloadTimeAction)
         function reloadTimeAction() {
-            if (player.money>=2) {
+            if (player.money>=4) {
             player.reloadTime -= 10;
-            player.removeMoney(2)
+            player.removeMoney(4)
             }
         }
         this.bulletDamageButton.mousePressed(bulletDamageAction)
         function bulletDamageAction() {
-            if (player.money>=3) {
+            if (player.money>=6) {
             player.laserDamage += 5;
-            player.removeMoney(3)
+            player.removeMoney(6)
             }
         }
         this.movementSpeedButton.mousePressed(movementSpeedButtonAction)
         function movementSpeedButtonAction() {
-            if (player.money>=3) {
+            if (player.money>=6) {
             player.movementSpeed += 1;
-            player.removeMoney(3)
+            player.removeMoney(6)
             }
         }
         this.bulletSpeedButton.mousePressed(bulletSpeedButtonAction)
         function bulletSpeedButtonAction() {
-            if (player.money>=2) {
+            if (player.money>=4) {
             player.laserSpeed += 1;
-            player.removeMoney(2)
+            player.removeMoney(4)
             }
         }
         this.hpRegenButton.mousePressed(hpRegenButtonAction)
         function hpRegenButtonAction() {
             //no
-            if (player.money>=10) {
+            if (player.money>=20) {
             player.hpRegen += 0.1;
             player.isHpRegen = true;
-            player.removeMoney(10)
+            player.removeMoney(20)
             }
         }
         this.joeBidenButton.mousePressed(joeBidenButtonAction)

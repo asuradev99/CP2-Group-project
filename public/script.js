@@ -23,6 +23,7 @@ socket.on("connect", () => {
 
 // ----------------- create variables
 let positions = {};
+let localFoodList = {};
 let localPlayerData = {};
 let players = [];
 let lasers = [];
@@ -86,7 +87,7 @@ function setup() {
     if(clientid == data.id){
       //console.log("kill confirmed")
       newPoints = 100+positions[data.id2].points;
-      newMoney = 1+positions[data.id2].money;
+      newMoney = 2+positions[data.id2].money;
       clientPlayer.points = clientPlayer.points + newPoints
       clientPlayer.money = clientPlayer.money + newMoney
     }
@@ -95,6 +96,10 @@ function setup() {
   socket.on("recieveDeleteBullet", (data) =>{
     //console.log(data)
     laserCollection = data;
+  })
+
+  socket.on("foodUpdate", (data) =>{
+    localFoodList = data;
   })
 
 };
@@ -160,6 +165,13 @@ function draw() {
   mouseAngle = atan2(mouseY - height / 2, mouseX - width / 2)
   clientPlayer.rotate(mouseAngle);
   clientPlayer.render();
+
+  for(const id in localFoodList) {
+    let food = new Food(localFoodList[id].x, localFoodList[id].y, localFoodList[id].hp, localFoodList[id].width)
+    food.update(lasers)
+    food.killfood(clientPlayer)
+    food.render()
+  }
 
   // for each client id got from the server except your client, render them
   // steven
