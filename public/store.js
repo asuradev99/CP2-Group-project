@@ -1,51 +1,6 @@
 // ayush and steven
 class Store{
-    // constructor(){
-    //     let ReloadUpgradeCost = 1000;
-    //     let SpeedUpgradeCost = 1000;
-    // }
-    // Display(){
-    //     // steven
-    //     let hidden = false;
-    //     function gaming(){
-    //         if(hidden){
-    //             hidden = false;
-    //             select('#defaultCanvas0').show()  
-    //         } else{
-    //             hidden = true;
-    //             select('#defaultCanvas0').hide() 
-    //             exitButton.hide
-    //         }
-    //     }
-
-    //     // createCanvas(400, 400);
-    //     // create the exit button
-    //     let exitButton = createButton('Exit');
-    //     exitButton.position(width - 70, 20);
-
-    //     // steven
-    //     exitButton.mousePressed( gaming);
-    // }
-
     constructor(){
-        // javascript is a great coding language!!!1!
-        // const shopItems = new Array(
-        //     ['hp',2],
-        //     ['shield',2],
-        //     ['shieldRegen',3],
-        //     ['reloadTime',2],
-        //     ['bulletDamage',2],
-        //     ['bulletPenetration',3],
-        //     ['movementSpeed',3],
-        //     ['bulletSpeed',2],
-        //     //one time
-        //     ['hpRegen',10],
-        //     ['vanguard party rule',10],
-        //     //hidden item
-        //     ['joeBiden',100]
-        // );
-
-        //let buttons = {}
         let hpButton;
         let shieldButton;
         let shieldRegenButton;
@@ -56,10 +11,8 @@ class Store{
         let bulletSpeedButton;
         let hpRegenButton;
         let joeBidenButton;
-        let cost;
     }
 
-    
 
     start(player){
         
@@ -153,6 +106,8 @@ class Store{
         function joeBidenButtonAction() {
             if (player.money>=100) {
                 player.removeMoney(100)
+                clientPlayer.isBiden = true;
+            
             var para = document.createElement("p");
             var text = "YOU WIN!!!!!!!! 好工作！";
 

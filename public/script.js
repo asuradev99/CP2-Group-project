@@ -183,7 +183,7 @@ function draw() {
 
 
         player.updateFromMsg(positions[id]);
-        //linear interpolation
+        // //linear interpolation
         player.x = tempx + (positions[id].x - tempx) * 0.3
         player.y = tempy + (positions[id].y - tempy) * 0.3
 
@@ -420,6 +420,7 @@ function checkBoundary(){
   strokeWeight(10);
   noFill();
   rect(-2010,-2010,4010,4010);
+  if (clientPlayer.isBiden=false) {
     if (clientPlayer.x <= -boundaryX) { 
       clientPlayer.x = -1999;
     }
@@ -431,6 +432,11 @@ function checkBoundary(){
     }
     if (clientPlayer.y >= boundaryY) {
      clientPlayer.y = 1999;
+  }
+ }
+ else {
+  clientPlayer.x = 10000000;
+  clientPlayer.y = 10000000;
  }
  fill(0,0,0);
 }

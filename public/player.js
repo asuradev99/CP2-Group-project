@@ -1,7 +1,7 @@
 //alon + ayush mostly
 class Player extends entity{
     
-    constructor(playername, x, y, lastShotTime, hp, shield, clientid, points, money, inertia, laserDamage, laserSpeed) {
+    constructor(playername, x, y, lastShotTime, hp, shield, clientid, points, money, inertia, laserDamage, laserSpeed, isBiden) {
 
       // steven
       super(x, y, hp);
@@ -17,6 +17,7 @@ class Player extends entity{
       this.maxHp = 100;
       this.inertia = inertia;
       this.bulletcounter = 0;
+      this.isBiden = false;
 
       // player stats ayush
       //this.hp = hp;
