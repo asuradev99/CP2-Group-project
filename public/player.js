@@ -5,7 +5,7 @@ class Player extends entity{
 
       // steven
       super(x, y, hp);
-      this.width = 20
+      this.width = 30
       this.playername = playername;
       this.points = points;
       this.maxShield = 25;
@@ -117,6 +117,9 @@ class Player extends entity{
         let pointtext = this.points
         text(pointtext, this.x - 10 , this.y+60);
         }
+
+      // hitbox
+      circle(this.x, this.y, this.width);
 	
         //text(this.hp, this.x, this.y+20);
 

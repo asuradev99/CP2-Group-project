@@ -187,7 +187,7 @@ function draw() {
         player.x = tempx + (positions[id].x - tempx) * 0.3
         player.y = tempy + (positions[id].y - tempy) * 0.3
 
-        player.currentAngle = tempangle + (positions[id].currentAngle - tempangle) * 0.3;
+        // player.currentAngle = tempangle + (positions[id].currentAngle - tempangle) * 0.3;
 
 
       }
@@ -249,7 +249,7 @@ function draw() {
     lasers[j].move();
 
     //laser hit player
-    if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
+    if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false && clientPlayer.id != lasers[j].id){
       sendDeleteBullet([lasers[j].id, lasers[j].bulletid]);
       //shield steven
       if(clientPlayer.shield > 0){
@@ -474,7 +474,7 @@ function leaderboard(){
     ['LEADERBOARD', 9999])
 
 
-  console.log(sortedPoints)
+  // console.log(sortedPoints)
 
   //steven
   let temptext = sortedPoints[0][0]

@@ -50,12 +50,13 @@ class Laser extends entity{
 
      // first move for laser (move laser out of player so it doesn't hit the player)
      // steven
-     if(this.collisionCheck(this.clientPlayer)){
-        this.x += Math.cos(this.angle) * 35;
-        this.y += Math.sin(this.angle) * 35;
-     }
-
-     // ethan
+     // if(this.collisionCheck(this.clientPlayer)){
+     //    this.x += Math.cos(this.angle) * 60;
+     //    this.y += Math.sin(this.angle) * 60;
+     //   console.log("MOOOOVE");
+     // }
+     //
+     // // ethan
      this.maxRange -= 1; 
      if(this.maxRange <= 0) {
 	      this.speed = 0;
