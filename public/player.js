@@ -25,7 +25,7 @@ class Player extends entity{
       this.reloadTime = 300;
 
       // alon
-      this.money = 1000;
+      this.money = 8;
 
       // player variables ayush + alon
       this.smoothSpeed = 1;

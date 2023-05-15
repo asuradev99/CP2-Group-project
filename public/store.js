@@ -75,7 +75,7 @@ class Store{
         this.reloadTimeButton = createButton('reloadTime - 2');
         this.reloadTimeButton.position(0, 60);
 
-        this.bulletDamageButton = createButton('bulletDamage - 2');
+        this.bulletDamageButton = createButton('bulletDamage - 3');
         this.bulletDamageButton.position(0, 80);
         
         this.movementSpeedButton = createButton('movementSpeed - 3');
@@ -121,9 +121,9 @@ class Store{
         }
         this.bulletDamageButton.mousePressed(bulletDamageAction)
         function bulletDamageAction() {
-            if (player.money>=2) {
+            if (player.money>=3) {
             player.laserDamage += 5;
-            player.removeMoney(2)
+            player.removeMoney(3)
             }
         }
         this.movementSpeedButton.mousePressed(movementSpeedButtonAction)
