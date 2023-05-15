@@ -166,12 +166,12 @@ function draw() {
   clientPlayer.rotate(mouseAngle);
   clientPlayer.render();
 
-  for(const id in localFoodList) {
-    let food = new Food(localFoodList[id].x, localFoodList[id].y, localFoodList[id].hp, localFoodList[id].width)
-    food.update(lasers)
-    food.killfood(clientPlayer)
-    food.render()
-  }
+  // for(const id in localFoodList) {
+  //   let food = new Food(localFoodList[id].x, localFoodList[id].y, localFoodList[id].hp, localFoodList[id].width)
+  //   food.update(lasers)
+  //   food.killfood(clientPlayer)
+  //   food.render()
+  // }
 
   // for each client id got from the server except your client, render them
   // steven
