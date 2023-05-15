@@ -230,12 +230,12 @@ function draw() {
 
     // delete lasers that are marked by laser collection
     if(lasers[j].id == laserCollection.id && lasers[j].bulletid-1 == laserCollection.count){
-      lasers[j].speed = 0;
+      lasers[j].speed = lasers[j].speed / 2;
     }
 
     // remove lasers that are not moving
     // steven
-    if (lasers[j].speed == 0 || lasers[j].hit){
+    if (lasers[j].speed < 1 || lasers[j].hit){
       lasers.splice(j, 1)
       j--;
     }

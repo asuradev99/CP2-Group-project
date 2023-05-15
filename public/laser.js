@@ -31,8 +31,8 @@ class Laser extends entity{
 
     const dx = this.x - this.clientPlayer.x;
     const dy = this.y - this.clientPlayer.y;
-    this.x += this.inertia[0]
-    this.y += this.inertia[1]
+    // this.x += this.inertia[0]
+    // this.y += this.inertia[1]
      translate(dx, dy)
      rotate(this.angle);
 
@@ -57,8 +57,11 @@ class Laser extends entity{
 
      // ethan
      this.maxRange -= 1; 
-     if(this.maxRange <= 0) {
-        this.speed = 0;
+     if(this.maxRange <= 10 || this.speed < 10) {
+	this.speed = this.speed/2;
+     }
+     if(this.maxRange < 0) {
+	this.speed = 0;
      }
     }
 
