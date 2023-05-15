@@ -229,8 +229,8 @@ function draw() {
     }
 
     // delete lasers that are marked by laser collection
-    if(lasers[j].id == laserCollection.id && lasers[j].bulletid-1 == laserCollection.count){
-      lasers[j].speed = lasers[j].speed / 2;
+    if((lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count) || (lasers[j].id == clientPlayer.id && lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count+1)){
+      lasers[j].speed = 0;
     }
 
     // remove lasers that are not moving

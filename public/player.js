@@ -110,6 +110,7 @@ class Player extends entity{
         // steven
         let pointtext = "points: "+this.points
         text(pointtext, this.x, this.y+20);
+	
         //text(this.hp, this.x, this.y+20);
 
         //health bar ayush
@@ -137,6 +138,7 @@ class Player extends entity{
         rect(this.x-this.width*2-10,this.y+60,100,20);
         noStroke();
 
+	// steven
         if(this.money<101){
           fill(255,215,0);
           rect(this.x-this.width*2-10,this.y+60,this.money,16);
@@ -146,6 +148,13 @@ class Player extends entity{
           fill(255-this.money/2,100,0);
           rect(this.x-this.width*2-10,this.y+60,this.money%100,16);
         }
+
+	fill(0,0,0)
+        stroke(255,0,0)
+        strokeWeight(3)
+	
+	let moneytext = "money: "+this.money;
+	text(moneytext, this.x, this.y+70)
 
         // reset colors
         fill(0,0,0)
