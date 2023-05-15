@@ -7,6 +7,9 @@ class Food extends entity {
     render() {
         stroke(0,0,255);
         fill(0,0,255);
+        fill(0,0,0)
+        stroke(255, 0, 0)
+        strokeWeight(3)
         circle(this.x,this.y,10);
     }
 

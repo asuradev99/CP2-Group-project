@@ -109,7 +109,7 @@ class Store{
                 clientPlayer.isBiden = true;
             
             var para = document.createElement("p");
-            var text = "YOU WIN!!!!!!!! 好工作！";
+            var text = "YOU WIN!!!!!!!! 好工作！ YOU HAVE BEEN DRAFTED INTO THE UNITED STATES ARMY!!!!!!!!!";
 
             var node = document.createTextNode(text);
             para.appendChild(node);

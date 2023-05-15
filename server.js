@@ -33,7 +33,7 @@ let numberOfPlayers = 0;
 let e = performance.now();
 let cheaters = {};
 let foodCounter = 0;
-let foodList = {};
+let foodList = [];
 
 //Socket configuration
 io.on("connection", (socket) => {
@@ -127,17 +127,23 @@ io.on("connection", (socket) => {
 }});
 
 function updateFood(){
-  foodCounter++
-  if(foodCounter == 6000 && foodList.length < 100){
+  // foodCounter++
+  // if(foodCounter == 6000){
     foodList.push({
-      x: Math.floor(Math.random()*4000)-2000,
-      y: Math.floor(Math.random()*4000)-2000,
+      // x: Math.floor(Math.random()*4000)-2000,
+      // y: Math.floor(Math.random()*4000)-2000,
+      x: 0,
+      y: 0,
       hp: 10,
       width: 20,
     })
 
+  //   foodCounter=0
+
+  //   console.log("we made food!")
+
     
-  }
+  // }
 
   io.emit("foodUpdate", foodList);
 }

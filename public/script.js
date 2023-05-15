@@ -23,7 +23,7 @@ socket.on("connect", () => {
 
 // ----------------- create variables
 let positions = {};
-let localFoodList = {};
+let localFoodList = [];
 let localPlayerData = {};
 let players = [];
 let lasers = [];
@@ -87,7 +87,7 @@ function setup() {
     if(clientid == data.id){
       //console.log("kill confirmed")
       newPoints = 100+positions[data.id2].points;
-      newMoney = 2+positions[data.id2].money;
+      newMoney = 1+positions[data.id2].money;
       clientPlayer.points = clientPlayer.points + newPoints
       clientPlayer.money = clientPlayer.money + newMoney
     }
@@ -166,12 +166,17 @@ function draw() {
   clientPlayer.rotate(mouseAngle);
   clientPlayer.render();
 
-  // for(const id in localFoodList) {
-  //   let food = new Food(localFoodList[id].x, localFoodList[id].y, localFoodList[id].hp, localFoodList[id].width)
-  //   food.update(lasers)
-  //   food.killfood(clientPlayer)
-  //   food.render()
-  // }
+  for(const id in localFoodList) {
+    let food = new Food(id.x, id.y, id.hp, id.width)
+    // food.update(lasers)
+    // food.killfood(clientPlayer)
+    // food.render()
+    stroke(255, 0, 0)
+    fill(0,0,0)
+    strokeWeight(3)
+    circle(id.x,id.y,50);
+    console.log("rending")
+  }
 
   // for each client id got from the server except your client, render them
   // steven
@@ -199,7 +204,7 @@ function draw() {
         player.x = tempx + (positions[id].x - tempx) * 0.3
         player.y = tempy + (positions[id].y - tempy) * 0.3
 
-        // player.currentAngle = tempangle + (positions[id].currentAngle - tempangle) * 0.3;
+        player.currentAngle = tempangle + (positions[id].currentAngle - tempangle) * 0.3;
 
 
       }
@@ -432,7 +437,6 @@ function checkBoundary(){
   strokeWeight(10);
   noFill();
   rect(-2010,-2010,4010,4010);
-  if (clientPlayer.isBiden=false) {
     if (clientPlayer.x <= -boundaryX) { 
       clientPlayer.x = -1999;
     }
@@ -445,11 +449,6 @@ function checkBoundary(){
     if (clientPlayer.y >= boundaryY) {
      clientPlayer.y = 1999;
   }
- }
- else {
-  clientPlayer.x = 10000000;
-  clientPlayer.y = 10000000;
- }
  fill(0,0,0);
 }
 
