@@ -125,7 +125,7 @@ io.on("connection", (socket) => {
 }});
 
 //send positions every framerate to each client
-const frameRate = 10;
+const frameRate = 60;
 setInterval(() => {
   numberOfPlayers=
   io.emit("positions", positions);

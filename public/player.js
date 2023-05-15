@@ -25,7 +25,7 @@ class Player extends entity{
       this.reloadTime = 300;
 
       // alon
-      this.money = money;
+      this.money = 1000;
 
       // player variables ayush + alon
       this.smoothSpeed = 1;
@@ -109,11 +109,14 @@ class Player extends entity{
         endShape(CLOSE);
 
         // steven
-        text(this.playername, this.x, this.y);
+        text(this.playername, this.x - this.playername.length * 2, this.y - 20);
 
         // steven
-        let pointtext = "points: "+this.points
-        text(pointtext, this.x, this.y+20);
+        if(!(this == clientPlayer)) {
+
+        let pointtext = this.points
+        text(pointtext, this.x - 10 , this.y+60);
+        }
 	
         //text(this.hp, this.x, this.y+20);
 
@@ -135,30 +138,29 @@ class Player extends entity{
         fill(31,190,214);
         rect(this.x-this.width*2-10,this.y+30,this.shield*(100/this.maxShield),16);
 
-        //money bar ayush
-        stroke(51,0,0);
-        strokeWeight(4);
-        noFill()
-        rect(this.x-this.width*2-10,this.y+60,100,20);
-        noStroke();
+  //       //money bar ayush
+  //       stroke(51,0,0);
+  //       strokeWeight(4);
+  //       noFill()
+  //       rect(this.x-this.width*2-10,this.y+60,100,20);
+  //       noStroke();
 
-	// steven
-        if(this.money<101){
-          fill(255,215,0);
-          rect(this.x-this.width*2-10,this.y+60,this.money,16);
-        } else{
-          fill(255-(this.money-100)/2,215,0);
-          rect(this.x-this.width*2-10,this.y+60,100,16);
-          fill(255-this.money/2,100,0);
-          rect(this.x-this.width*2-10,this.y+60,this.money%100,16);
-        }
+	// // steven
+  //       if(this.money<101){
+  //         fill(255,215,0);
+  //         rect(this.x-this.width*2-10,this.y+60,this.money,16);
+  //       } else{
+  //         fill(255-(this.money-100)/2,215,0);
+  //         rect(this.x-this.width*2-10,this.y+60,100,16);
+  //         fill(255-this.money/2,100,0);
+  //         rect(this.x-this.width*2-10,this.y+60,this.money%100,16);
+  //       }
 
-	fill(0,0,0)
-        stroke(255,0,0)
-        strokeWeight(3)
+	// fill(0,0,0)
+  //       stroke(255,0,0)
+  //       strokeWeight(3)
 	
-	let moneytext = "money: "+this.money;
-	text(moneytext, this.x, this.y+70)
+	
 
         // reset colors
         fill(0,0,0)

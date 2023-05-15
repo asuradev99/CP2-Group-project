@@ -131,6 +131,10 @@ function draw() {
   //draw background color and grid ethan
   background(0); 
 
+
+  
+  push()
+
   //apply camera transformation ethan
   translate(width / 2, height / 2);
   translate(-clientPlayer.x, -clientPlayer.y);
@@ -139,11 +143,17 @@ function draw() {
   //grid()
   drawGrid();
 
+
+  
   //boundary
   checkBoundary();
 
   // leaderboard
   leaderboard()
+
+
+
+  textSize(10);
 
   //update player position
   clientPlayer.move();
@@ -194,25 +204,26 @@ function draw() {
 
       // put a circle if the player is offscreen
       var circx, circy;
-      var smallerside, dist;
+      var dist;
       dist = player.findDistance(clientPlayer)
-      
-      player.collisionCheck(clientPlayer);
-      if(window.innerHeight < window.innerWidth){
-        smallerside = window.innerHeight;
-      } else{
-        smallerside = window.innerWidth;
+
+      let dx = abs(clientPlayer.x - player.x); 
+      let dy = abs(clientPlayer.y - player.y);
+
+      if(dy > window.innerHeight / 2 || dx > window.innerWidth / 2) {
+
+        player.collisionCheck(clientPlayer);
+        let smallerside = min(window.innerWidth, window.innerHeight);
+        if(dist>smallerside/2){
+          r = ((smallerside/2)-20) / dist
+          circx = r * player.x + (1 - r) * clientPlayer.x;
+          circy = r * player.y + (1 - r) * clientPlayer.y;
+        }
+        circle(circx, circy, 200/(dist/100));
+        fill(0, 0, 0);
+        text(player.playername, circx, circy);
+        text(player.hp, circx, circy+20);
       }
-      if(dist>smallerside/2){
-        r = ((smallerside/2)-50) / dist
-        circx = r * player.x + (1 - r) * clientPlayer.x;
-        circy = r * player.y + (1 - r) * clientPlayer.y;
-      }
-      noFill();
-      circle(circx, circy, 200/(dist/100));
-      fill(0, 0, 0);
-      text(player.playername, circx, circy);
-      text(player.hp, circx, circy+20);
       
       // ethan
       if(newLaser[0] == id) {
@@ -273,6 +284,26 @@ function draw() {
 
     
   }
+
+
+
+  pop()
+
+  //points bar
+  textSize(50);
+  stroke(255, 0, 0);
+  strokeWeight(4)
+  let poionts = "Points: "+ clientPlayer.points;
+  text(poionts, window.innerWidth / 2 - (poionts.length * 50 / 10), 40)
+
+   //points bar
+  textSize(20);
+  stroke(255, 0, 0);
+  strokeWeight(3)
+  let moneytext = "Money: " + clientPlayer.money;
+  text(moneytext, 0, 200, 40)
+
+  
 
   //shield come back
   // steven
@@ -409,40 +440,48 @@ function leaderboard(){
   stroke(255,0,0)
   strokeWeight(6);
   let sortedPoints = [
-    ['LEADERBOARD', 9999],
-    ['------------------', 9997]
+   
   ];
   for(const id in positions){
-    // for(let i = 0; i<numberOfPlayers+1; i++){
-    //   if(sortedPoints[i][1]<positions[id].points){
-    //     sortedPoints.splice(i, 0, [positions[id].name, positions[id].points])
-    //   } else{
-    //     temparray = [positions[id].name, positions[id].points]
-    //     sortedPoints.push(temparray)
-    //   }
-    // }
     if(positions[id].hp > 0 && positions[id].playername.length > 0){
       temparray = [positions[id].playername, positions[id].points]
       sortedPoints.push(temparray)
     }
   }
 
-  for(let i = 0; i < sortedPoints.length; i++){
-    for(let j = i+1; j < sortedPoints.length; j++){
-      if(sortedPoints[j][1] > sortedPoints[i][1]){
-        let temp = sortedPoints[i];
-        sortedPoints[i] = sortedPoints[j];
-        sortedPoints[j] = temp;
-      }
-    }
-  }
+  // for(let i = 0; i < sortedPoints.length; i++){
+  //   for(let j = i+1; j < sortedPoints.length; j++){
+  //     if(sortedPoints[j][1] > sortedPoints[i][1]){
+  //       let temp = sortedPoints[i];
+  //       sortedPoints[i] = sortedPoints[j];
+  //       sortedPoints[j] = temp;
+  //     }
+  //   }
+  // }
+
+
+  sortedPoints.sort(function(a, b) {
+  
+    if (a[1] > b[1]) return -1;
+    if (a[1] < b[1]) return 1;
+    return 0;
+  });
+
+
+  sortedPoints.unshift(['------------------', 9997])
+
+  sortedPoints.unshift(
+    ['LEADERBOARD', 9999])
+
+
+  console.log(sortedPoints)
 
   //steven
   let temptext = sortedPoints[0][0]
   text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3)
   temptext = sortedPoints[1][0]
   text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+20)
-  for(let i = 3; i<sortedPoints.length; i++){
+  for(let i = 2; i<sortedPoints.length; i++){
     let temptext = sortedPoints[i][0]+': '+sortedPoints[i][1]
     text(temptext, clientPlayer.x+window.innerWidth/3, clientPlayer.y-window.innerHeight/3+20*i)
     //console.log('printing leaderboard: '+temptext)
