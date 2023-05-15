@@ -23,6 +23,7 @@ socket.on("connect", () => {
 
 // ----------------- create variables
 let positions = {};
+let localPlayerData = {};
 let players = [];
 let lasers = [];
 let lastShotTime = 0;
@@ -92,7 +93,7 @@ function setup() {
   })
 
   socket.on("recieveDeleteBullet", (data) =>{
-    console.log(data)
+    //console.log(data)
     laserCollection = data;
   })
 
@@ -110,8 +111,7 @@ function drawGrid() {
 
 
    strokeWeight(6);
-   stroke(40);
-
+   stroke(20);
 
    for (let x = left; x < right; x += step) {
       line(x, top, x, bottom);
@@ -157,12 +157,40 @@ function draw() {
     if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
       //const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points, positions[id].money, positions[id].inertia, positions[id].laserDamage, positions[id].laserSpeed);
-      const player = new Player();
-      player.updateFromMsg(positions[id]);
+      let player = localPlayerData[id];
+
+      if(player == null) {
+        player = new Player();
+        player.updateFromMsg(positions[id]);
+
+        localPlayerData[id] = player;
+          console.log("new")
+      } else {
+
+        let tempx = player.x;
+        let tempy = player.y;
+        let tempangle = player.currentAngle; 
+
+
+        player.updateFromMsg(positions[id]);
+        //linear interpolation
+        player.x = tempx + (positions[id].x - tempx) * 0.3
+        player.y = tempy + (positions[id].y - tempy) * 0.3
+
+        player.currentAngle = tempangle + (positions[id].currentAngle - tempangle) * 0.3;
+
+
+      }
+      
       
       // rotate that player and render them
       //player.rotate(positions[id].a)
       player.render();
+
+    //  player = new Player();
+    //  player.updateFromMsg(positions[id]);
+      
+     //console.log(player.x, player.hp)
 
       // put a circle if the player is offscreen
       var circx, circy;
@@ -194,7 +222,7 @@ function draw() {
         lasers.push(laser)
       }
 
- 
+      
       // if(positions[id].isShooting){
       //   text("I am soting", player.x, player.y)
       //   player.shoot(lasers, mill)

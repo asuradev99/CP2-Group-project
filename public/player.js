@@ -37,6 +37,10 @@ class Player extends entity{
       this.isShooting = false;
       this.millisBuffer = 0;
       this.id = clientid;
+
+      //interpolation stuff (ethan)
+      this.ix = this.x; 
+      this.iy = this.y;
     }
 
     removeMoney(i){
@@ -100,7 +104,7 @@ class Player extends entity{
             vertex( (this.x) + cos(theta) * this.scl, (this.y) + sin(theta) * this.scl);
         }
         fill(0,0,0)
-        stroke(255,0,0)
+        stroke(255, 0, 0)
         strokeWeight(3)
         endShape(CLOSE);
 
@@ -165,3 +169,8 @@ class Player extends entity{
     }
 }
 
+
+
+class ClientController extends Player{
+
+}
