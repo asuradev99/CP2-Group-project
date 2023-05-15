@@ -92,6 +92,7 @@ function setup() {
   })
 
   socket.on("recieveDeleteBullet", (data) =>{
+    console.log(data)
     laserCollection = data;
   })
 
@@ -205,12 +206,6 @@ function draw() {
     lasers[j].draw();
     lasers[j].move();
 
-    // remove lasers that are not moving
-    // steven
-    if (lasers[j].speed == 0 || lasers[j].hit){
-      lasers.splice(j, 1)
-    }
-
     //laser hit player
     if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false){
       sendDeleteBullet([lasers[j].id, lasers[j].bulletid]);
@@ -225,16 +220,24 @@ function draw() {
       } else{
         clientPlayer.hp=clientPlayer.hp-lasers[j].damage;
       }
-      lasers[j].hit = true;
+      
       laserThatLastHitThePlayer = lasers[j].id;
 
       lastHitTime = performance.now()
 
-      if(lasers[j].id == laserCollection[0] && lasers[j].bulletid == laserCollection[1]){
-        lasers[j].speed = 0;
-      }
-      lasers.splice(j, 1);
-      break;
+      lasers[j].hit = true;
+    }
+
+    // delete lasers that are marked by laser collection
+    if(lasers[j].id == laserCollection.id && lasers[j].bulletid-1 == laserCollection.count){
+      lasers[j].speed = 0;
+    }
+
+    // remove lasers that are not moving
+    // steven
+    if (lasers[j].speed == 0 || lasers[j].hit){
+      lasers.splice(j, 1)
+      j--;
     }
 
     
@@ -341,7 +344,8 @@ async function sendKill(id, id2){
 //delete laser
 async function sendDeleteBullet(id){
   socket.emit("deleteBullet", {
-    id: id
+    id: id[0],
+    count: id[1]
   })
 }
 
