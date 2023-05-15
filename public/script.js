@@ -156,9 +156,12 @@ function draw() {
   for (const id in positions) {
     if (id != clientid && positions[id].hp > 0){
       // create a player for that id in positions
-      const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points, positions[id].money, positions[id].inertia, positions[id].laserDamage, positions[id].laserSpeed);
+      //const player = new Player(positions[id].name, positions[id].x, positions[id].y, positions[id].lastShotTime, positions[id].hp, positions[id].shield, id, positions[id].points, positions[id].money, positions[id].inertia, positions[id].laserDamage, positions[id].laserSpeed);
+      const player = new Player();
+      player.updateFromMsg(positions[id]);
+      
       // rotate that player and render them
-      player.rotate(positions[id].a)
+      //player.rotate(positions[id].a)
       player.render();
 
       // put a circle if the player is offscreen
@@ -309,22 +312,24 @@ function draw() {
 
 // steven and ethan
 async function sendPacket() {
-  socket.emit("updatePosition", {
-    x: clientPlayer.x,
-    y: clientPlayer.y,
-    a: mouseAngle,
-    name: clientname,
-    isShooting: clientPlayer.isShooting,
-    lastShotTime: clientPlayer.lastShotTime,
-    millis: 0,
-    hp: clientPlayer.hp,
-    shield: clientPlayer.shield,
-    points: clientPlayer.points,
-    money: clientPlayer.money,
-    inertia: clientPlayer.inertia,
-    laserDamage: clientPlayer.laserDamage,
-    laserSpeed: clientPlayer.laserSpeed
-  });
+  // socket.emit("updatePosition", {
+  //   x: clientPlayer.x,
+  //   y: clientPlayer.y,
+  //   a: mouseAngle,
+  //   name: clientname,
+  //   isShooting: clientPlayer.isShooting,
+  //   lastShotTime: clientPlayer.lastShotTime,
+  //   millis: 0,
+  //   hp: clientPlayer.hp,
+  //   shield: clientPlayer.shield,
+  //   points: clientPlayer.points,
+  //   money: clientPlayer.money,
+  //   inertia: clientPlayer.inertia,
+  //   laserDamage: clientPlayer.laserDamage,
+  //   laserSpeed: clientPlayer.laserSpeed
+  // });
+  
+   socket.emit("updatePosition", clientPlayer.emitUpdateMsg("all"))
 
 }
 // seteven and ethan
@@ -388,8 +393,8 @@ function leaderboard(){
     //     sortedPoints.push(temparray)
     //   }
     // }
-    if(positions[id].hp > 0 && positions[id].name.length > 0){
-      temparray = [positions[id].name, positions[id].points]
+    if(positions[id].hp > 0 && positions[id].playername.length > 0){
+      temparray = [positions[id].playername, positions[id].points]
       sortedPoints.push(temparray)
     }
   }

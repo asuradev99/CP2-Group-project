@@ -58,7 +58,7 @@ class Laser extends entity{
      // ethan
      this.maxRange -= 1; 
      if(this.maxRange <= 0) {
-	this.speed = 0;
+	      this.speed = 0;
      }
     }
 
