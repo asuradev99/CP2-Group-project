@@ -69,34 +69,6 @@ io.on("connection", (socket) => {
   
   //client can send a message 'updatePosition' each time the clients position changes
   socket.on("updatePosition", (data) => {
-    // //if(!antiCheat(positions[socket.id].x, data.x, 20)){
-    //   positions[socket.id].x = data.x;
-    // //}
-    // //if(!antiCheat(positions[socket.id].y, data.y, 20)){
-    //   positions[socket.id].y = data.y;
-    // //}
-
-    // positions[socket.id].a = data.a;
-
-    // //if(!antiCheat(positions[socket.id].hp, data.hp, 25)){
-    //   positions[socket.id].hp = data.hp;
-    // //}
-    // //if(!antiCheat(positions[socket.id].shield, data.shield, 100)){
-    //   positions[socket.id].shield = data.shield;
-    // //}
-    // // will fix points later
-    // // if(!antiCheat(positions[socket.id].points, data.points, 1000)){
-    // //   positions[socket.id].points = data.points;
-    // // }
-    // positions[socket.id].points = data.points;
-    // positions[socket.id].money = data.money;
-    // positions[socket.id].inertia = data.inertia;
-    // positions[socket.id].laserDamage = data.laserDamage;
-    // positions[socket.id].name = data.name;
-    // positions[socket.id].isShooting = data.isShooting;
-    // positions[socket.id].lastShotTime = data.lastShotTime;
-    // positions[socket.id].millis = data.millis;
-    // positions[socket.id].laserSpeed = data.laserSpeed
 
 
     positions[socket.id] = data; 
@@ -128,15 +100,15 @@ io.on("connection", (socket) => {
 
 function updateFood(){
   // foodCounter++
-  // if(foodCounter == 6000){
+   if(foodList.length < 100){
     foodList.push({
-      // x: Math.floor(Math.random()*4000)-2000,
-      // y: Math.floor(Math.random()*4000)-2000,
-      x: 0,
-      y: 0,
+       x: Math.floor(Math.random()*4000)-2000,
+       y: Math.floor(Math.random()*4000)-2000,
       hp: 10,
       width: 20,
     })
+
+  }
 
   //   foodCounter=0
 

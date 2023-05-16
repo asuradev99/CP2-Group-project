@@ -1,10 +1,10 @@
 //ethan
 class entity {
-    constructor(x, y, hp){
+    constructor(x, y, hp, width){
         this.x = x;
         this.y = y;
         this.hp = hp;
-        this.width;
+        this.width = width;
     }
 
     collisionCheck(entity){

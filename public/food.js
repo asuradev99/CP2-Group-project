@@ -5,21 +5,25 @@ class Food extends entity {
   }
 
     render() {
-        stroke(0,0,255);
-        fill(0,0,255);
+        //stroke(0,0,255);
+        //fill(0,0,255);
         fill(0,0,0)
-        stroke(255, 0, 0)
+        stroke(0, 255, 0)
         strokeWeight(3)
-        circle(this.x,this.y,10);
+        circle(this.x,this.y, this.width);
+        text(this.hp, this.x, this.y)
+        stroke(255, 0, 0)
+
     }
 
     update(lasers) {
       for (var j = lasers.length - 1; j>= 0; j--){
         if(lasers[j].collisionCheck(this) && lasers[j].hit == false){
+          console.log("hit")
             this.hp = this.hp - lasers[j].damage;
             
             lasers[j].hit = true;
-        }
+        } 
       }
     }
 

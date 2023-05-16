@@ -41,6 +41,26 @@ var boundaryY = 2000;
 let laserThatLastHitThePlayer;
 let bulletCounter = 0;
 
+//idea: master list of every single entity in the game
+
+//rows are for global Id, columns are local ID
+
+// indexed by: entityList[globalId][localId]
+//server globalID is 0
+
+//operations: 
+//Create entity: tells the server to push to the list (globaId array) with the specified data
+//Destroy entity: tells the server to remove a local index from the list
+//Update entity: tells the server to replace the contents of specified index 
+
+//entityList is overriden every frame by the server
+
+//for bullets, which are not stored by the server (and other entities which are computed locally)
+
+
+//in the client code: 
+//entityList is iterated over and any necessary updates/renders are made
+
 // its like garbagew collection but for lasers
 let laserCollection = [-1, -1]
 
@@ -167,15 +187,15 @@ function draw() {
   clientPlayer.render();
 
   for(const id in localFoodList) {
-    let food = new Food(id.x, id.y, id.hp, id.width)
-    // food.update(lasers)
-    // food.killfood(clientPlayer)
-    // food.render()
-    stroke(255, 0, 0)
-    fill(0,0,0)
-    strokeWeight(3)
-    circle(id.x,id.y,50);
-    console.log("rending")
+    let food = new Food(localFoodList[id].x, localFoodList[id].y, localFoodList[id].hp, localFoodList[id].width)
+     food.update(lasers)
+     food.killfood(clientPlayer)
+     food.render()
+    // stroke(255, 0, 0)
+    // fill(255,0,0)
+    // strokeWeight(3)
+    // circle(localFoodList[id].x, localFoodList[id].y,50);
+    //console.log(id)
   }
 
   // for each client id got from the server except your client, render them
@@ -407,6 +427,7 @@ async function sendPacket() {
   
    socket.emit("updatePosition", clientPlayer.emitUpdateMsg("all"))
 
+   socket.emit
 }
 // seteven and ethan
 async function sendBullet(c) {
@@ -465,16 +486,6 @@ function leaderboard(){
       sortedPoints.push(temparray)
     }
   }
-
-  // for(let i = 0; i < sortedPoints.length; i++){
-  //   for(let j = i+1; j < sortedPoints.length; j++){
-  //     if(sortedPoints[j][1] > sortedPoints[i][1]){
-  //       let temp = sortedPoints[i];
-  //       sortedPoints[i] = sortedPoints[j];
-  //       sortedPoints[j] = temp;
-  //     }
-  //   }
-  // }
 
 
   sortedPoints.sort(function(a, b) {
