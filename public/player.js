@@ -23,7 +23,7 @@ class Player extends entity{
       //this.hp = hp;
       this.shield = shield;
       this.movementSpeed = 5;
-      this.reloadTime = 300;
+      this.reloadTime = 600;
 
       // alon
       this.money = 8;

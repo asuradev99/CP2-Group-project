@@ -105,11 +105,12 @@ function setup() {
   })
   socket.on("recievekill", (data) =>{
     if(clientid == data.id){
-      //console.log("kill confirmed")
-      newPoints = 100+positions[data.id2].points;
-      newMoney = 1+positions[data.id2].money;
-      clientPlayer.points = clientPlayer.points + newPoints
-      clientPlayer.money = clientPlayer.money + newMoney
+	//console.log("kill confirmed")
+	let moneyScale = (100*Math.pow(0.99912111, clientPlayer.points))/10;
+	newPoints = 100+positions[data.id2].points;
+	newMoney = moneyScale+positions[data.id2].money*moneyScale;
+	clientPlayer.points = clientPlayer.points + newPoints
+	clientPlayer.money = clientPlayer.money + newMoney
     }
   })
 
@@ -123,10 +124,11 @@ function setup() {
   })
 
   socket.on("awardPoints", (data) =>{
-    if(clientPlayer.id == data){
-      clientPlayer.money += 1;
-      clientPlayer.points += 10;
-    }
+      if(clientPlayer.id == data[0]){
+	  let moneyScale = data[1]*(100*Math.pow(0.997, clientPlayer.points))/30;
+	  clientPlayer.money += moneyScale;
+	  clientPlayer.points += 50;
+      }
   })
 };
 
@@ -195,9 +197,10 @@ function draw() {
   for(let id in localFoodList) {
       let food = new Food(localFoodList[id].x, localFoodList[id].y, localFoodList[id].hp, localFoodList[id].width)
       for(let i = 0; i < lasers.length; i++){
-	  if(food.update(lasers[i]) && lasers[i].hit == false)
+	  if(food.update(lasers[i]))
 	  {
 	      sendDamageFood(clientPlayer.laserDamage, id, clientPlayer.id);
+	      lasers[i].hit == true;
 	      // this doesn't work
 	      // sendDeleteBullet([lasers[i].id, lasers[i].bulletid])
 	  }

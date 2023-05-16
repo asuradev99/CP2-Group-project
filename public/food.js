@@ -26,8 +26,8 @@ class Food extends entity {
 	// }
 	if(laser.collisionCheck(this) && laser.hit == false){
 	    console.log("hit")
-	    return true
 	    laser.hit = true
+	    return true
 	}
 	return false
     }

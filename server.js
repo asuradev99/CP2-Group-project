@@ -96,7 +96,7 @@ io.on("connection", (socket) => {
       if(foodList[data.foodID].hp <= 0){
 	  foodList.splice(data.foodID, 1);
 	  console.log("FOOD ELMINIATED")
-	  io.emit("awardPoints", data.clientid)
+	  io.emit("awardPoints", [data.clientid, foodList[data.foodID].points] )
       }
   })
 
@@ -108,25 +108,34 @@ io.on("connection", (socket) => {
 }});
 
 function updateFood(){
-  // foodCounter++
-   if(foodList.length < 100){
-    foodList.push({
-	x: Math.floor(Math.random()*4000)-2000,
-	y: Math.floor(Math.random()*4000)-2000,
-	hp: 10,
-	width: 20
-    })
+    // foodCounter++
+    if(foodList.length < 100){
+	foodList.push({
+	    x: Math.floor(Math.random()*4000)-2000,
+	    y: Math.floor(Math.random()*4000)-2000,
+	    hp: 10,
+	    width: 20,
+	    points: 5
+	})
+
+	foodList.push({
+	    x: Math.floor(Math.random()*4000)-2000,
+	    y: Math.floor(Math.random()*4000)-2000,
+	    hp: 50,
+	    width: 40,
+	    points: 1
+	})
 
    }
 
-  //   foodCounter=0
+    //   foodCounter=0
 
-  //   console.log("we made food!")
+    //   console.log("we made food!")
 
     
-  // }
+    // }
 
-  io.emit("foodUpdate", foodList);
+    io.emit("foodUpdate", foodList);
 }
 
 //send positions every framerate to each client
