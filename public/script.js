@@ -114,14 +114,20 @@ function setup() {
   })
 
   socket.on("recieveDeleteBullet", (data) =>{
-    //console.log(data)
-    laserCollection = data;
+      //console.log(data)
+      laserCollection = data;
   })
 
   socket.on("foodUpdate", (data) =>{
     localFoodList = data;
   })
 
+  socket.on("awardPoints", (data) =>{
+    if(clientPlayer.id == data){
+      clientPlayer.money += 1;
+      clientPlayer.points += 10;
+    }
+  })
 };
 
 // ethan
@@ -186,17 +192,23 @@ function draw() {
   clientPlayer.rotate(mouseAngle);
   clientPlayer.render();
 
-  for(const id in localFoodList) {
-    let food = new Food(localFoodList[id].x, localFoodList[id].y, localFoodList[id].hp, localFoodList[id].width)
-     food.update(lasers)
-     food.killfood(clientPlayer)
-     food.render()
-    // stroke(255, 0, 0)
-    // fill(255,0,0)
-    // strokeWeight(3)
-    // circle(localFoodList[id].x, localFoodList[id].y,50);
-    //console.log(id)
-  }
+  for(let id in localFoodList) {
+      let food = new Food(localFoodList[id].x, localFoodList[id].y, localFoodList[id].hp, localFoodList[id].width)
+      for(let i = 0; i < lasers.length; i++){
+	  if(food.update(lasers[i]) && lasers[i].hit == false)
+	  {
+	      sendDamageFood(clientPlayer.laserDamage, id, clientPlayer.id);
+	      // this doesn't work
+	      // sendDeleteBullet([lasers[i].id, lasers[i].bulletid])
+	  }
+      }
+      food.render()
+      // stroke(255, 0, 0)
+      // fill(255,0,0)
+      // strokeWeight(3)
+      // circle(localFoodList[id].x, localFoodList[id].y,50);
+      //console.log(id)
+}
 
   // for each client id got from the server except your client, render them
   // steven
@@ -442,6 +454,13 @@ async function sendKill(id, id2){
     id: id,
     id2: id2
   })
+}
+async function sendDamageFood(damage, foodID, id){
+    socket.emit("damageFood", {
+	damage: damage,
+	foodID: foodID,
+	clientid: id
+    })
 }
 //delete laser
 async function sendDeleteBullet(id){

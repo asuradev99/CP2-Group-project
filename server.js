@@ -91,6 +91,15 @@ io.on("connection", (socket) => {
     io.emit("recieveDeleteBullet", data);
   })
 
+  socket.on("damageFood", (data) => {
+      foodList[data.foodID].hp -= data.damage;
+      if(foodList[data.foodID].hp <= 0){
+	  foodList.splice(data.foodID, 1);
+	  console.log("FOOD ELMINIATED")
+	  io.emit("awardPoints", data.clientid)
+      }
+  })
+
   socket.on("kill", (data) => {
     lastKill.id = data.id;
     lastKill.id2 = data.id2;
@@ -102,13 +111,13 @@ function updateFood(){
   // foodCounter++
    if(foodList.length < 100){
     foodList.push({
-       x: Math.floor(Math.random()*4000)-2000,
-       y: Math.floor(Math.random()*4000)-2000,
-      hp: 10,
-      width: 20,
+	x: Math.floor(Math.random()*4000)-2000,
+	y: Math.floor(Math.random()*4000)-2000,
+	hp: 10,
+	width: 20
     })
 
-  }
+   }
 
   //   foodCounter=0
 
