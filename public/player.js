@@ -49,7 +49,7 @@ class Player extends entity{
     }
 
     //ayush
-    move(){
+    update(){
       this.inertia = [0,0];
       if(keyIsPressed) {
         if(keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
@@ -68,6 +68,18 @@ class Player extends entity{
           this.y+=this.movementSpeed;
           this.inertia = [this.inertia[0], +this.movementSpeed]
         }
+      }
+
+      // shoot bullet
+      if (mouseIsPressed) {
+        if (performance.now() - this.lastShotTime >= this.reloadTime) {
+          sendBullet(bulletCounter);
+          bulletCounter++;    
+          this.shoot(lasers, performance.now());
+        }
+        this.isShooting = true;
+      } else {
+        this.isShooting = false;
       }
     }
     //alon
@@ -113,7 +125,7 @@ class Player extends entity{
         text(this.playername, this.x - this.playername.length * 2, this.y - 20);
 
         // steven
-        if(!(this == clientPlayer)) {
+        if(!(this == this)) {
 
         let pointtext = this.points
         text(pointtext, this.x - 10 , this.y+60);
@@ -172,6 +184,21 @@ class Player extends entity{
         strokeWeight(3)
         //text(this.id, this.x, this.y+40);
         //console.log(targetAngle)
+    }
+
+    updateShield() {
+      //shield come back
+      // steven
+      if (performance.now() - lastHitTime > 5000) {
+        if (this.shield < this.maxShield) {
+          this.shield = this.shield + this.shieldRegen;
+        }
+        if (this.isHpRegen) {
+          if (this.hp < this.maxHp) {
+            this.hp = this.hp + this.hpRegen;
+          }
+        }
+      }
     }
 }
 

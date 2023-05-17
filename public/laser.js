@@ -16,9 +16,32 @@ class Laser extends entity{
     this.inertia = inertia;
   }
 
-  move() {
+  update() {
     this.x += Math.cos(this.angle) * this.speed;
     this.y += Math.sin(this.angle) * this.speed;
+
+
+    //laser hit player
+    if (this.collisionCheck(clientPlayer) && this.hit == false && clientPlayer.id != this.id) {
+      sendDeleteBullet([this.id, this.bulletid]);
+      //shield steven
+      if (clientPlayer.shield > 0) {
+        //clientPlayer.shield=clientPlayer.shield - this.damage;
+        clientPlayer.shield = clientPlayer.shield - this.damage;
+        if (clientPlayer.shield < 0) {
+          clientPlayer.hp = clientPlayer.hp + clientPlayer.shield - 1
+          clientPlayer.shield = 0;
+        }
+      } else {
+        clientPlayer.hp = clientPlayer.hp - this.damage;
+      }
+
+      laserThatLastHitThePlayer = this.id;
+
+      lastHitTime = performance.now()
+
+      this.hit = true;
+    }
   }
 
   draw() { 

@@ -12,10 +12,7 @@ function setup() {
 
   frameRate(60); //set framerate to 60, same as server
 
-  // initSocket();
 };
-
-
 
 //the p5js draw function, runs every frame rate
 //(30-60 times / sec)
@@ -41,20 +38,17 @@ function draw() {
   textSize(10);
 
   //update player position
-  clientPlayer.move();
+  clientPlayer.update();
   mouseAngle = atan2(mouseY - height / 2, mouseX - width / 2)
   clientPlayer.rotate(mouseAngle);
   clientPlayer.render();
 
+  //render food
   for (let id in localFoodList) {
     let food = new Food(localFoodList[id].x, localFoodList[id].y, localFoodList[id].hp, localFoodList[id].width)
-    food.update(lasers, id);
     food.render()
-    // stroke(255, 0, 0)
-    // fill(255,0,0)
-    // strokeWeight(3)
-    // circle(localFoodList[id].x, localFoodList[id].y,50);
-    //console.log(id)
+
+    food.update(lasers, id);
   }
 
   // for each client id got from the server except your client, render them
@@ -70,7 +64,6 @@ function draw() {
         player.updateFromMsg(positions[id]);
 
         localPlayerData[id] = player;
-        console.log("new")
       } else {
 
         let tempx = player.x;
@@ -86,17 +79,10 @@ function draw() {
         player.currentAngle = tempangle + (positions[id].currentAngle - tempangle) * 0.3;
 
       }
-
-
       //player.rotate(positions[id].a)
       player.render();
 
       renderLocationCircle(player)
-      // ethan
-      // if(newLaser[0] == id) {
-      //   console.log(newLaser)
-
-      // }
 
     }
   }
@@ -104,93 +90,22 @@ function draw() {
 
   //laser stuff ayush + alon
   for (var j = lasers.length - 1; j >= 0; j--) {
-    lasers[j].move();
     lasers[j].draw();
-
-
-    //laser hit player
-    if (lasers[j].collisionCheck(clientPlayer) && lasers[j].hit == false && clientPlayer.id != lasers[j].id) {
-      sendDeleteBullet([lasers[j].id, lasers[j].bulletid]);
-      //shield steven
-      if (clientPlayer.shield > 0) {
-        //clientPlayer.shield=clientPlayer.shield - lasers[j].damage;
-        clientPlayer.shield = clientPlayer.shield - lasers[j].damage;
-        if (clientPlayer.shield < 0) {
-          clientPlayer.hp = clientPlayer.hp + clientPlayer.shield - 1
-          clientPlayer.shield = 0;
-        }
-      } else {
-        clientPlayer.hp = clientPlayer.hp - lasers[j].damage;
-      }
-
-      laserThatLastHitThePlayer = lasers[j].id;
-
-      lastHitTime = performance.now()
-
-      lasers[j].hit = true;
-    }
+    lasers[j].update();
 
     // delete lasers that are marked by laser collection
-    if ((lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count) || (lasers[j].id == clientPlayer.id && lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count + 1)) {
-      lasers[j].speed = 0;
-    }
-
-    // remove lasers that are not moving
-    // steven
-    if (lasers[j].speed < 1 || lasers[j].hit) {
+    if (lasers[j].speed == 0 || lasers[j].hit || (lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count) || (lasers[j].id == clientPlayer.id && lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count + 1)) {
       lasers.splice(j, 1)
       j--;
     }
-
-
   }
-
-
 
   pop()
 
-  //points bar
-  textSize(50);
-  stroke(255, 0, 0);
-  strokeWeight(4)
-  let poionts = "Points: " + clientPlayer.points;
-  text(poionts, window.innerWidth / 2 - (poionts.length * 50 / 10), 40)
+  renderUI()
 
-  //points bar
-  textSize(20);
-  stroke(255, 0, 0);
-  strokeWeight(3)
-  let moneytext = "Money: " + clientPlayer.money;
-  text(moneytext, 0, 200, 40)
+  clientPlayer.updateShield();
 
-
-
-  //shield come back
-  // steven
-  if (performance.now() - lastHitTime > 5000) {
-    if (clientPlayer.shield < clientPlayer.maxShield) {
-      clientPlayer.shield = clientPlayer.shield + clientPlayer.shieldRegen;
-    }
-    if (clientPlayer.isHpRegen) {
-      if (clientPlayer.hp < clientPlayer.maxHp) {
-        clientPlayer.hp = clientPlayer.hp + clientPlayer.hpRegen;
-      }
-    }
-  }
-
-  // shoot bullet
-  if (mouseIsPressed) {
-    if (performance.now() - clientPlayer.lastShotTime >= clientPlayer.reloadTime) {
-      sendBullet(bulletCounter);
-      bulletCounter++;
-
-    }
-    clientPlayer.shoot(lasers, performance.now());
-
-    clientPlayer.isShooting = true;
-  } else {
-    clientPlayer.isShooting = false;
-  }
 
   //send updated packet to server
   sendPacket();

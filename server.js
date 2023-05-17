@@ -95,7 +95,6 @@ io.on("connection", (socket) => {
       foodList[data.foodID].hp -= data.damage;
       if(foodList[data.foodID].hp <= 0){
 	  foodList.splice(data.foodID, 1);
-	  console.log("FOOD ELMINIATED")
 	  io.emit("awardPoints", [data.clientid, foodList[data.foodID].points] )
       }
   })
