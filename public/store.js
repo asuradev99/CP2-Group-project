@@ -40,9 +40,12 @@ class Store{
         this.hpRegenButton = createButton('hpRegen - 20');
         this.hpRegenButton.position(0, 140);
 
+        this.newTurretButton = createButton('new turret - 50');
+        this.newTurretButton.position(0, 160);
+
         //buy this to win the game (actually scams you out of 100 points)
         this.joeBidenButton = createButton('joeBiden - 100');
-        this.joeBidenButton.position(0,160);
+        this.joeBidenButton.position(0,180);
 
         this.hpButton.mousePressed(hpButtonAction)
         function hpButtonAction() {
@@ -101,6 +104,17 @@ class Store{
             player.isHpRegen = true;
             player.removeMoney(20)
             }
+        }
+        this.newTurretButton.mousePressed(newTurretAction)
+        function newTurretAction() {
+            let angle;
+            while(true){
+                angle = window.prompt("angle?", "0");
+                if(parseInt(angle) != NaN){
+                    break;
+                }
+            }
+            player.turrets.push(parseInt(angle))
         }
         this.joeBidenButton.mousePressed(joeBidenButtonAction)
         function joeBidenButtonAction() {

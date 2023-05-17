@@ -18,6 +18,7 @@ class Player extends entity{
       this.inertia = inertia;
       this.bulletcounter = 0;
       this.isBiden = false;
+      this.turrets = [0];
 
       // player stats ayush
       //this.hp = hp;
@@ -88,10 +89,13 @@ class Player extends entity{
     //alon
     shoot(lasers, millis) {
       if (millis - this.lastShotTime >= this.reloadTime) {
-        let laser = new Laser(this.x, this.y, this.currentAngle, this.laserSpeed - (this.count - 3), 500, this, this.id, this.laserDamage, this.inertia, bulletCounter, this.width / 2);
-        lasers.push(laser);
+        for(let i = 0; i<this.turrets.length; i++){
+          let laser = new Laser(this.x, this.y, this.currentAngle+this.turrets[i], this.laserSpeed - (this.count - 3), 500, this, this.id, this.laserDamage, this.inertia, bulletCounter, this.width / 2);
+          lasers.push(laser);
+          
+          this.bulletcounter++;
+        }
         this.lastShotTime = millis;
-        this.bulletcounter++;
       }
 
     }
