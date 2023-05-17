@@ -128,13 +128,6 @@ function updateFood(){
 
    }
 
-    //   foodCounter=0
-
-    //   console.log("we made food!")
-
-    
-    // }
-
     io.emit("foodUpdate", foodList);
 }
 
