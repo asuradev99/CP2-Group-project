@@ -19,8 +19,6 @@ https://user-images.githubusercontent.com/70330869/232074813-a5caac2b-a6ca-489b-
 
 # todo list
 - HPRegen doesn't work
-- make player bigger when level up 
 - give player the option to add turrets
 - fix money system
-- lower movement speed upgrade
 - what the hell is inertia supposed to do
