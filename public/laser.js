@@ -1,9 +1,9 @@
 //alon + ayush
 class Laser extends entity{
-  constructor(x, y, mouseAngle, speed, maxRange, clientPlayer, ide, adamage, inertia, ida) {
+  constructor(x, y, mouseAngle, speed, maxRange, clientPlayer, ide, adamage, inertia, ida, width) {
     super(x, y, 10);
     this.speed = speed;
-    this.width = 15;
+    this.width = width;
     this.height = 5;
     this.angle = mouseAngle;
     this.maxRange = 50;

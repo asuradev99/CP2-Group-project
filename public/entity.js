@@ -8,7 +8,7 @@ class entity {
     }
 
     collisionCheck(entity){
-	    if(this.findDistance(entity) < this.width + entity.width) {
+	    if(this.findDistance(entity) < this.width + entity.width - 5) {
 	        return true
 	    } 
         return false

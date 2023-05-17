@@ -85,7 +85,7 @@ class Player extends entity{
     //alon
     shoot(lasers, millis) {
       if (millis - this.lastShotTime >= this.reloadTime) {
-        let laser = new Laser(this.x, this.y, this.currentAngle, this.laserSpeed, 500, this, this.id, this.laserDamage, this.inertia, bulletCounter);
+        let laser = new Laser(this.x, this.y, this.currentAngle, this.laserSpeed, 500, this, this.id, this.laserDamage, this.inertia, bulletCounter, this.width / 2);
         lasers.push(laser);
         this.lastShotTime = millis;
         this.bulletcounter++;
@@ -112,9 +112,11 @@ class Player extends entity{
 
     render(laser){
       beginShape();
+        this.count = 3 + Math.floor(this.points / 300)
+        this.width = 30 + (this.count - 3) * 10;
         for (let i = 0; i < this.count; ++i) {
             const theta = this.currentAngle + i * TWO_PI / this.count;
-            vertex( (this.x) + cos(theta) * this.scl, (this.y) + sin(theta) * this.scl);
+            vertex( (this.x) + cos(theta) * this.width, (this.y) + sin(theta) * this.width);
         }
         fill(0,0,0)
         stroke(255, 0, 0)
@@ -136,23 +138,24 @@ class Player extends entity{
 	
         //text(this.hp, this.x, this.y+20);
 
+        let xoffset = -50
         //health bar ayush
         stroke(51,0,0);
         strokeWeight(4);
         fill(0,0,0);
-        rect(this.x-this.width*2-10,this.y+30,100,20);
+        rect(this.x+xoffset,this.y+10+this.width,100,20);
         noStroke();
         fill(255,0,0);
-        rect(this.x-this.width*2-10,this.y+30,this.hp,16);
+        rect(this.x+xoffset,this.y+10+this.width,this.hp,16);
 
         //shield bar ayush
         stroke(51,0,0);
         strokeWeight(4);
         noFill()
-        rect(this.x-this.width*2-10,this.y+30,100,20);
+        rect(this.x+xoffset,this.y+10+this.width,100,20);
         noStroke();
         fill(31,190,214);
-        rect(this.x-this.width*2-10,this.y+30,this.shield*(100/this.maxShield),16);
+        rect(this.x+xoffset,this.y+10+this.width,this.shield*(100/this.maxShield),16);
 
   //       //money bar ayush
   //       stroke(51,0,0);
