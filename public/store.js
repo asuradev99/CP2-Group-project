@@ -75,14 +75,14 @@ class Store{
         this.bulletDamageButton.mousePressed(bulletDamageAction)
         function bulletDamageAction() {
             if (player.money>=6) {
-            player.laserDamage += 5;
+            player.laserDamage += 3;
             player.removeMoney(6)
             }
         }
         this.movementSpeedButton.mousePressed(movementSpeedButtonAction)
         function movementSpeedButtonAction() {
             if (player.money>=6) {
-            player.movementSpeed += 1;
+            player.movementSpeed += 0.25;
             player.removeMoney(6)
             }
         }

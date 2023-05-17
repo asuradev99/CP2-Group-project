@@ -16,20 +16,18 @@ class Food extends entity {
 
     }
 
-    update(laser) {
-	// for (var j = lasers.length - 1; j>= 0; j--){
-	//   if(lasers[j].collisionCheck(this) && lasers[j].hit == false){
-	//     console.log("hit")
-	//       this.hp = this.hp - lasers[j].damage;
-	//       lasers[j].hit = true;
-	//   } 
-	// }
-	if(laser.collisionCheck(this) && laser.hit == false){
-	    console.log("hit")
-	    laser.hit = true
-	    return true
-	}
-	return false
+    update(lasers, id) {
+        for (var j = lasers.length - 1; j>= 0; j--){
+            if(lasers[j].collisionCheck(this) && lasers[j].hit == false){
+                if( lasers[j].id == clientPlayer.id) {
+                    this.hp = this.hp - lasers[j].damage;
+                    sendDamageFood(clientPlayer.laserDamage, id, clientPlayer.id);
+                }
+                lasers[j].hit = true;
+
+            } 
+        }
+	
     }
 
     killfood(clientPlayer) {
