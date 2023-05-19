@@ -29,9 +29,17 @@ socket.on("recievebullet", (data) => {
 
     let player = new Player();
     if(id != clientPlayer.id) {
-        player.updateFromMsg(positions[id]);
-        laser = new Laser(player.x, player.y, player.currentAngle, player.laserSpeed, 500, player, id, player.laserDamage, player.inertia, newLaser[1], player.width / 2);
-        lasers.push(laser)
+	player.updateFromMsg(positions[id]);
+	console.log(player.turrets)
+	for(let i = 0; i < player.turrets.length; i++){
+	    // if(i>0){
+	    // 	newLaser[1] = newLaser[1] * -1
+	    // }
+	    let laser = new Laser(player.x, player.y, player.currentAngle+player.turrets[i], player.laserSpeed, 500, player, id, player.laserDamage, player.inertia, newLaser[1], player.width / 2);
+	    lasers.push(laser)
+	    console.log("working")
+	    newLaser[1]++
+	}
     }
 
 })
@@ -90,11 +98,11 @@ async function sendPacket() {
 
 }
 // seteven and ethan
-async function sendBullet(c) {
-  socket.emit("bullet", {
-    c: c
-    
-  })
+async function sendBullet(c, turrets) {
+    socket.emit("bullet", {
+	c: c
+	
+    })
 }
 // steven
 async function sendKill(id, id2){

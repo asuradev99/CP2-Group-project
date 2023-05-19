@@ -71,18 +71,18 @@ io.on("connection", (socket) => {
   socket.on("updatePosition", (data) => {
 
 
-    positions[socket.id] = data; 
+      positions[socket.id] = data;
 
-    //console.log(positions[socket.id].data);
+      // console.log(positions[socket.id].data);
 
   });
 
   socket.on("bullet", (data) => {
-    // bullets.x = data.x;
-    // bullets.y = data.y;
-    // bullets.a = data.a;
-    bullets  = [socket.id, data.c];
-    io.emit("recievebullet", bullets);
+      // bullets.x = data.x;
+      // bullets.y = data.y;
+      // bullets.a = data.a;
+      bullets  = [socket.id, data.c];
+      io.emit("recievebullet", bullets);
   })
   socket.on("deleteBullet", (data) => {
     // bullets.x = data.x;
