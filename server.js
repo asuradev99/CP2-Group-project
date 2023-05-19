@@ -92,11 +92,13 @@ io.on("connection", (socket) => {
   })
 
   socket.on("damageFood", (data) => {
+    if(foodList[data.foodID] != null) {
       foodList[data.foodID].hp -= data.damage;
       if(foodList[data.foodID].hp <= 0){
 	  foodList.splice(data.foodID, 1);
 	  io.emit("awardPoints", [data.clientid, 2] )
       }
+    }
   })
 
   socket.on("kill", (data) => {
