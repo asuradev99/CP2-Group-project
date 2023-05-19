@@ -18,7 +18,7 @@ class Player extends entity{
 	this.inertia = inertia;
 	this.bulletcounter = 0;
 	this.isBiden = false;
-	this.turrets = [0];
+	this.turrets = turrets; // this is an array
 
 	// player stats ayush
 	//this.hp = hp;
@@ -77,9 +77,12 @@ class Player extends entity{
 	// shoot bullet
 	if (mouseIsPressed) {
             if (performance.now() - this.lastShotTime >= this.reloadTime) {
-		sendBullet(bulletCounter);
-		bulletCounter++;    
+		console.log(bulletCounter);
+		sendBullet(bulletCounter-1);
+		// bulletCounter++
+		
 		this.shoot(lasers, performance.now());
+		// bulletCounter++
             }
             this.isShooting = true;
 	} else {
@@ -89,12 +92,12 @@ class Player extends entity{
     //alon
     shoot(lasers, millis) {
 	if (millis - this.lastShotTime >= this.reloadTime) {
-            for(let i = 0; i<this.turrets.length; i++){
+	    // let bulletCounterForMultiples = bulletCounter;
+	    for(let i = 0; i<this.turrets.length; i++){
+		bulletCounter++
 		let laser = new Laser(this.x, this.y, this.currentAngle+this.turrets[i], this.laserSpeed - (this.count - 3), 500, this, this.id, this.laserDamage, this.inertia, bulletCounter, this.width / 2);
 		lasers.push(laser);
-		
-		this.bulletcounter++;
-            }
+	    }
             this.lastShotTime = millis;
 	}
 

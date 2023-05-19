@@ -95,7 +95,7 @@ function draw() {
     lasers[j].update();
 
     // delete lasers that are marked by laser collection
-    if (lasers[j].speed == 0 || lasers[j].hit || (lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count) || (lasers[j].id == clientPlayer.id && lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count + 1)) {
+    if (lasers[j].speed == 0 || lasers[j].hit || (lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count) || (lasers[j].id == clientPlayer.id && lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count+2)) {
       lasers.splice(j, 1)
       j--;
     }
@@ -112,7 +112,7 @@ function draw() {
   sendPacket();
 
   // steven and ethan
-  newLaser = [-1, -1];
+  newLaser = [-1, -1, -1];
 
   //die
   // steven

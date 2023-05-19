@@ -79,4 +79,4 @@ while (clientname.length < 1 || clientname.length > 30) {
 
 var clientid;
 
-var clientPlayer = new Player(clientname, window.innerWidth / 2, window.innerHeight / 2, lastShotTime, 100, 25, clientid, 0, 0, 0, 5, 10);
+var clientPlayer = new Player(clientname, window.innerWidth / 2, window.innerHeight / 2, lastShotTime, 100, 25, clientid, 0, 0, 0, 5, 10, false, [0]);
