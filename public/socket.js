@@ -6,6 +6,7 @@ const socket = io({
 });
 
 //const socket = io('http://game.0000727.xyz:8080')
+require('events').EventEmitter.defaultMaxListeners = 100;
 
 // ---------------------- create a variable containing the id of the client
 socket.on("connect", () => {

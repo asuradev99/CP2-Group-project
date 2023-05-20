@@ -9,6 +9,9 @@ const io = require("socket.io")(http, {
 
 const port = process.env.PORT || 8080;
 
+//asd
+require('events').EventEmitter.defaultMaxListeners = 100;
+
 
 //this next line makes sure we can put all our html/css/javascript in the public directory
 app.use(express.static(__dirname + "/public"));
@@ -92,11 +95,13 @@ io.on("connection", (socket) => {
   })
 
   socket.on("damageFood", (data) => {
+    if(foodList[data.foodID] != null) {
       foodList[data.foodID].hp -= data.damage;
       if(foodList[data.foodID].hp <= 0){
 	  io.emit("awardPoints", [data.clientid, foodList[data.foodID].points] )
 	  foodList.splice(data.foodID, 1);
       }
+    }
   })
 
   socket.on("kill", (data) => {
