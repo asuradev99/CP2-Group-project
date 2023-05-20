@@ -8,7 +8,7 @@ Its probably down because we can't run the server forever.
 
 ## Controls
 | buttons         | actions    |
-|-----------------+------------|
+|-----------------|------------|
 | w / up arrow    | move up    |
 | s / down arrow  | move down  |
 | a / left arrow  | move left  |
@@ -47,7 +47,7 @@ If you are using brew on MacOS, run the following code:
 #### Linux
 On most Linux distros, you should be able to install node with a similar command to these:
 | Distro           | Command                       |
-|------------------+-------------------------------|
+|------------------|-------------------------------|
 | Ubuntu or Debian | `sudo apt install nodejs npm` |
 | Fedora           | `sudo dnf install nodejs npm` |
 | Arch             | `sudo pacman -Syu nodejs npm` |
