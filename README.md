@@ -2,7 +2,7 @@
 Shape Shooter is a game inspired by diep.io as a 2d top-down perspective online shooter. The objective of this game is to gain 100 money to buy the Biden button (Joe Biden President of the United States).
 
 # How to play
-Just click this link \E2\86\92 https://cooltriangle.duckdns.org
+Just click this link → https://cooltriangle.duckdns.org
 
 Its probably down because we can't run the server forever.
 
