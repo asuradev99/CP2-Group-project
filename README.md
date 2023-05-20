@@ -38,12 +38,14 @@ https://user-images.githubusercontent.com/70330869/232074813-a5caac2b-a6ca-489b-
 If you find yourself in the unfortunate situation of needing to host the server for this, heres what you need to do.
 
 ## Download Node.js / npm
-Node is needed for running the server for this. If you are on Windows, go to this [link][https://nodejs.org/en/download/current] and download the installer for Windows. If you are on Mac OS you can also do that, or you can follow the next set of instructions
+Node is needed for running the server for this. If you are on Windows, go here https://nodejs.org/en/download/current and download the installer for Windows. If you are on Mac OS you can also do that, or you can follow the next set of instructions
 
 ### Using a Package Manager
 #### Brew for Mac OS
 If you are using brew on MacOS, run the following code:
-   brew install node
+```
+brew install node
+```
 #### Linux
 On most Linux distros, you should be able to install node with a similar command to these:
 | Distro           | Command                       |
@@ -56,13 +58,17 @@ On most Linux distros, you should be able to install node with a similar command
 ## Running the Server
 ### With Git
 If you have `git` installed, just clone the repo and then run it with node:
-   git clone https://github.com/asuradev99/CP2-Group-project
-   cd CP2-Group-project
-   node server
+```
+git clone https://github.com/asuradev99/CP2-Group-project
+cd CP2-Group-project
+node server
+```
 After doing that, it should be running on port 8080.
 ### Without Git
 Click the green "Code" button at the top of this repo, and hit download zip. Extract that zip, and open the terminal in that directory. Then run the following command:
-    node server
+```
+node server
+```
 It should then be running on port 8080.
 
 # Gannt Chart
