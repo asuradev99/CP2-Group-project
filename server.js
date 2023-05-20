@@ -94,8 +94,8 @@ io.on("connection", (socket) => {
   socket.on("damageFood", (data) => {
       foodList[data.foodID].hp -= data.damage;
       if(foodList[data.foodID].hp <= 0){
+	  io.emit("awardPoints", [data.clientid, foodList[data.foodID].points] )
 	  foodList.splice(data.foodID, 1);
-	  io.emit("awardPoints", [data.clientid, 2] )
       }
   })
 
@@ -114,7 +114,7 @@ function updateFood(){
 	    y: Math.floor(Math.random()*4000)-2000,
 	    hp: 10,
 	    width: 20,
-	    points: 5
+	    points: 1
 	})
 
 	foodList.push({
@@ -122,7 +122,7 @@ function updateFood(){
 	    y: Math.floor(Math.random()*4000)-2000,
 	    hp: 50,
 	    width: 40,
-	    points: 1
+	    points: 5
 	})
 
    }
