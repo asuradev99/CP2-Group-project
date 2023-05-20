@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
   } else{
   console.log(`${socket.id} connected`);
 
-  //lets add a starting position when the client connects
+  // these are default variables for a player who first connects, after they set a name, they will change
   positions[socket.id] = { x: 100, y: 100 , a: 0, name: '', isShooting: false, lastShotTime: 0, millis: 0, hp: 0, shield: 25, points: 0};
   //players[socket.id] = {player: new Player(''), a: 0}
   socket.on("disconnect", () => {
@@ -70,7 +70,7 @@ io.on("connection", (socket) => {
     const sessionID = socket.id;
   });
   
-  //client can send a message 'updatePosition' each time the clients position changes
+  // updates each frame with the players updated data and stats
   socket.on("updatePosition", (data) => {
 
 
@@ -80,6 +80,8 @@ io.on("connection", (socket) => {
 
   });
 
+  // listens for the player socket send event to indicate to the rest of the players
+  // that a bullet has been sent by a player and who that player is
   socket.on("bullet", (data) => {
       // bullets.x = data.x;
       // bullets.y = data.y;
@@ -87,6 +89,8 @@ io.on("connection", (socket) => {
       bullets  = [socket.id, data.c];
       io.emit("recievebullet", bullets);
   })
+  // listens for a player to send the bullet delete event so that it can tell the rest
+  // of the players to delete that bullet
   socket.on("deleteBullet", (data) => {
     // bullets.x = data.x;
     // bullets.y = data.y;
@@ -94,6 +98,8 @@ io.on("connection", (socket) => {
     io.emit("recieveDeleteBullet", data);
   })
 
+  // listens for a player to send the damage food event to remove hp from that food
+  // or if it is dead now, give the player points and money
   socket.on("damageFood", (data) => {
     if(foodList[data.foodID] != null) {
       foodList[data.foodID].hp -= data.damage;
@@ -104,6 +110,9 @@ io.on("connection", (socket) => {
     }
   })
 
+  // listens for the player kill event to tell the player that killed the other player
+  // this is from before the award points event existed
+  // it does that except is hardcoded inside of socket.js
   socket.on("kill", (data) => {
     lastKill.id = data.id;
     lastKill.id2 = data.id2;
@@ -111,6 +120,9 @@ io.on("connection", (socket) => {
   })
 }});
 
+// every frame send the updated foodList to all players connected
+// if theres less than 100 food it adds a small food and a big food
+// to a random location
 function updateFood(){
     // foodCounter++
     if(foodList.length < 100){
@@ -135,7 +147,7 @@ function updateFood(){
     io.emit("foodUpdate", foodList);
 }
 
-//send positions every framerate to each client
+//send positions every framerate to each client and food udates
 const frameRate = 60;
 setInterval(() => {
   numberOfPlayers=

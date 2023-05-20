@@ -6,7 +6,7 @@ function setup() {
   //to fill up the full container, get the width an height
   // create the canvas as large as the screen width and height
   createCanvas(window.innerWidth, window.innerHeight);
-
+  // instantiate the store for upgrades and connects it to the player
   store = new Store();
   store.start(clientPlayer);
 
@@ -83,6 +83,7 @@ function draw() {
       //player.rotate(positions[id].a)
       player.render();
 
+      // if the player is offscreen, show them as a circle pointing in their direction
       renderLocationCircle(player)
 
     }
@@ -94,7 +95,7 @@ function draw() {
     lasers[j].draw();
     lasers[j].update();
 
-    // delete lasers that are marked by laser collection
+    // delete lasers that are marked by laser collection or many other conditions because we are good at coding
     if (lasers[j].speed == 0 || lasers[j].hit || (lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count) || (lasers[j].id == clientPlayer.id && lasers[j].id == laserCollection.id && lasers[j].bulletid == laserCollection.count+2)) {
       lasers.splice(j, 1)
       j--;
@@ -111,7 +112,7 @@ function draw() {
   //send updated packet to server
   sendPacket();
 
-  // steven and ethan
+  // steven and ethan: set new lasers back to -1
   newLaser = [-1, -1, -1];
 
   //die
