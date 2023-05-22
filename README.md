@@ -80,3 +80,10 @@ It should then be running on port 8080.
 - steven: server / client (he committed most times, he didn't code the entire thing by himself)
 - ayush: code the objects
 - alon: code the objects
+
+# Members
+- make stuff scale more
+- joe biden win scenario
+- make turrets cost money + change from radians to degrees
+- mr kapptie upgrade
+- anti cheat?
