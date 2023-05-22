@@ -72,7 +72,7 @@ node server
 It should then be running on port 8080.
 
 # Gannt Chart
-<img width="2042" alt="Screen Shot 2023-05-03 at 7 51 46 AM" src="https://user-images.githubusercontent.com/70330869/235936209-dae5cb24-80bf-4035-ab84-9dab275bc393.png">
+<img width="2041" alt="Screen Shot 2023-05-22 at 7 31 41 AM" src="https://github.com/asuradev99/CP2-Group-project/assets/70330869/9c010656-4c82-4e4c-ac6d-057ec436c99d">
 
 
 # Members
@@ -80,9 +80,3 @@ It should then be running on port 8080.
 - steven: server / client (he committed most times, he didn't code the entire thing by himself)
 - ayush: code the objects
 - alon: code the objects
-
-# todo list
-- HPRegen doesn't work
-- give player the option to add turrets
-- fix money system
-- what the hell is inertia supposed to do
