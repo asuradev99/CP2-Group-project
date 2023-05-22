@@ -10,7 +10,7 @@ const io = require("socket.io")(http, {
 const port = process.env.PORT || 8080;
 
 //asd
-require('events').EventEmitter.defaultMaxListeners = 100;
+//require('events').EventEmitter.defaultMaxListeners = 100;
 
 
 //this next line makes sure we can put all our html/css/javascript in the public directory
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 //run the server which uses express
 http.listen(port, () => {
-  console.log(`Server is active at port:${port}`);
+  console.log(`Server is active at pordt:${port}`);
 });
 
 //store the positions of each client in this object.
@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
   }
   //each time someone visits the site and connect to socket.io this function  gets called
   //it includes the socket object from which you can get the id, useful for identifying each client
-  if(performance.now()-e < 1000 || cheaters[socket.id]){
+  if(performance.now()-e < 5000 || cheaters[socket.id]){
     socket.disconnect();
   } else{
   console.log(`${socket.id} connected`);

@@ -95,7 +95,7 @@ class Player extends entity{
 	    // let bulletCounterForMultiples = bulletCounter;
 	    for(let i = 0; i<this.turrets.length; i++){
 		bulletCounter++
-		let laser = new Laser(this.x, this.y, this.currentAngle+this.turrets[i], this.laserSpeed - (this.count - 3), 500, this, this.id, this.laserDamage, this.inertia, bulletCounter, this.width / 2);
+		let laser = new Laser(this.x, this.y, this.currentAngle+this.turrets[i], this.laserSpeed, 500, this, this.id, this.laserDamage, this.inertia, bulletCounter, this.width / 2);
 		lasers.push(laser);
 	    }
             this.lastShotTime = millis;
