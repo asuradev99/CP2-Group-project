@@ -32,6 +32,8 @@ When battling other players, you may notice that you go faster when going diagon
 There are 4 boundaries on the map in the 4000x4000 area indicated by a white line. You can't go past that.
 
 # Images and Videos
+https://github.com/asuradev99/CP2-Group-project/assets/70330869/886218fc-44a9-4b12-a4de-f4cea48ceb41
+
 https://user-images.githubusercontent.com/70330869/232074813-a5caac2b-a6ca-489b-8199-4b349447b547.mov
 
 # Guide to Running
