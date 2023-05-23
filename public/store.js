@@ -44,7 +44,7 @@ class Store{
         this.newTurretButton.position(0, 160);
 
         //buy this to win the game (actually scams you out of 100 points)
-        this.joeBidenButton = createButton('joeBiden - 100');
+        this.joeBidenButton = createButton('joeBiden - 1000');
         this.joeBidenButton.position(0,180);
 
         this.hpButton.mousePressed(hpButtonAction)
@@ -118,8 +118,8 @@ class Store{
         }
         this.joeBidenButton.mousePressed(joeBidenButtonAction)
         function joeBidenButtonAction() {
-            if (player.money>=100) {
-                player.removeMoney(100)
+            if (player.money>=1000) {
+                player.removeMoney(1000)
                 clientPlayer.isBiden = true;
             
             var para = document.createElement("p");
