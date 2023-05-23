@@ -129,7 +129,7 @@ function updateFood(){
 	foodList.push({
 	    x: Math.floor(Math.random()*4000)-2000,
 	    y: Math.floor(Math.random()*4000)-2000,
-	    hp: 10,
+	    hp: 20,
 	    width: 20,
 	    points: 1
 	})
@@ -137,7 +137,15 @@ function updateFood(){
 	foodList.push({
 	    x: Math.floor(Math.random()*4000)-2000,
 	    y: Math.floor(Math.random()*4000)-2000,
-	    hp: 50,
+	    hp: 30,
+	    width: 30,
+	    points: 2
+	})
+
+	foodList.push({
+	    x: Math.floor(Math.random()*4000)-2000,
+	    y: Math.floor(Math.random()*4000)-2000,
+	    hp: 80,
 	    width: 40,
 	    points: 5
 	})
