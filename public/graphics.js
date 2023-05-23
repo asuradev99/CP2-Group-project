@@ -129,7 +129,7 @@ function deathScreen() {
 
 
   function renderUI() {
-
+    fill(0,0,0)
     //points bar
     textSize(50);
     stroke(255, 0, 0);
@@ -141,6 +141,21 @@ function deathScreen() {
     textSize(20);
     stroke(255, 0, 0);
     strokeWeight(3)
-    let moneytext = "Money: " + clientPlayer.money;
+    let moneytext = "Money: " + Math.floor(clientPlayer.money);
     text(moneytext, 0, 200, 40)
+
+    // last two digits of money
+    let mmm = clientPlayer.money.toFixed(2)
+    // console.log((mmm*100)%100)
+
+    text("Progress to next Money", 0, 260, 1000)
+
+    // bar showing progress to next money
+    // stroke(51,0,0);
+    // strokeWeight(4);
+    fill(0,0,0);
+    rect(0,280,100,20);
+    noStroke();
+    fill(255,0,0);
+    rect(0,280,(mmm*100)%100,16);
   }

@@ -29,7 +29,7 @@ class Player extends entity{
 	this.sizePenalty = 0;
 	
 	// alon
-	this.money = 8;
+	this.money = 8.00;
 
 	// player variables ayush + alon
 	this.smoothSpeed = 1;

@@ -68,9 +68,9 @@ socket.on("recievekill", (data) => {
 
 socket.on("awardPoints", (data) => {
     if (clientPlayer.id == data[0]) {
-        let moneyScale = Math.round(data[1] * (100 * Math.pow(0.997, clientPlayer.points)) / 30);
-        clientPlayer.money += moneyScale;
-        clientPlayer.reward(20)
+        let moneyScale = data[1] * (100 * Math.pow(0.997, clientPlayer.points)) / 50;
+	clientPlayer.money += moneyScale;
+	clientPlayer.reward(20)
 
     }
 })
