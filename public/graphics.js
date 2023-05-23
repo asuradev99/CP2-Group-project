@@ -103,7 +103,7 @@ function deathScreen() {
     sendKill(laserThatLastHitThePlayer, clientid);
       para = document.createElement("p");
       try{
-      text = "you are dead, not big surprise, you were killed by "+positions[laserThatLastHitThePlayer].name;
+      text = "you are dead, not big surprise";
       }catch{
         text = "you committed suicide"
       }
