@@ -10,7 +10,7 @@ class entity {
 
     // checks if the distance between the centerpoint of two entities is less than both their widths combined
     collisionCheck(entity){
-	    if(this.findDistance(entity) < (this.width + entity.width) / 2 ) {
+	    if(this.findDistance(entity) < (this.width + entity.width) / 1.5 ) {
 	        return true
 	    } 
         return false
