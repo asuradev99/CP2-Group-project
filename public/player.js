@@ -121,8 +121,8 @@ class Player extends entity{
     }
     reward(pts) {
 	this.points += pts
-	this.count = 3 + Math.floor(this.points / 300)
-	this.width = 30 + (this.count - 3) * 10;
+	this.count = 3 + Math.floor(this.points / 600)
+	this.width = 30 + (this.count - 3) * 5;
 	//size penalty
     }
     render(laser){
