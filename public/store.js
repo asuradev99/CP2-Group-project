@@ -107,14 +107,18 @@ class Store{
         }
         this.newTurretButton.mousePressed(newTurretAction)
         function newTurretAction() {
-            let angle;
-            while(true){
-                angle = window.prompt("angle?", "0");
-                if(parseInt(angle) != NaN){
-                    break;
+            if(player.money >= 50) {
+
+                let angle;
+                while(true){
+                    angle = window.prompt("angle?", "0");
+                    if(parseInt(angle) != NaN){
+                        break;
+                    }
                 }
+                player.turrets.push(parseInt(angle))
+                player.removeMoney(50)
             }
-            player.turrets.push(parseInt(angle))
         }
         this.joeBidenButton.mousePressed(joeBidenButtonAction)
         function joeBidenButtonAction() {
