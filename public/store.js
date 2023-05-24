@@ -78,7 +78,7 @@ class Store{
         this.bulletDamageButton.mousePressed(bulletDamageAction)
         function bulletDamageAction() {
             if (player.money>=6) {
-            player.laserDamage += 3;
+            player.laserDamage += 2;
             player.removeMoney(6)
             }
         }
@@ -99,10 +99,10 @@ class Store{
         this.hpRegenButton.mousePressed(hpRegenButtonAction)
         function hpRegenButtonAction() {
             //no
-            if (player.money>=20) {
+            if (player.money>=10) {
             player.hpRegen += 0.1;
             player.isHpRegen = true;
-            player.removeMoney(20)
+            player.removeMoney(10)
             }
         }
         this.newTurretButton.mousePressed(newTurretAction)
