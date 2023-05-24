@@ -71,7 +71,7 @@ class Store{
         this.reloadTimeButton.mousePressed(reloadTimeAction)
         function reloadTimeAction() {
             if (player.money>=4) {
-            player.reloadTime -= 10;
+            player.reloadTime -= 20;
             player.removeMoney(4)
             }
         }
