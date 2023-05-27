@@ -40,7 +40,7 @@ class Store{
         this.hpRegenButton = createButton('hpRegen - 20');
         this.hpRegenButton.position(0, 140);
 
-        this.newTurretButton = createButton('new turret - 50');
+        this.newTurretButton = createButton('new turret - 35');
         this.newTurretButton.position(0, 160);
 
         //buy this to win the game (actually scams you out of 100 points)
@@ -99,15 +99,15 @@ class Store{
         this.hpRegenButton.mousePressed(hpRegenButtonAction)
         function hpRegenButtonAction() {
             //no
-            if (player.money>=10) {
+            if (player.money>=20) {
             player.hpRegen += 0.1;
             player.isHpRegen = true;
-            player.removeMoney(10)
+            player.removeMoney(20)
             }
         }
         this.newTurretButton.mousePressed(newTurretAction)
         function newTurretAction() {
-            if(player.money >= 50) {
+            if(player.money >= 35) {
 
                 let angle;
                 while(true){

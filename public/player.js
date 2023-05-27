@@ -54,7 +54,7 @@ class Player extends entity{
     //ayush
     update(){
 	this.inertia = [0,0];
-	let effectiveSpeed = this.movementSpeed - (this.count - 3);
+	let effectiveSpeed = Math.max(2,  this.movementSpeed - (this.count - 3) / 2);
 	if(keyIsPressed) {
             if(keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
 		this.x-=effectiveSpeed;
